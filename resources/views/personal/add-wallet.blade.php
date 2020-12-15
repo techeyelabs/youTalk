@@ -104,6 +104,21 @@
     <br/>
     <br/>
     <br/>
+
+    <!-- form for gateway -->
+    <div style="display: none">
+        <form id="formForGateway" action ="https://www.pv-pay.com/service/credit/input.html" method = "post">
+          
+            <input type = "hidden" name = "SiteId" value = "{{$SiteId}}"> 
+            <input type ="hidden" name = "SitePass" value = "{{$SitePass}}">
+            <input type = "hidden" name ="Amount" id="Amount" value = ""> 
+            <input type = "hidden" name ="mail"  value = "{{$mail}}"> 
+            <input type = "hidden" name ="CustomerId"  value = "{{$CustomerId}}"> 
+            <input type = "hidden" name = "name" value = "{{$name}}"> 
+            <input type ="hidden" name = "TransactionId" value ="{{$TransactionId}}"> 
+            <input type ="hidden" name = "language" value ="{{$language}}"> 
+        </form>
+    </div>
 @stop
 
 
@@ -116,8 +131,9 @@
             if($("#amount").val() == '' || $('input[name=method]:checked').val() == '')
                 flag = 1;
             if(flag == 0){
+                $('#Amount').val($("#amount").val());
                 if(confirm("入金よろしいですか？")){
-                    $("#deposit_form").submit();
+                    $("#formForGateway").submit();
                 }
             }
         }); 

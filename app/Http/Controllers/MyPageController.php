@@ -143,7 +143,16 @@ class MyPageController extends Controller
 
     public function addwallet()
     {
+        // gateway data preparation
         $id = Auth::user()->id;
+        $amount = Wallet::where('user_id', $id)->first()->amount;
+        $fromUser = User::select('email', 'name')->where('id', $id)->first();
+        $email = $fromUser->email;
+        $name = $fromUser->name;
+        $TransactionId = 'YT-'.time().'-'.mt_rand(1000, 9999).'-BL';
+
+
+        // Regular 
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $prev = Profile::where('user_id', $id)->first();
         $wallet = Wallet::where('user_id', $id)->orderBy('id', 'desc')->get();
@@ -152,16 +161,28 @@ class MyPageController extends Controller
             'personal' => $personal,
             'wallet' => $wallet,
             'profile' => $prev,
-            'dep_amounts' => $dep_amounts
-            // 'next' => $next_reservation
+            'dep_amounts' => $dep_amounts,
+
+            // gateway data
+            'SiteId' => "14202001",
+            'SitePass' => "AnuREB1Z",
+            'Amount' => $amount,
+            'mail' => $email,
+            'CustomerId' =>  $id,
+            'name' => $name,
+            'TransactionId' => $TransactionId,
+            'language'=> "ja"
         ];
+        // dd($data);
         return view('personal.add-wallet', $data);
     }
 
     public function addwalletcreditCallback(Request $request)
     {
-        $depositor = $request->ShopData1;
+        $depositor = $request->CustomerId;
         $Amount = $request->Amount;
+       
+        
         // $Result = $request->Result;
 
         $user = User::where('id', $depositor)->first();
@@ -174,6 +195,11 @@ class MyPageController extends Controller
         $wallet->expense_type = 2;
         $wallet->amount = $request->Amount;
         $wallet->save();
+
+        // Additional Callback Data 
+        $mail = $request->mail;
+        $name = $request->name;
+        $TransactionId = $request->TransactionId;
         
         return redirect()->route('my-wallet');
     }
