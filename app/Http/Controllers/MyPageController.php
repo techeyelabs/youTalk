@@ -20,6 +20,7 @@ use App\Models\Wallet;
 use App\Models\WithdrawRequest;
 use App\Models\DepositAmounts;
 use App\Models\PendingBankDeposit;
+use App\Models\GatewayResponse;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Library\TimeLibrary;
@@ -150,6 +151,7 @@ class MyPageController extends Controller
         $email = $fromUser->email;
         $name = $fromUser->name;
         $TransactionId = 'YT-'.time().'-'.mt_rand(1000, 9999).'-BL';
+        
 
 
         // Regular 
@@ -179,27 +181,49 @@ class MyPageController extends Controller
 
     public function addwalletcreditCallback(Request $request)
     {
-        $depositor = $request->CustomerId;
-        $Amount = $request->Amount;
-       
+        $SiteIdCheck = "14202001";
+        $SitePassCheck = "AnuREB1Z";
+        if($SiteIdCheck == $request->SiteId && $SitePassCheck == $request->SitePass){
+            $depositor = $request->CustomerId;
+            $Amount = $request->Amount;
+           
+            
+            // $Result = $request->Result;
+    
+            $user = User::where('id', $depositor)->first();
+            $user->wallet_balance = $user->wallet_balance + $request->Amount;
+            $user->save();
+    
+            $wallet = new Wallet();
+            $wallet->user_id = $depositor;
+            $wallet->service_id = 0;
+            $wallet->expense_type = 2;
+            $wallet->amount = $request->Amount;
+            $wallet->save();
+
+             // Save All Callback Data 
+            $gatewayresponse = new GatewayResponse();
+            $gatewayresponse->SiteId = $request->SiteId;
+            $gatewayresponse->SitePass = $request->SitePass;
+            $gatewayresponse->Amount = $request->Amount;
+            $gatewayresponse->CustomerId = $request->CustomerId;
+            $gatewayresponse->name = $request->name;
+            $gatewayresponse->mail = $request->mail;
+            $gatewayresponse->TransactionId = $request->TransactionId;
+            $gatewayresponse->language = $request->language;
+            $gatewayresponse->other = $request->other;
+            $gatewayresponse->Result = $request->Result;
+            $gatewayresponse->save();
+
+            return response()->json([
+                "status" => 200
+              ]);
+        } else{
+            return response()->json([
+                "status" => 404
+              ]);
+        }
         
-        // $Result = $request->Result;
-
-        $user = User::where('id', $depositor)->first();
-        $user->wallet_balance = $user->wallet_balance + $request->Amount;
-        $user->save();
-
-        $wallet = new Wallet();
-        $wallet->user_id = $depositor;
-        $wallet->service_id = 0;
-        $wallet->expense_type = 2;
-        $wallet->amount = $request->Amount;
-        $wallet->save();
-
-        // Additional Callback Data 
-        $mail = $request->mail;
-        $name = $request->name;
-        $TransactionId = $request->TransactionId;
         
         return redirect()->route('my-wallet');
     }
