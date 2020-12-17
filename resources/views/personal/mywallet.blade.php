@@ -16,7 +16,13 @@
 
 
 @section('content')
+        @if (session('status')) 
+            <div class="alert alert-success text-center" style="font-size: 18px;">
+                {{ session('status') }}
+            </div>
+        @endif
     @include('template.wallettop')
+   
     <div class="col-md-12 text-center" style="font-size: 16px">
         <form action="{{route('add-wallet')}}"><button class="my-white">入金する</button></form>
     </div>

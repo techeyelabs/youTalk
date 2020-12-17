@@ -227,7 +227,8 @@ class MyPageController extends Controller
         
         return redirect()->route('my-wallet');
     }
-
+    
+   
     public function addwalletaction(Request $request)
     {
         // $user = User::where('id', Auth::user()->id)->first();
