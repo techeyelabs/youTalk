@@ -215,9 +215,9 @@ class MyPageController extends Controller
             $gatewayresponse->Result = $request->Result;
             $gatewayresponse->save();
 
-            return response()->json([
-                "status" => 200
-              ]);
+            // return response()->json([
+            //     "status" => 200
+            //   ]);
         } else{
             return response()->json([
                 "status" => 404
