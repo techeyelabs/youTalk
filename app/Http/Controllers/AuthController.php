@@ -187,7 +187,7 @@ class AuthController extends Controller
          $amount = new Wallet();
          $amount->user_id = $User->id;
          $amount->service_id = 0;
-         $amount->expense_type = 2;
+         $amount->expense_type = 4;
          $amount->amount = 0;
          $amount->save();
          
