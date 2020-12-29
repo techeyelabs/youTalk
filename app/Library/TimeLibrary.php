@@ -16,7 +16,6 @@ class TimeLibrary
                 $increment = gmdate( 'H:i', $increment );
                 $time_slot[$i] = $increment;
                 $i++;
-                
             }
           return $time_slot;
         }

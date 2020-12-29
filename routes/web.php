@@ -142,9 +142,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add-wallet-action', 'MyPageController@addwalletaction')->name('add-wallet-action');
     Route::get('/withdraw-wallet', 'MyPageController@addwallet')->name('withdraw-wallet');
 
-    // //Gateway Messages
+    //Gateway Messages
     Route::get('/success', function () {
-        return redirect()->route('my-wallet')->with('status', 'Payment Successfully Done.');
+        return redirect('/mypage-wallet')->with('status', 'Payment Successfully Done.');
+        // return redirect('my-wallet')->route('my-wallet')->with('status', 'Payment Successfully Done.');
     });
     Route::get('/addwallet-callback-fail', function () {
         return redirect()->route('add-wallet')->with('status', 'Sorry, Payment Failed! Please Try Again.');
