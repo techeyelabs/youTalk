@@ -5,7 +5,7 @@ class TimeLibrary
 {
     public function TimeLibrary($lower = 0, $upper = 82800, $step = 3600, $format = '' )
         {
-        $time_slot= array();
+        $time_slot = array();
             
             if ( empty( $format ) ) {
                 $format = 'H:i';
