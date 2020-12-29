@@ -93,6 +93,7 @@ class AuthController extends Controller
         $User->register_token = time().rand(1000,9999);
         $User->save();
 
+       
         // new profile add
         $pro = new Profile();
         $pro->picture = 'default.png';
@@ -182,6 +183,15 @@ class AuthController extends Controller
         $User->status = true;
         $User->save();
 
+         
+         $amount = new Wallet();
+         $amount->user_id = $User->id;
+         $amount->service_id = 0;
+         $amount->expense_type = 2;
+         $amount->amount = 0;
+         $amount->save();
+         
+ 
         $image = 'default.png';
 
         $Profile = new Profile();
