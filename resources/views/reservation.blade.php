@@ -168,7 +168,7 @@
                                         <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="slot_1" name="slot_1"  
                                         onblur="removeAlert('d_1','d_1_error')">
                                              <option value="">-------</option>
-                                            <option value="12">0時</option>
+                                            <option value="0">0時</option>
                                             <option value="1">1時</option>
                                             <option value="2">2時</option>
                                             <option value="3">3時</option>
@@ -224,7 +224,7 @@
                                             <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="slot_2" name="slot_2"  
                                             onblur="removeAlert('d_2','d_2_error')">
                                                 <option value="">-------</option>
-                                                <option value="12">0時</option>
+                                                <option value="0">0時</option>
                                                 <option value="1">1時</option>
                                                 <option value="2">2時</option>
                                                 <option value="3">3時</option>
@@ -280,7 +280,7 @@
                                         <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="slot_3" name="slot_3"  
                                         onblur="removeAlert('d_3','d_3_error')">
                                             <option value="">-------</option>
-                                            <option value="12">0時</option>
+                                            <option value="0">0時</option>
                                             <option value="1">1時</option>
                                             <option value="2">2時</option>
                                             <option value="3">3時</option>

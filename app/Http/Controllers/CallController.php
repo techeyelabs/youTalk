@@ -20,6 +20,7 @@ use App\Models\Wallet;
 
 use App\Library\TimeLibrary;
 
+
 use Illuminate\Support\Facades\Mail;
 
 use Auth;
@@ -73,9 +74,9 @@ class CallController extends Controller
     {
         
         //return $request;
-      
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
+        
 
         $service_id = $request->service_id; //grab service id 
         $service = Service::where('id', $service_id)->first(); //fetch relevant service

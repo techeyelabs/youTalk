@@ -107,7 +107,7 @@
                                         @endphp
                                     @endif
                                 </div>
-                                <div id="image_error" class="red_alerts"><span class="text-10">画像アップロードしてください！</span></div>
+                                <div id="image_error" class="red_alerts"><span class="text-10">画像アップロードしてください！(「画像サイズは2メガ以内にしてください！」)</span></div>
                             </div>
                         </div>
                         <br/>
