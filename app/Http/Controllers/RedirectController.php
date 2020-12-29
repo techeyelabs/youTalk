@@ -18,6 +18,6 @@ class RedirectController extends Controller
 
     public function cancel(Request $request)
     {
-        return redirect()->route('add-wallet')->with('status', 'Payment Cancelled');
+        return redirect()->route('add-wallet')->with('status', '決済キャンセルされました！');
     }
 }
