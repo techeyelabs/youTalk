@@ -96,7 +96,10 @@
                                     $flag = 0;
                                 @endphp
                                 <div class="">
-                                    <div><input type="file" id="thumbimg" name="thumbimg" onblur="removeAlert('thumbimg','image_error')"/></div>
+                                    <div>
+                                        <input type="file" id="thumbimg" name="thumbimg" onblur="removeAlert('thumbimg','image_error')"/>
+                                        <span style="color:red">(「画像サイズは2メガ以内にしてください！」)</span>
+                                    </div>
                                     @if(isset($service_prev->thumbnail))
                                         <div class="mt-2" id="edit_img">
                                             <img style="height: 180px; width: 200px; object-fit: cover" src="{{Request::root()}}/assets/service/{{isset($service_prev->thumbnail)?$service_prev->thumbnail:''}}" />
@@ -107,7 +110,7 @@
                                         @endphp
                                     @endif
                                 </div>
-                                <div id="image_error" class="red_alerts"><span class="text-10">画像アップロードしてください！(「画像サイズは2メガ以内にしてください！」)</span></div>
+                                <div id="image_error" class="red_alerts"><span class="text-10">画像アップロードしてください！</span></div>
                             </div>
                         </div>
                         <br/>
