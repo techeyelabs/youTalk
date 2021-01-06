@@ -48,7 +48,7 @@
                     <br/>
                     <div>入金する方法を選択してください</div>--}}
                     <br/>
-                    <div class="col-md-12 row text-center">
+                    <div class="col-md-12 row text-center" style="display: none">
                         <table style="margin:0 auto">
                             <tbody>
                                 <tr><td class="payment_options_td">
@@ -61,8 +61,6 @@
                                 </td></tr>
                             </tbody>
                         </table>
-                        
-                        
                     </div>
                     <div id="bank_info_div" class="col-md-12 row" style="display: none">
                         <div class="col-md-3"></div>
