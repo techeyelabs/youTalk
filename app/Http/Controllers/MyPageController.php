@@ -183,9 +183,6 @@ class MyPageController extends Controller
         if($SiteIdCheck == $request->SiteId && $SitePassCheck == $request->SitePass){
             $depositor = $request->CustomerId;
             $Amount = $request->Amount;
-           
-            
-            // $Result = $request->Result;
     
             $user = User::where('id', $depositor)->first();
             $user->wallet_balance = $user->wallet_balance + $request->Amount;
@@ -211,21 +208,14 @@ class MyPageController extends Controller
             $gatewayresponse->other = $request->other;
             $gatewayresponse->Result = $request->Result;
             $gatewayresponse->save();
-
-            // return response()->json([
-            //     "status" => 200
-            //   ]);
         } else{
             return response()->json([
                 "status" => 404
               ]);
         }
-        
-        
         return redirect()->route('my-wallet');
     }
-    
-   
+
     public function addwalletaction(Request $request)
     {
         $method = $request->method + 1;
@@ -440,6 +430,7 @@ class MyPageController extends Controller
         }
         return redirect()->to(route('my-page-profile'));
     }
+
     public function getMessage(Request $request)
     {
         DB::enableQueryLog();

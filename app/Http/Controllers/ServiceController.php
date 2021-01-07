@@ -64,7 +64,8 @@ class ServiceController extends Controller
             'personal' => $personal,
             'profile' => $prev,
             'service_prev' => $service_prev,
-            'categories' => $categories
+            'categories' => $categories,
+            'serviceCount' => 1 //used to stop the scope of creating more than 2 services
         ];
         return view('createservice', $data);
     }
@@ -197,6 +198,7 @@ class ServiceController extends Controller
         $service->save();
         return redirect()->back();
     }
+
     public function reservationChange($stat, $id)
     {
         $service = Service::where('id', $id)->first();
@@ -370,6 +372,7 @@ class ServiceController extends Controller
         ];
         return view('seller-res-list', $data);
     }
+
     public function historyListindService($id)
     {
         $user_id = Auth::user()->id;
@@ -389,6 +392,7 @@ class ServiceController extends Controller
         ];
         return view('seller-his-list', $data);
     }
+
     public function accepted_res($id)
     {
         $user_id = Auth::user()->id;

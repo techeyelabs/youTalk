@@ -4,68 +4,67 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 @stop
 
-
 @section('content')
-    
     <div class="col-md-12 alternates" style="min-height: 850px">
         <div class="col-md-12 col-sm-12 remove-pads">
-            <div class="text-16 text-center mb-4"><span>サービス一覧</span></div>
+            <div class="text-16 text-center mb-4">
+                <span>サービス一覧</span>
+            </div>
             @foreach($myServices as $data)
                 @php
                     $countPending = 0;
                     $countConfirmed = 0
                 @endphp
-            <div class="col-md-12 row pl-3 pb-2 text-14" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $data->id])}}"><span style="font-weight: bold">{{$data->title}}</span></a></div>
-            <div class="row pl-3 text-12">
-                @foreach($data->reservation as $res)
-                    @if($res->status == 1)
-                        @php
-                            $countPending++
-                        @endphp
-                    @elseif($res->status == 2)
-                        @php
-                            $countConfirmed++
-                        @endphp
-                    @endif
-                @endforeach
-                <div class="col-md-8 p-0">
-                    @if($countPending > 0)
-                    <div style="" class="anchorColor" onclick="show_res_req({{$data->id}})">予約通知{{$countPending}}件</div>
-                    @else 
-                    <div style="">予約通知{{$countPending}}件</div>
-                    @endif
-
-                    @if($countConfirmed > 0)
-                    <div style="" class="anchorColor" onclick="show_accepted_res({{$data->id}})">電話受付予約{{$countConfirmed}}件</div>
-                    @else 
-                    <div style="">電話受付予約{{$countConfirmed}}件</div>
-                    @endif
-
-                    
-                    
+                <div class="col-md-12 row pl-3 pb-2 text-14" style="">
+                    <a class="anchorColor" href="{{route('user-display-service', ['id' => $data->id])}}"><span style="font-weight: bold">{{$data->title}}</span></a>
                 </div>
-              
-              <div class="col-md-4 text-center p-0">
-                <span style="font-size: 35px">{{$data->price}}</span><span>円 / 分</span>
-              </div>
-            </div>
-            <hr style="height:1px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />
+                <div class="row col-md-12 pl-3 text-12">
+                    @foreach($data->reservation as $res)
+                        @if($res->status == 1)
+                            @php
+                                $countPending++
+                            @endphp
+                        @elseif($res->status == 2)
+                            @php
+                                $countConfirmed++
+                            @endphp
+                        @endif
+                    @endforeach
+                    <div class="col-md-8 p-0">
+                        @if($countPending > 0)
+                            <div style="" class="anchorColor" onclick="show_res_req({{$data->id}})">予約通知{{$countPending}}件</div>
+                        @else
+                            <div style="">予約通知{{$countPending}}件</div>
+                        @endif
+
+                        @if($countConfirmed > 0)
+                            <div style="" class="anchorColor" onclick="show_accepted_res({{$data->id}})">電話受付予約{{$countConfirmed}}件</div>
+                        @else
+                            <div style="">電話受付予約{{$countConfirmed}}件</div>
+                        @endif
+                    </div>
+                    <div class="col-md-4 text-center p-0">
+                        <span style="font-size: 35px">{{$data->price}}</span><span>円 / 分</span>
+                    </div>
+                </div>
+                <div class="col-md-12 justify-content-start">
+                    <a href="{{route('service-history', ['id' => $data->id])}}"><span class="my-buttons">電話受付履歴</span></a>
+                    &nbsp/&nbsp
+                    <a href="{{route('edit-service', ['id' => $data->id])}}"><span class="my-buttons">更新・編集</span></a>
+                    <hr style="height:1px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />
+                </div>
             @endforeach
         </div>
     </div>
     <br/>
     <br/>
     <br/>
-
     <div class="w3-container">
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                 <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
                     <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
-                        
                     </div>
-    
-                
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
                 <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red buttons btn-size">Ok</button>
             </div>

@@ -161,7 +161,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 @stop
 
-
 @section('content')
 <div class=" row">
     <div class="col-md-2"></div>
@@ -229,27 +228,14 @@
                             @else
                                 <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important; color:white">🚫 電話予約する</button>
                             @endif
-                            {{-- @if($service->free_min != 0 && $service->free_mint_iteration != 0)
-                                <div class="mt-2">
-                                    <span class="span-font-size-after-login" style="color: gray;">無料通話回数 {{$service->free_mint_iteration}} 回（毎回 {{$service->free_min}} 分）  </span>
-                                </div>
-                            @endif --}}
+
                             <div class="after-login-br" style="height: 30px; text-align: right"><br class="before-login-br"></div>
-                            @if($service->seller_id == Auth::user()->id)
-                                <div style="width: 100%; text-align: right">
-                                    <a href="{{route('service-history', ['id' => $service->id])}}"><span class="my-buttons">電話受付履歴</span></a>&nbsp;/&nbsp;<a href="{{route('edit-service', ['id' => $service->id])}}"><span class="my-buttons">更新・編集</span></a>
-                                </div>
-                                {{--<a href="{{route('service-history', ['id' => $service->id])}}"><button type="submit" class="button-before-login" >電話受付履歴</button></a>
-                                <div class="after-login-br" style="height: 30px"><br class="before-login-br"></div>
-                                <a href="{{route('edit-service', ['id' => $service->id])}}"><button type="submit" class="button-before-login" >更新/編集</button></a>--}}
-                            @else
+                            @if($service->seller_id != Auth::user()->id)
                                 <div>
                                     <button type="submit" onclick="show_conv({{Auth::user()->id}}, {{$service->createdBy->id}})" class="button-before-login" style="background-color: #84bdb8; color: white; border: 1px solid #84bdb8">メッセージをする</button>
                                 </div>
                             @endif
-                            
                         </div>
-
                     </div>
                 @else
                     <div class="col-md-5 text-center button_holder" >
