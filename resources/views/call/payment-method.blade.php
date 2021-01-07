@@ -37,8 +37,8 @@
                     <br/>
                     <br/>
                     <div class="col-md-12 text-center mb-3">
-                        <button id="button-of-no-worth" class="btn mr-5 buttons btn-size" style="width: 120px" disabled>送信</button>
-                        <a class="btn buttons btn-size" href="{{ url()->previous() }}" style="width: 120px; color: #7f9098 !important">キャンセル</a>
+                        <button id="button-of-no-worth" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%" disabled>送信</button>
+                        <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
                     </div>
                 <?php
                     } else {
@@ -47,14 +47,14 @@
                     <br/>
                     <br/>
                     <div class="col-md-12 text-center mb-3">
-                        <button id="send_payment" class="btn mr-5 buttons btn-size" style="width: 120px">送信</button>
-                        <a class="btn buttons btn-size" href="{{ url()->previous() }}" style="width: 120px; color: #7f9098 !important">キャンセル</a>
+                        <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%">送信</button>
+                        <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
                     </div>
                 <?php
                     }
                 ?>
             </div>
-            
+
         </div>
 
         <div class="col-md-12" style="display: none">
