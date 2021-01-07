@@ -82,7 +82,7 @@ class Chat{
 	onCall(data){
 		if(data.status == false){
 			this.closeCall();
-			alert('Your partners browser is not supported');
+			alert('お使いのブラウザはサポートされていません!');
 			return false;
 		}
 		if(navigator.mediaDevices == undefined){
@@ -99,7 +99,7 @@ class Chat{
 								},
 				'status' 		: false
 			});
-			alert('Your browser is not supported,please try another browser.');
+			alert('お使いのブラウザはサポートされていません!');
 			return false;
 		}
 		console.log(data);
@@ -117,7 +117,7 @@ class Chat{
 	}
 	call(data, type = 'dialing'){
 		if(navigator.mediaDevices == undefined){
-			alert('Your browser is not supported,please try another browser.');
+			alert('お使いのブラウザはサポートされていません!');
 			return false;
 		}
 		if(!this.isReady){
