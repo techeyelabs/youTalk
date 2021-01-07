@@ -107,7 +107,6 @@ class HomeController extends Controller
 
     public function contactUsAction(Request $request)
     {
-        //return $request->all();
         $this->validate($request, [
             'name' => 'required|max:25',
             'email' => 'required|email',

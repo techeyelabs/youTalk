@@ -26,7 +26,6 @@
     </style>
 @stop
 
-
 @section('content')
     <div class="col-md-12 alternates p-0" style="min-height: 850px">
         <div class="col-md-12 col-sm-12 p-0">
@@ -42,7 +41,7 @@
                                 <div class="form-group mb-0" >
                                     {{-- minimal_createservice form-control small-screen-input-width --}}
                                     <select class="custom-select" name="service_category" id="service_category" style="width: 45% !important; border: 1px solid #cecece;height:38px !important; border-radius:3px" onblur="removeAlert('service_category','service_category_error')" id="select-service-category-order" required>
-                                        <option value="">----------</option>
+                                        <option value="">選択してください</option>
                                         @foreach ($categories as $data)
                                             <option value="{{ $data->id }}" 
                                                 <?php 
@@ -55,14 +54,11 @@
                                                     {{ $data->cat_name }}
                                             </option>
                                         @endforeach
-                                       
                                     </select>
                                 </div>
                                 <div id="service_category_error" class="red_alerts"><span>カテゴリーを選択してください！</span></div>
                             </div>
-
                         </div><br>
-                        
                         <div class="col-md-12 row">
                             <div class="col-md-2"><span class="text-14">サービス名</span><br><span class="text-danger" style="font-size: 10px"> ＊必須</span></div>
                             <div class="col-md-10">
@@ -74,8 +70,22 @@
                         <div class="col-md-12 row">
                             <div class="col-md-2"><span class="text-14">通話料</span><br><span class="text-danger" style="font-size: 10px"> ＊必須</span></div>
                             <div class="col-md-10">
-                                <input type="text" class="small-screen-input-width input_box" style="width:45%; height:38px" id="price" name="price" value="{{isset($service_prev->price)?$service_prev->price:''}}" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" onblur="removeAlert('price','price_error')"/> 円 / 分
-                                <div id="price_error" class="red_alerts"><span>通話料入力してください！</span></div>
+                                <select class="custom-select" style="width:45% !important; height:38px!important;" id="price" name="price" onblur="removeAlert('price','price_error')"/>
+                                    <option value="">選択してください</option>
+                                    <option value="60">60</option>
+                                    <option value="80">80</option>
+                                    <option value="100">100</option>
+                                    <option value="120">120</option>
+                                    <option value="140">140</option>
+                                    <option value="160">160</option>
+                                    <option value="180">180</option>
+                                    <option value="200">200</option>
+                                    <option value="220">220</option>
+                                    <option value="240">240</option>
+                                    <option value="260">260</option>
+                                    <option value="280">280</option>
+                                    <option value="300">300</option>
+                                </select>  円 / 分
                             </div>
                         </div>
                         <br/>
@@ -131,11 +141,9 @@
                         <div class="col-md-6 text-md-left">
                             <a class="btn buttons btn-size" href="{{ url()->previous() }}" role="button" style="width: 120px">キャンセル</a>
                         </div>
-                        
                     </div>
                     <br/>
                     <br/>
-                
             </div>
         </div>
     </div>
@@ -143,8 +151,6 @@
     <br/>
     <br/>
 @stop
-
-
 
 @section('custom_js')
 <script src="{{Request::root()}}/ckeditor/ckeditor.js"></script>
@@ -215,13 +221,10 @@
                     $("#service_form").submit();
                 }
             }
-        }); 
-
-       
+        });
     });
 </script>
 <script>
-
     function removeAlert(b, a){
         error = document.getElementById(a);
         input_val = document.getElementById(b);
@@ -231,6 +234,4 @@
             error.style.display = "none";
     }
 </script>
-
-
 @stop

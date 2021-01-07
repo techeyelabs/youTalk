@@ -49,6 +49,7 @@ class ServiceController extends Controller
         ];
         return view('createservice', $data);
     }
+
     public function edit($id)
     {
         $user_id = Auth::user()->id;
@@ -64,36 +65,27 @@ class ServiceController extends Controller
         ];
         return view('createservice', $data);
     }
+
     public function userDisplay($id)
     {
         $service = Service::with('createdBy')->with('createdBy.profile')->with('faqs')->where('id', $id)->first();
 
-        
-        //$data['service'] = $service;
         if (isset(Auth::user()->id)){
             $user_id = Auth::user()->id;
             $prev = Profile::where('user_id', $user_id)->first();
         } else {
             $prev = '';
         }
-        
-        // $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $user_id)->first();
-        
-        // $service = Service::with('createdBy')->with('createdBy.profile')->with('faqs')->where('id', $id)->first();
-        // $data['service'] = $service;
-        // $data['personal'] = $personal;
-        // $data['profile'] = $prev;
-
         $reviews = Review::where('seller_id', $service->seller_id)->where('service_id', $id)->get();
         $avg_rating = Review::where('seller_id', $service->seller_id)->where('service_id', $id)->avg('rating');
         $avg_rating = number_format($avg_rating,1);
         $total_ratings = $reviews->count();
         //$service_in_talkroom = Talkroom::where('service_id', $id)->where('status', 2)->get()->count();
         $service_data = Service::find($id);
-        //return $service_data;
+
         $call_possible_seller = 0;
         $call_possible_buyer = 0;
-        //return $call_possible_buyer;
+
         if(isset(Auth::user()->id)){
             $user_id = Auth::user()->id;
             $call_possible_seller = Talkroom::where('status', 2)
@@ -116,9 +108,9 @@ class ServiceController extends Controller
             'call_possible_seller' =>$call_possible_seller,
             'call_possible_buyer' => $call_possible_buyer
         ];
-
         return view('service_details_user', $data);
     }
+
     public function userDisplaySelf($id)
     {
         $user_id = Auth::user()->id;
@@ -133,8 +125,6 @@ class ServiceController extends Controller
 
     public function newServicePost(Request $request)
     {
-        //return $request;
-        // dd($request);
         if(Auth::user()->id){
             if($request->edit_flag == 0){
                 if ($request->hasFile('thumbimg')) {
@@ -162,14 +152,8 @@ class ServiceController extends Controller
                 $ser->payment_instructions = $instruction;
                 $ser->status = 1;
                 $ser->save();
-    
-                // $faq = new Faq();
-                // $faq->user_id = Auth::user()->id;
-                // $faq->service_id = $ser->id;
-                // $faq->question = $request->qstn;
-                // $faq->ans = $request->ans;
-                // $faq->save();
-            } else {
+            }
+            else {
                 $name = '';
                 if ($request->hasFile('thumbimg')) {
                     $extension = $request->thumbimg->extension();
