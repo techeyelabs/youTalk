@@ -42,10 +42,13 @@ class ServiceController extends Controller
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $user_id)->first();
         $prev = Profile::where('user_id', $user_id)->first();
         $categories = Category::get();
+        $service = count(Service::where('seller_id', $user_id)->get());
+
         $data = [
             'personal' => $personal,
             'profile' => $prev,
-            'categories' => $categories
+            'categories' => $categories,
+            'serviceCount' => $service
         ];
         return view('createservice', $data);
     }

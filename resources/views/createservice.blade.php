@@ -27,29 +27,33 @@
 @stop
 
 @section('content')
-    <div class="col-md-12 alternates p-0" style="min-height: 850px">
+    @php
+        $flag = 0;
+    @endphp
+
+    <div class="col-md-12 alternates p-0">
         <div class="col-md-12 col-sm-12 p-0">
             <div class="col-md-12 p-0">
+                @if($serviceCount < 2)
                     <div class="col-md-12 text-center mb-3"><span class="text-16">相談できるサービスを入力</span></div>
                     <form id="service_form" action="{{route('new-service-post')}}" enctype="multipart/form-data" method="post">
-
                         {{ csrf_field() }}
                         <input type="hidden" value="{{isset($service_prev->id)?$service_prev->id: 0}}" id="edit_flag" name="edit_flag"/>
                         <div class="col-md-12 row">
-                            <div class="col-md-2"><span class="text-14">カテゴリー選択<span><br><span class="text-danger" style="font-size: 10px">＊必須</span></div>
+                            <div class="col-md-2"><span class="text-14">カテゴリー選択</span><br><span class="text-danger" style="font-size: 10px">＊必須</span></div>
                             <div class="col-md-10">
                                 <div class="form-group mb-0" >
                                     {{-- minimal_createservice form-control small-screen-input-width --}}
                                     <select class="custom-select" name="service_category" id="service_category" style="width: 45% !important; border: 1px solid #cecece;height:38px !important; border-radius:3px" onblur="removeAlert('service_category','service_category_error')" id="select-service-category-order" required>
                                         <option value="">選択してください</option>
                                         @foreach ($categories as $data)
-                                            <option value="{{ $data->id }}" 
-                                                <?php 
+                                            <option value="{{ $data->id }}"
+                                                <?php
                                                     if(isset($service_prev)){
                                                         if($data->id == $service_prev->category_id) {
                                                             echo 'selected="selected"';
                                                         }
-                                                    } 
+                                                    }
                                                 ?>>
                                                     {{ $data->cat_name }}
                                             </option>
@@ -144,12 +148,14 @@
                     </div>
                     <br/>
                     <br/>
+                @else
+                    <div class="row col-md-12 justify-content-center mt-5">
+                        <h4 style="color: red">最大2つまで作成できます。</h4>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
-    <br/>
-    <br/>
-    <br/>
 @stop
 
 @section('custom_js')
