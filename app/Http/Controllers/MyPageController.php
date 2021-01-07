@@ -147,13 +147,10 @@ class MyPageController extends Controller
         // gateway data preparation
         $id = Auth::user()->id;
         $amount = Wallet::where('user_id', $id)->first()->amount;
-        // dd($amount);
         $fromUser = User::select('email', 'name')->where('id', $id)->first();
         $email = $fromUser->email;
         $name = $fromUser->name;
         $TransactionId = 'YT-'.time().'-'.mt_rand(1000, 9999).'-BL';
-        
-
 
         // Regular 
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
@@ -231,18 +228,6 @@ class MyPageController extends Controller
    
     public function addwalletaction(Request $request)
     {
-        // $user = User::where('id', Auth::user()->id)->first();
-        // $user->wallet_balance = $user->wallet_balance + $request->amount;
-        // $user->save();
-
-        // $wallet = new Wallet();
-        // $wallet->user_id = Auth::user()->id;
-        // $wallet->service_id = 0;
-        // $wallet->expense_type = 3;
-        // $wallet->amount = $request->amount;
-        // $wallet->save();
-        // return redirect()->route('my-wallet');
-
         $method = $request->method + 1;
         if($method == 3){
             $newpen = new PendingBankDeposit();
@@ -252,58 +237,10 @@ class MyPageController extends Controller
             $newpen->save();
 
             $user = User::find(Auth::user()->id);
-
-            // $emailData = [
-            //     'subject' => '【ココテル】ポイント購入振込先のお知らせ',
-            //     'from_email' => 'info@coco-tel.biz',
-            //     'from_name' => 'cocotel',
-            //     'amount' => $request->amount,
-            //     'template' => 'user.email.bankdeposit',
-            //     'root'     => $request->root()
-            // ];
-    
-            // Mail::to($user->email)
-            //     ->send(new Common($emailData));
-
-
-        } else if($method == 2){
-            // $y = date('Y');
-            // $m = date('m');
-            // $d = date('d');
-            // $h = date('H');
-            // $i = date('i');
-            // $s = date('s');
-            // $shopcode = $y.$m.$d.$h.$i.$s.rand(10, 1000);
-            // $user = User::find(Auth::user()->id);
-            // $data = [
-            //     'ShopId'        => 'j0026s001',
-            //     'Job'           => 'CAPTURE',
-            //     'Amount'        => $request->amount,
-            //     'ShopCode'      => $shopcode,
-            //     'RetUrl'        => 'https://coco-tel.com/addwallet-callback',
-            //     'CancelUrl'     => 'https://coco-tel.com/addwallet-cancel',
-            //     'Email'         => $user->email,
-            //     'Phone'         => isset($user->profile->phone)?$user->profile->phone:'No phone no provided',
-            //     'ItemType'      => 0,
-            //     'Item'          => $request->amount.'P'.'(¥'.$request->amount.')',
-            //     'ShopData1'     => Auth::user()->id,
-            // ];
-            // return view('personal.gateway', $data);
-            // $wallet_ex = new Wallet();
-            // $wallet_ex->user_id = Auth::user()->id;
-            // $wallet_ex->service_id = 0;
-            // $wallet_ex->expense_type = $method;
-            // $wallet_ex->amount = $request->amount;
-            // $wallet_ex->save();
-
-            // $user = User::find(Auth::user()->id);
-            // $user->wallet_balance = $user->wallet_balance + $request->amount;
-            // $user->save();
-
-            // return redirect()->route('my-wallet');
+        }
+        else if($method == 2){
             $depositor = Auth::user()->id;
             $Amount = $request->amount;
-            // $Result = $request->Result;
 
             $user = User::where('id', $depositor)->first();
             $user->wallet_balance = $user->wallet_balance + $Amount;
@@ -315,7 +252,6 @@ class MyPageController extends Controller
             $wallet->expense_type = 2;
             $wallet->amount = $Amount;
             $wallet->save();
-            // return redirect()->route('addwallet-callback');
         }
         return redirect()->route('my-wallet');
     }
@@ -355,7 +291,6 @@ class MyPageController extends Controller
         $user = User::find(Auth::user()->id);
         $user->earning_balance = $user->earning_balance - $request->amount;
         $user->save();
-
 
         $data = [
             'status' => 200
@@ -408,7 +343,7 @@ class MyPageController extends Controller
         $avg_rating = Review::where('seller_id', $user_id)->avg('rating');
         $avg_rating = number_format($avg_rating,1);
         $total_ratings = $reviews->count();
-        //return $avg_rating;
+
         $data = [
             'personal' => $personal,
             'profile_info' => $profile_info,
@@ -421,13 +356,11 @@ class MyPageController extends Controller
             'total_ratings' => $total_ratings,
             'completed_services' => $completed_services
         ];
-        // dd($personal);
         return view('userpage-profile', $data);
     }
 
     public function userFollow($seller_id)
     {
-        //return $seller_id;
         $id = Auth::user()->id;
         
         $seller = Follow::where('seller_id', $seller_id)->where('follower_id', $id)->first();
@@ -435,13 +368,14 @@ class MyPageController extends Controller
             $new = new Follow;
             $new->seller_id = $seller_id;
             $new->follower_id = $id;
-            // dd($new);
             $new->status = 2;
             $new->save();
-        }elseif($seller->status == 1){
+        }
+        elseif($seller->status == 1){
             $seller->status = 2;
             $seller->save();
-        }elseif($seller->status == 2){
+        }
+        elseif($seller->status == 2){
             $seller->status = 1;
             $seller->save();
         }
@@ -455,7 +389,6 @@ class MyPageController extends Controller
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $prev = Profile::where('user_id', $id)->first();
 
-        //return $prev;
         $data = [
             'profile' => $prev,
             'personal' => $personal
@@ -465,15 +398,13 @@ class MyPageController extends Controller
 
     public function profileEditAction(Request $request)
     {
-        //return $request;
-        // dd($request);
         if(Auth::user()->id){
             if ($request->hasFile('dp')) {
                 $extension = $request->dp->extension();
                 $name = time().rand(1000,9999).'.'.$extension;
                 $img = Image::make($request->dp);
                 $img->save(public_path().'/assets/user/'.$name);
-                // $path = $request->image->storeAs('products', $name);
+                $img->save(public_path().'/assets/user/'.$name);
             }
             if(isset($name)){
                 $profiledata = [
@@ -547,7 +478,6 @@ class MyPageController extends Controller
 
     public function sendMessage(Request $request)
     {
-        // dd($request);
         $sender_id = Auth::user()->id;
         $Message = new Chat();
         if($request->receiver >=0 ) 
@@ -569,7 +499,6 @@ class MyPageController extends Controller
                                             $query->where('receiver_id', $sender_id)
                                                   ->where('sender_id', 0);
                                         })->first();
-                                        //dd($top_message);
             if(!$top_message){
                 $chat_thread = new ChatThread();
                 $chat_thread->sender_id = $sender_id;
@@ -597,7 +526,6 @@ class MyPageController extends Controller
         $totalReservation = Reservation::where('reserver_id', $id)->where('status', 2)->count();
         $personal = User::select('id','email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $prev = Profile::where('user_id', $id)->first();
-        //$my_his = ServiceHistory::where('receiver_id', $id)->with('service')->with('seller')->get();
         $my_his = Talkroom::where('buyer_id', $id)->where('status', 1)->orderBy('id', 'desc')->get();
         
         $data = [

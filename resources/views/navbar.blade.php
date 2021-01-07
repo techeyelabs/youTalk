@@ -321,7 +321,7 @@
                                                 <span id="icon_badge_mobile" class="badge badge-danger badge-notify" style="border-radius: 50%; color:red; display:none; height: 14px; width: 14px; top: -6px; left: -6px">2</span>
                                                 
                                                 <div class="dropdown-menu dropdown-menu-right custom_pad">
-                                                  <a class="dropdown-item" style="font-size: 13px; color: white !important">{{Auth::user()->name}}</a>
+                                                  <a class="dropdown-item" style="font-size: 13px;">{{Auth::user()->name}}</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('my-page-profile')}}">マイページ</a><div class="dropdown-divider"></div>
                                                   <span id="badge_span_small" class="badge badge-pill badge-primary badge-noti badge_noti_mobile" style="float:right;margin-bottom:-10px;display: none">0</span> <!-- your badge -->
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('my-wallet')}}">マイウォレット</a>
@@ -345,16 +345,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        {{--<a class="log-reg-button" href="{{ route('sign-out') }}"><img src="{{Request::root()}}/assets/systemimg/sign-out.jpg" style="height: 30px; width: auto;"/></a>--}}
                                         <div class="expandableProfilePic">
-                                            {{-- <a class="log-reg-button" href="{{ route('my-wallet') }}"><img src="{{Request::root()}}/assets/systemimg/wallet-flat.png" style="height: 30px; width: 30px; border-radius: 50%"/></a>&nbsp;&nbsp;
-                                            <span id="badge_span" class="badge badge-pill badge-primary badge-noti" style="float:right;margin-bottom:-10px;display: none">0</span> <!-- your badge --> --}}
-                                            {{-- <a class="log-reg-button" href="{{ route('my-page-service') }}"><img src="{{Request::root()}}/assets/user/{{$profile->picture}}" style="height: 30px; width: 30px; border-radius: 50%"/></a> --}}
                                             <div class="btn-group">
-                                                {{--<a class="log-reg-button" href="{{ route('my-earning') }}"><img src="{{Request::root()}}/assets/systemimg/wallet-flat.png" style="height: 30px; width: 30px; border-radius: 50%"/></a>&nbsp;&nbsp;--}}
                                                 <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    
                                                     <img src="{{Request::root()}}/assets/user/{{$profile->picture}}" style="height: 35px; width: 35px; border-radius: 50%"/>
                                                 </a>
                                                 <span id="icon_badge" class="badge badge-danger badge-notify" style="border-radius: 50%; color:red; display:none; height: 14px; width: 14px; top: -6px; left: -6px">1</span>

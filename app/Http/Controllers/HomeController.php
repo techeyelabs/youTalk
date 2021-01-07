@@ -28,10 +28,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        // return view('home');
         $service_list = Service::where('status', 1)->with('createdBy')->with('createdBy.profile')->orderBy('id', 'desc')->get();
-        
-        // $reviews = Review::where()
+
         $data['service'] = $service_list;
         return view('top', $data);
     }
@@ -90,9 +88,6 @@ class HomeController extends Controller
             }
         }
 
-        //return $seller_status;
-
-        //return $ratingCount;
         $data = [
             'personal' => $personal,
             'wallet' => $wallet,
@@ -106,7 +101,7 @@ class HomeController extends Controller
             'ratingCountSeller' => $ratingCountSeller,
             'seller_status' => $seller_status
         ];
-        // dd($data['service']);
+
         return view('top', $data);
     }
 
@@ -127,6 +122,7 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success_message', 'Message successfull sent!');
     }
+
     public function serviceCategory(Request $request)
     {
         $service = Service::where('status', 1)->where('category_id', $request->id)->orderBy('created_at', 'desc')->get();
@@ -143,6 +139,7 @@ class HomeController extends Controller
         ];
         return view('top', $data);
     }
+
     public function search(Request $request)
     {
         $service_list = $this->service($request);
@@ -212,9 +209,10 @@ class HomeController extends Controller
             'ratingCountSeller' => $ratingCountSeller,
             'seller_status' => $seller_status
         ];
-        // dd( $data =['service']);
+
     	return view('top', $data);
     }
+
     private function service($request)
     {
         $data = Service::where('status', 1)
@@ -284,6 +282,7 @@ class HomeController extends Controller
         ];
         return view('stat-text', $data);
     }
+
     public function privacy()
     {
         $id = isset(Auth::user()->id)?Auth::user()->id: 0;
@@ -299,6 +298,7 @@ class HomeController extends Controller
         ];
         return view('stat-text', $data);
     }
+
     public function uguide()
     {
         $id = isset(Auth::user()->id)?Auth::user()->id: 0;
@@ -314,6 +314,7 @@ class HomeController extends Controller
         ];
         return view('law', $data);
     }
+
     public function terms()
     {
         $id = isset(Auth::user()->id)?Auth::user()->id: 0;
