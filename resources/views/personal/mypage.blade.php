@@ -12,46 +12,54 @@
             </div>
             @foreach($myServices as $data)
                 @php
-                    $countPending = 0;
-                    $countConfirmed = 0
+                   $countPending = 1;
+                   $countConfirmed = 1;
                 @endphp
-                <div class="col-md-12 row pl-3 pb-2 text-14" style="">
-                    <a class="anchorColor" href="{{route('user-display-service', ['id' => $data->id])}}"><span style="font-weight: bold">{{$data->title}}</span></a>
-                </div>
-                <div class="row col-md-12 pl-3 text-12">
-                    @foreach($data->reservation as $res)
-                        @if($res->status == 1)
-                            @php
-                                $countPending++
-                            @endphp
-                        @elseif($res->status == 2)
-                            @php
-                                $countConfirmed++
-                            @endphp
-                        @endif
-                    @endforeach
-                    <div class="col-md-8 p-0">
-                        @if($countPending > 0)
-                            <div style="" class="anchorColor" onclick="show_res_req({{$data->id}})">予約通知{{$countPending}}件</div>
-                        @else
-                            <div style="">予約通知{{$countPending}}件</div>
-                        @endif
+                @foreach($data->reservation as $res)
+                    @if($res->status == 1)
+                        @php
+                            $countPending++
+                        @endphp
+                    @elseif($res->status == 2)
+                        @php
+                            $countConfirmed++
+                        @endphp
+                    @endif
+                @endforeach
 
-                        @if($countConfirmed > 0)
-                            <div style="" class="anchorColor" onclick="show_accepted_res({{$data->id}})">電話受付予約{{$countConfirmed}}件</div>
-                        @else
-                            <div style="">電話受付予約{{$countConfirmed}}件</div>
-                        @endif
+                <div class="row col-md-12">
+                    <div class="col-md-3" style="padding-right: 0px!important;">
+                        <a class="anchorColor" href="{{route('user-display-service', ['id' => $data->id])}}">
+                            <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$data->thumbnail}}" style="max-width: 95%">
+                        </a>
                     </div>
-                    <div class="col-md-4 text-center p-0">
-                        <span style="font-size: 35px">{{$data->price}}</span><span>円 / 分</span>
+                    <div class="col-md-8 mt-3" style="padding-left: 0px!important;">
+                        <div class="row col-md-12">
+                            <a class="col-md-12 text-14" href="{{route('user-display-service', ['id' => $data->id])}}" style="font-weight: bold; padding-left: 0px!important;">{{$data->title}}</a>
+                            <div class="col-md-8 p-0">
+                                @if($countPending > 0)
+                                    <div style="" class="anchorColor" onclick="show_res_req({{$data->id}})">予約通知{{$countPending}}件</div>
+                                @else
+                                    <div style="">予約通知{{$countPending}}件</div>
+                                @endif
+
+                                @if($countConfirmed > 0)
+                                    <div style="" class="anchorColor" onclick="show_accepted_res({{$data->id}})">電話受付予約{{$countConfirmed}}件</div>
+                                @else
+                                    <div style="">電話受付予約{{$countConfirmed}}件</div>
+                                @endif
+                            </div>
+                            <div class="col-md-4 text-right p-0">
+                                <span style="font-size: 35px">{{$data->price}}</span><span>円 / 分</span>
+                            </div>
+                            <a href="{{route('service-history', ['id' => $data->id])}}"><span class="my-buttons">電話受付履歴</span></a>
+                            &nbsp/&nbsp
+                            <a href="{{route('edit-service', ['id' => $data->id])}}"><span class="my-buttons">更新・編集</span></a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12 justify-content-start">
-                    <a href="{{route('service-history', ['id' => $data->id])}}"><span class="my-buttons">電話受付履歴</span></a>
-                    &nbsp/&nbsp
-                    <a href="{{route('edit-service', ['id' => $data->id])}}"><span class="my-buttons">更新・編集</span></a>
-                    <hr style="height:1px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />
+                    <div class="col-md-12 justify-content-start">
+                        <hr style="height:1px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />
+                    </div>
                 </div>
             @endforeach
         </div>

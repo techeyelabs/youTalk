@@ -84,7 +84,6 @@ class ServiceController extends Controller
         $avg_rating = Review::where('seller_id', $service->seller_id)->where('service_id', $id)->avg('rating');
         $avg_rating = number_format($avg_rating,1);
         $total_ratings = $reviews->count();
-        //$service_in_talkroom = Talkroom::where('service_id', $id)->where('status', 2)->get()->count();
         $service_data = Service::find($id);
 
         $call_possible_seller = 0;
