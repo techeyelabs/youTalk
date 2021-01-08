@@ -1,7 +1,4 @@
 <!-- local styles -->
-
- 
-
 <div class="card mb-3">
     <div class="card-body">
         <div class="row">
@@ -63,7 +60,7 @@
                                 </div>
                             @elseif($s->seller_status == 1)
                                 <div class="mr-2"  >
-                                    <span class="text-success" style="border:1px solid #28a745;padding:3px">電話受付中</span>
+                                    <span class="text-success" style="border:1px solid #28a745;padding:3px">今すぐ電話可能</span>
                                 </div>
                             @else
                                 <div class="mr-2">
