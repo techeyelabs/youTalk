@@ -44,9 +44,6 @@
                         </select> 円
                     </div>
                     <br/>
-                    {{--<div>入金方法</div>
-                    <br/>
-                    <div>入金する方法を選択してください</div>--}}
                     <br/>
                     <div class="col-md-12 row text-center" style="display: none">
                         <table style="margin:0 auto">
@@ -96,8 +93,8 @@
                 <br/>
                 <button class="btn buttons btn-size white_buttons" id="deposit" style="background-color: white; border: gray">入金する</button>
                 <div class="mt-5">
-                    <div>銀行振込を行われた場合、メッセージでお知らせください。</div>
-                    <div>入金確認できましたらウォレットに追加されます。</div>
+                    <div> 一度の決済で最大２万ポイントまで購入可能です。</div>
+                    <div>１枚のカードで1日最大3回まで購入できます。</div>
                 </div>
             </div>
         </div>

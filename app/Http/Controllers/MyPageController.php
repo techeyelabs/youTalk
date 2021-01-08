@@ -326,8 +326,6 @@ class MyPageController extends Controller
         $follow =  Follow::where('seller_id', $user_id)->where('follower_id', $id)->first();
         $completed_services = Talkroom::where('seller_id', $user_id)->where('status', 1)->get()->count();
 
-        //return $follow_count;
-
         $services = Service::where('seller_id', $user_id)->get();
         $reviews = Review::where('seller_id', $user_id)->get();
         $avg_rating = Review::where('seller_id', $user_id)->avg('rating');
