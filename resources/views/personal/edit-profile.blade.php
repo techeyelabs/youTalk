@@ -4,11 +4,10 @@
 
 @stop
 
-
 @section('content')
     <div class="col-md-12 alternates" style="min-height: 850px">
         <div class="col-md-12 col-sm-12 p-0">
-            <div class="col-md-12 text-center mb-5 text-16"><b>プロフィール更新 / 編集</b></div>
+            <div class="col-md-12 text-center mb-5 text-16"><b>プロフィール編集</b></div>
             <form id="service_form" action="{{route('profile-edit-action')}}" enctype="multipart/form-data" method="post" style="width: 100%">
 
                 {{ csrf_field() }}
@@ -20,11 +19,6 @@
                     </div>
                 </div>
                 <br/>
-                <?php
-                    // echo '<pre>';
-                    // print_r($profile);
-                    // exit;
-                ?>
                 <div class="col-md-12 row">
                     <div class="col-md-2 text-14">氏名</div>
                     <div class="col-md-10">
@@ -176,7 +170,7 @@
                 <br/>
                 <div class="col-md-12 text-center row">
                     <div class="col-md-6 text-md-right mb-3 mb-md-0">
-                        <button type="submit" class="btn buttons btn-size white_buttons" style="color: black">更新する</button>
+                        <button type="submit" class="btn buttons btn-size white_buttons" style="color: black">編集する</button>
                     </div>
         
                     <div class="col-md-6 text-md-left">

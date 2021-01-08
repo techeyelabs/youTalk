@@ -312,14 +312,12 @@
                             @if(Auth::user())
                                 <td class="logo-td" style="padding-bottom: 16px !important">
                                     <div style="text-align: right;margin-top:5px !important">
-
                                         <div class="dd_vanish">
                                             <div class="btn-group">
                                                 <a class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <img src="{{Request::root()}}/assets/user/{{$profile->picture}}" style="height: 35px; width: 35px; border-radius: 50%"/>
                                                 </a>
                                                 <span id="icon_badge_mobile" class="badge badge-danger badge-notify" style="border-radius: 50%; color:red; display:none; height: 14px; width: 14px; top: -6px; left: -6px">2</span>
-                                                
                                                 <div class="dropdown-menu dropdown-menu-right custom_pad">
                                                   <a class="dropdown-item" style="font-size: 13px;">{{Auth::user()->name}}</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('my-page-profile')}}">マイページ</a><div class="dropdown-divider"></div>
@@ -339,7 +337,7 @@
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('user-message')}}">メッセージ
                                                     <span id="message_badge_mobile" class="badge badge-danger" style="border-radius: 50%;display:none; color:red; font-size: 8px; width: 13px; height: 13px; vertical-align: top">2</span>
                                                     </a><div class="dropdown-divider"></div>
-                                                  <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('profile-edit')}}">プロフィール更新</a>
+                                                  <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('profile-edit')}}">プロフィール編集</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('change-password')}}">パスワード変更</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('sign-out')}}">ログアウト</a>
                                                 </div>
@@ -370,7 +368,7 @@
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('user-message')}}">メッセージ
                                                     <span id="message_badge" class="badge badge-danger" style="border-radius: 50%; display:none; color:red; font-size: 8px; width: 13px; height: 13px; vertical-align: top">2</span>
                                                 </a><div class="dropdown-divider"></div>
-                                                  <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('profile-edit')}}">プロフィール更新</a>
+                                                  <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('profile-edit')}}">プロフィール編集</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('change-password')}}">パスワード変更</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('sign-out')}}">ログアウト</a>
                                                 </div>
