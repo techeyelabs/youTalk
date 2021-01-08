@@ -1,12 +1,7 @@
 @extends('navbar')
 
 @section('custom_css')
-
-<style>
-    
-    </style>
 @stop
-
 
 @section('content')
     
@@ -14,47 +9,50 @@
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 mb-5 pt-3" style="border: 1px solid #a2a2a280">
             <div class="mb-2 text-16"><span>電話通話内容</span></div>
-            <div class="p-2 text-14">
-                <div class="col-md-12 row pl-3" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">{{$service->title}}</a></div>
-                <div class="row pl-3">
-                    <div class="col-md-8 p-0">
-                        <div style="height: 30px;">無料通話回数{{$service->free_mint_iteration}}回（毎回{{$service->free_min}}分)</div>
-                        <div style=""><a class="anchorColor" href="{{route('user-page-profile', ['id' => $service->seller_id])}}">{{$service->createdBy->name}} {{$service->createdBy->last_name}}</a></div>
-                    </div>
-                
-                <div class="col-md-4 text-center p-0">
-                    <span style="font-size: 35px">{{$service->price}}</span><span> 円 / 分</span>
+            <div class="row col-md-12" style="padding-left: 0px!important;">
+                <div class="col-md-3" style="padding-right: 0px!important; padding-left: 0px!important;">
+                    <a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">
+                        <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$service->thumbnail}}" style="max-width: 95%">
+                    </a>
                 </div>
-                </div>  
+                <div class="col-md-9 p-2 text-14 mt-3" style="padding-left: 0px!important;">
+                    <div class="col-md-12 row pl-3" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">{{$service->title}}</a></div>
+                    <div class="row pl-3">
+                        <div class="col-md-8 p-0">
+                            <div style="height: 30px;">無料通話回数{{$service->free_mint_iteration}}回（毎回{{$service->free_min}}分)</div>
+                            <div style=""><a class="anchorColor" href="{{route('user-page-profile', ['id' => $service->seller_id])}}">{{$service->createdBy->name}} {{$service->createdBy->last_name}}</a></div>
+                        </div>
+                        <div class="col-md-4 text-center p-0">
+                            <span style="font-size: 35px">{{$service->price}}</span><span> 円 / 分</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br/>
-            <br/>
-            <div class="text-center">
+            <div class="text-center mt-5">
                 <?php 
                     if($available_mins == 0){
                 ?>  
-                    <div><span style="color: red">ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
-                    <br/>
-                    <br/>
-                    <div class="col-md-12 text-center mb-3">
-                        <button id="button-of-no-worth" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%" disabled>送信</button>
-                        <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
-                    </div>
+                <div><span style="color: red">ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
+                <br/>
+                <br/>
+                <div class="col-md-12 text-center mb-3">
+                    <button id="button-of-no-worth" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%" disabled>スタート</button>
+                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
+                </div>
                 <?php
                     } else {
                 ?>
-                    <div><span>ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
-                    <br/>
-                    <br/>
-                    <div class="col-md-12 text-center mb-3">
-                        <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%">送信</button>
-                        <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
-                    </div>
+                <div><span>ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
+                <br/>
+                <br/>
+                <div class="col-md-12 text-center mb-3">
+                    <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%">スタート</button>
+                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
+                </div>
                 <?php
                     }
                 ?>
             </div>
-
         </div>
 
         <div class="col-md-12" style="display: none">
