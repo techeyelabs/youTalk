@@ -1,9 +1,7 @@
 @extends('navbar')
 
 @section('content')
-
 <div class="mt-3" style="min-height: 850px">
-    
     <section class="auth_page_title">
             <div class="row">
                 <div class="col-12 alternates" style="max-width: 500px">
@@ -23,12 +21,10 @@
                                 </div>
                             @endif
                             @include('message')
-                            <form id="registration_form" class="form-horizontal" method="POST" action="{{route('user-register-action')}}">
+                            <form id="registration_form" class="form-horizontal" method="POST" action="{{route('user-register-action', $data['token'])}}">
                                 {{ csrf_field() }}
-
                                 <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                     <label for="first_name" class="control-label">氏名<span class="text-danger" style="font-size: 10px">＊必須</span></label>
-
                                     <div>
                                         <input id="first_name" type="text" class="form-control" name="first_name" placeholder="" value="{{ old('first_name') }}" maxlength="25">
                                         <span class="help-block text-danger" id="errors_name" style="display: none;font-size: 10px">名前を入力してください！</span>
@@ -39,10 +35,8 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="email" class="control-label">メールアドレス <span class="text-danger" style="font-size: 10px">＊必須</span></label>
-
                                     <div>
                                         <input id="email" type="email" class="form-control" name="email" placeholder="">
                                         <span class="help-block text-danger" id="errors_email_exists" style="display: none;font-size: 10px">メールアドレスはすでに存在します</span>
@@ -54,13 +48,13 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <label for="password" class="control-label">パスワード <span class="text-danger" style="font-size: 10px">＊必須</span><a href="#" data-toggle="tooltip" data-html="true" title="パスワードに使用できる文字列は下記になります。 <br> ・8文字以上のパスワード <br> ・英大文字：A～Z，#，@，\ <br> ・英小文字：a～z <br> ・数字：0～9"></a></label>
-
+                                    <label for="password" class="control-label">パスワード
+                                        <span class="text-danger" style="font-size: 10px">＊必須</span>
+                                        <a href="#" data-toggle="tooltip" data-html="true" title="パスワードに使用できる文字列は下記になります。 <br> ・8文字以上のパスワード <br> ・英大文字：A～Z，#，@，\ <br> ・英小文字：a～z <br> ・数字：0～9"></a>
+                                    </label>
                                     <div>
                                         <input id="password" type="password" class="form-control" placeholder=""  name="password" value="">
-                                        
                                         <span class="help-block text-danger" id="errors_pass" style="display: none;font-size: 10px">パスワードを入力してください！</span>
                                         @if ($errors->has('password'))
                                             <span class="help-block text-danger">
@@ -69,12 +63,8 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                     <label for="password_confirmation" class="control-label">パスワード確認 <span class="text-danger" style="font-size: 10px">＊必須</span></label>
-                                    {{-- パスワードの書式が間違えています。確認してください。 --}}
-                                    
-
                                     <div>
                                         <input id="password_confirmation" type="password" placeholder="" class="form-control" name="password_confirmation">
                                         <span class="help-block text-danger" id="missmatch_pass" style="display: none;font-size: 10px">パスワードの書式が間違えています。確認してください。</span>
@@ -86,38 +76,12 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <!-- <div class="col-md-12 text-center">
-
-                                        {{-- <a class="btn btn-link" href="{{ route('login') }}"> --}}
-                                            Login To Your Account
-                                        </a>
-                                    </div> -->
-                                    <!-- <div class="col-md-12">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div> -->
-                                </div>
                             </form>
                         </div>
-
                         <div class="col-md-12 text-center">
                             <button type="submit" class="btn buttons btn-size" id="submit" style="width: 120px">
                                 <b>登録</b>
                             </button>
-                        </div>
-                       
-                        <div class="col-12 part_2">
-                            <table style="width: 100%">
-                                {{--<tr>
-                                    <td style="width: 33.33%; padding-left: 25px; padding-right: 25px"><a href="{{route('front-facebook')}}" class="btn btn-primary btn-lg btn-block facebook" style="border-radius: 25px !important;"><i class="fa fa-facebook"></i></a></td>
-                                    <td style="width: 33.33%; padding-left: 25px; padding-right: 25px"><a href="{{route('front-google')}}" class="btn btn-danger btn-lg btn-block google" style="border-radius: 25px !important;"><i class="fa fa-google"></i></a></td>
-                                    <td style="width: 33.33%; padding-left: 25px; padding-right: 25px"><a href="{{route('front-twitter')}}" class="btn btn-info btn-lg btn-block twitter" style="border-radius: 25px !important;"><i class="fa fa-twitter"></i></a></td>
-                                </tr>--}}
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -129,7 +93,7 @@
 @section('custom_js')
     <script type="text/javascript">
         $(document).ready(function(){
-
+            console.log("hello");
             $('[data-toggle="tooltip"]').tooltip();
 
             var flag = 0;
@@ -145,7 +109,6 @@
                             'email': email
                     },
                     success: function(data){
-                        console.log(data);
                         emailTest(data);
                     },
                     complete: function (data) {    
@@ -168,11 +131,8 @@
             }
             });
 
-            
-
             $("#submit").click(function(){
-                
-                
+                console.log("submit button");
                 if($('#first_name').val() == '' || $('#first_name').val() == null){
                     flag = 1;
                     $('#errors_name').show();
@@ -201,117 +161,26 @@
                     $('#errors_pass_conf').hide();
                 }
 
-
-                if(flag == 0){
-                    if(confirm("こちらの内容でよろしいですか！")){
-                        $("#registration_form").submit();
+                function validPassword(password) {
+                    let errors = '';
+                    let flag = 0;
+                    if (password.length < 8 ) {
+                        errors = "パソワードが８文字以上にする必要です";
+                        flag = 1;
+                    }
+                    if(flag == 1) {
+                        $('#errors_pass').html(errors);
+                        return false;
+                    }
+                    if(flag == 0){
+                        if(confirm("こちらの内容でよろしいですか！")){
+                            $("#registration_form").submit();
+                        }
                     }
                 }
-            }); 
-                
-
-
-            // $(document).on('click', '#submit', function(){
-            //     var flag_all = 0;
-
-            //     var first_name = $('#first_name').val();
-            //     if(first_name == '' || first_name == null){
-            //         $('#errors_name').show();
-            //         flag_all = 1;
-            //     } else {
-            //         $('#errors_name').hide();
-            //     }
-                
-            //     var email = $('#email').val();
-            //     if(email == '' || email == null){
-            //         $('#errors_email').show();
-            //         flag_all = 1;
-            //     } else {
-            //         $('#errors_email').hide();
-            //     }
-
-            //     var pass = $('#password').val();
-            //     if(email == '' || email == null){
-            //         $('#errors_pass').show();
-            //         flag_all = 1;
-            //     } else {
-            //         $('#errors_pass').hide();
-            //     }
-
-            //     if(flag_all == 1)
-            //         return;
-                
-                
-
-
-
-            //     function validPassword(password) {
-            //         let errors = '';
-            //         let flag = 0;
-            //         //password < 8
-            //         if (password.length < 8 ) {
-            //             errors = "パソワードが８文字以上にする必要です";
-            //             flag = 1;
-            //         }
-            //         //password has number and chars
-            //         // else if (!password.match(/([a-zA-Z])/)) {
-            //         //         errors = "Passwords must contain at least one letter";
-            //         //         flag = 1;
-            //         // }
-            //         // else if (!password.match(/([0-9])/)) {
-            //         //     errors = "Passwords must contain at least one number";
-            //         //     flag = 1;
-            //         // }
-            //         // else if (!password.match(/([!,@,#,$,%,^,&,*,?,_,~])/)){
-            //         //     errors = "Passwords must contain at least one symbol";
-            //         //     flag = 1;
-            //         // }
-            //         // else if (!password.match(/([A-Z])/)) {
-            //         //     errors = "Passwords must contain at least one capitalized letter";
-            //         //     flag = 1;
-            //         // }
-            //         if(flag == 1) {
-            //             $('#errors_pass').html(errors);
-            //             return false;
-            //         }
-            //     }
-
-            //     function validName(name){
-            //         let errors = '';
-            //         let flag_name = 0;
-            //         if (name.length < 1 ) {
-            //             errors = "必須項目を入力してください！";
-            //             flag_name = 1;
-            //         }
-                  
-            //         if(flag_name == 1) {
-            //             $('#errors_name').html(errors);
-            //             return false;
-            //         }
-            //     }
-            //     function validEmail(mail){
-            //         let errors = '';
-            //         let flag_mail = 0;
-            //         if (mail.length < 1 ) {
-            //             errors = "必須項目を入力してください！";
-            //             flag_mail = 1;
-            //         }
-                  
-            //         if(flag_mail == 1) {
-            //             $('#errors_email').html(errors);
-            //             return false;
-            //         }
-            //     }
-
-            //     var password = $('#password').val();
-            //     var first_name = $('#first_name').val();
-            //     var mail = $('#email').val();
-            //     validPassword(password);
-            //     validName(first_name);
-            //     validEmail(mail);
-            // });
-
-
+                var password = $('#password').val();
+                validPassword(password);
+            });
         });
     </script>
 @endsection

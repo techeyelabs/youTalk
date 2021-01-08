@@ -380,7 +380,7 @@
                                 <td class="logo-td" style="padding-bottom: 16px !important">
                                     <div class="mobile_login" style="text-align: right; font-size:14px !important;margin-top:5px !important">
                                         <a class="log-reg-button" href="{{ route('user-login') }}">ログイン</a>&nbsp;/
-                                        <a class="log-reg-button" href="{{ route('user-register') }}">新規登録</a>
+                                        <a class="log-reg-button" href="{{ route('user-register-request') }}">新規登録</a>
                                     </div>
                                 </td>
                             @endif

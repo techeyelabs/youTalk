@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers;
 
+use http\Exception;
 use Illuminate\Http\Request;
 use App\Mail\Common;
 use App\Models\Profile;
@@ -84,8 +85,6 @@ class AuthController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
         }
 
-
-        // New user add
         $User = new User();
         $User->name = 'welcome user';
         $User->email = $request->email;
@@ -93,8 +92,6 @@ class AuthController extends Controller
         $User->register_token = time().rand(1000,9999);
         $User->save();
 
-       
-        // new profile add
         $pro = new Profile();
         $pro->picture = 'default.png';
         $pro->save();
@@ -111,45 +108,33 @@ class AuthController extends Controller
             'email'     => $request->email
         ];
 
-        Mail::to($request->email)
-            ->send(new Common($emailData));
-
+        try {
+            Mail::to($request->email)
+                ->send(new Common($emailData));
+        }
+        catch (Exception $e){
+        }
         return redirect()->back()->with('success_message', 'メールを送信しました。');
-
     }
 
     public function register(Request $request)
     {
-        // $token = $request->token;
-        // $data['user'] = User::where('register_token', $token)->first();
-        // if($data['user']){
-        //     return view('auth.register', $data);
-        // }
-        // abort(404);
-        return view('auth.register');
-
-    }
-
-    public function validateEmail(Request $request)
-    {
-        //dd($request);
-        $count = User::where('email', $request->email)->get()->count();
-        //dd($count);
-        return $count;
+        $token = $request->token;
+        $data['user'] = User::where('register_token', $token)->first();
+        $data['token'] = $token;
+        if($data['user']){
+            return view('auth.register', ['data'=>$data]);
+        }
+        abort(404);
     }
 
     public function registerAction(Request $request)
     {
-        //return $request->all();
-        //dd($request);
         $this->validate($request, [
             'first_name' => 'required|max:25',
-            'email' => 'required|email|unique:users',
-            'password' => ['required', 
-            'min:8',
-            'confirmed']
+            'email' => 'required|email',
+            'password' => ['required','min:8','confirmed']
         ],[
-            // 'password.regex'=> 'パスワードの書式が間違えています。確認してください。',
             'password.min' => 'パスワードは８文字以上にする必要があります',
             'password.confirmed' => 'パスワードの確認が一致しません'
         ]);
@@ -164,16 +149,12 @@ class AuthController extends Controller
         if(preg_match('/([0-9])/', $request->password)){
             $count++;
         }
-        //if(preg_match('/([!@#$%^&*])/', $request->password)){
-        //     $count++;
-        // }
+
         if($count < 2 || preg_match('/([!$%^&*]+)/', $request->password)){
             return redirect()->back()->withInput()->with('error_message', 'パスワードの書式が間違えています。確認してください。');
         }
-        // dd($count);
-        
-        //$User = User::where('register_token', $request->token)->first();
-        $User = new User();
+
+        $User = User::where('register_token', $request->token)->first();
         $User->name = $request->first_name;
         $User->last_name = isset($request->last_name)?$request->last_name:'';
         $User->email = $request->email;
@@ -183,15 +164,13 @@ class AuthController extends Controller
         $User->status = true;
         $User->save();
 
-         
-         $amount = new Wallet();
-         $amount->user_id = $User->id;
-         $amount->service_id = 0;
-         $amount->expense_type = 4;
-         $amount->amount = 0;
-         $amount->save();
-         
- 
+        $amount = new Wallet();
+        $amount->user_id = $User->id;
+        $amount->service_id = 0;
+        $amount->expense_type = 4;
+        $amount->amount = 0;
+        $amount->save();
+
         $image = 'default.png';
 
         $Profile = new Profile();
@@ -199,7 +178,6 @@ class AuthController extends Controller
         $Profile->picture = $image;
         $Profile->first_name = $request->first_name;;
         $Profile->save();
-
 
         $emailData = [
             'name' => $User->name.' '.$User->last_name,
@@ -211,11 +189,19 @@ class AuthController extends Controller
             'root'     => $request->root()
         ];
 
-        Mail::to($request->email)
-            ->send(new Common($emailData));
-
+        try {
+            Mail::to($request->email)
+                ->send(new Common($emailData));
+        }
+        catch (Exception $e){
+        }
         return redirect()->to(route('login'))->with('success_message', 'ご登録ありがとうございます！'.'<br/>'.' 下記よりログインして弊社サービスをご利用ください。');
+    }
 
+    public function validateEmail(Request $request)
+    {
+        $count = User::where('email', $request->email)->get()->count();
+        return $count;
     }
 
     public function changePassword(Request $request)

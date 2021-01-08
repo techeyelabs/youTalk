@@ -63,9 +63,12 @@ Route::get('/terms', 'HomeController@terms')->name('terms');
 Route::get('/register-request', 'AuthController@registerRequest')->name('user-register-request');
 Route::post('/register-request', 'AuthController@registerRequestAction')->name('user-register-request-action');
 
-Route::get('/register', 'AuthController@register')->name('user-register');
-Route::post('/register', 'AuthController@registerAction')->name('user-register-action');
+Route::get('/register/{token}', 'AuthController@register')->name('user-register');
+Route::post('/register/{token}', 'AuthController@registerAction')->name('user-register-action');
 Route::post('/email-validation', 'AuthController@validateEmail')->name('email-validation');
+
+Route::get('/register-request', 'AuthController@registerRequest')->name('user-register-request');
+Route::post('/register-request', 'AuthController@registerRequestAction')->name('user-register-request-action');
 
 Route::get('/login', 'AuthController@login')->name('user-login');
 Route::get('/service-login/{id}', 'AuthController@loginFromService')->name('service-login');
@@ -293,6 +296,5 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/accept-deposit','Admin\DepositController@acceptDeposit')->name('accept-deposit-request');
         Route::post('/reject-deposit','Admin\DepositController@rejectDeposit')->name('reject-deposit-request');
         Route::post('/add-amount','Admin\DepositController@addAmount')->name('add-amount');
-    
     });
 });
