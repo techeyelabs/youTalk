@@ -250,11 +250,8 @@ class ServiceController extends Controller
 
     public function postReserve(Request $request)
     {
-        // dd($request);
-        //return $request;
         $buyer = Auth::user()->id;
         $service = Service::where('id', $request->service_id)->first();
-        //return $seller_id;
         
         $card = new CardInfo();
         $card->card_name = $request->cardname;
@@ -265,7 +262,6 @@ class ServiceController extends Controller
         $card->buyer_id = $buyer;
         $card->save();
 
-
         $res = new Reservation();
         $res->service_id = $request->service_id;
         $res->seller_id = $service->seller_id;
@@ -274,7 +270,6 @@ class ServiceController extends Controller
         $res->status = 1;
         $res->completion_status = 1;
         $res->save();
-
 
         $d = str_split($request->d_1);
         $year = implode(array_slice($d, 0, 4));
@@ -333,9 +328,7 @@ class ServiceController extends Controller
             'profile_info' => $profile_info,
             'profile' => $profile_info,
         ];
-        // return view('personal.mypage-profile', $data);
         return redirect()->route('user-display-service', ['id' => $request->service_id]);
-
     }
 
     public function reservationList()
@@ -501,10 +494,8 @@ class ServiceController extends Controller
 
     public function getReservationRequest(Request $request)
     {
-      
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
-       // dd($time_slot);
       
         $s_id = $request->service_id;
         $reservation_req = Reservation::where('service_id', $s_id)->where('status', 1)->get();
@@ -630,6 +621,18 @@ class ServiceController extends Controller
             $reservation->status = 2;
             $reservation->save();
         }
+
+        $emailData = [
+            'buyer_name' => Auth::user()->name,
+            'subject' => '【YouTalk】電話予約確定のお知らせ！',
+            'from_email' => 'support@youtalk.tel',
+            'from_name' => 'YouTalk',
+            'template' => 'user.email.reservation_req_confirm',
+            'root'     => $request->root()
+        ];
+
+        Mail::to($service->createdBy->email)
+            ->send(new Common($emailData));
         return redirect()->back();
     }
 

@@ -122,14 +122,8 @@
         </div>
     </div>
 
-</div>    
-               
-           
-        
+</div>
 @stop
-
-
-
 @section('custom_js')
 
 <script>
@@ -137,7 +131,6 @@
         $("#send_payment").click(function(){
             var flag = 0;
             var hh = $("input[name='paymentOptions']:checked").val();
-            console.log(hh);
 
             if(hh == undefined){
                 flag = 1;
@@ -162,11 +155,7 @@
                     $('#cvc_error').show();
                 }
             }
-            
-            // if($('#description').val() == '' || $('#description').val() == null){
-            //     flag = 1;
-            //     $('#detail_error').show();
-            // }
+
             if(flag == 0){
                 if(confirm("こちらの内容でよろしいですか！")){
                     $("#send_payment").prop('disabled',true);
