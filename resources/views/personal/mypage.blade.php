@@ -33,9 +33,12 @@
                             <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$data->thumbnail}}" style="max-width: 95%">
                         </a>
                     </div>
-                    <div class="col-md-8 mt-3" style="padding-left: 0px!important;">
+                    <div class="col-md-8 mt-1" style="padding-left: 0px!important;">
                         <div class="row col-md-12">
                             <a class="col-md-12 text-14" href="{{route('user-display-service', ['id' => $data->id])}}" style="font-weight: bold; padding-left: 0px!important;">{{$data->title}}</a>
+                            @if($data->free_mint_iteration > 0)
+                                <div class="mb-2" style="font-size: 12px; height: auto;">お試し通話機能あり（開始から{{$data->free_min}}分までを{{$data->free_mint_iteration}}回無料）</div>
+                            @endif
                             <div class="col-md-8 p-0">
                                 @if($countPending > 0)
                                     <div style="" class="anchorColor" onclick="show_res_req({{$data->id}})">予約通知{{$countPending}}件</div>
@@ -52,9 +55,9 @@
                             <div class="col-md-4 text-right p-0">
                                 <span style="font-size: 35px">{{$data->price}}</span><span>円 / 分</span>
                             </div>
-                            <a href="{{route('service-history', ['id' => $data->id])}}"><span class="my-buttons">電話受付履歴</span></a>
-                            &nbsp/&nbsp
-                            <a href="{{route('edit-service', ['id' => $data->id])}}"><span class="my-buttons">更新・編集</span></a>
+                            <a href="{{route('service-history', ['id' => $data->id])}}" style="border: 2px solid #0000FF"><span class="my-buttons ml-1 mr-1">電話受付履歴</span></a>
+                            &nbsp &nbsp
+                            <a href="{{route('edit-service', ['id' => $data->id])}}" style="border: 2px solid #0000FF"><span class="my-buttons ml-1 mr-1">更新・編集</span></a>
                         </div>
                     </div>
                     <div class="col-md-12 justify-content-start">

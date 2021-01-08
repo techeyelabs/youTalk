@@ -19,7 +19,9 @@
                     <div class="col-md-12 row pl-3" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">{{$service->title}}</a></div>
                     <div class="row pl-3">
                         <div class="col-md-8 p-0">
-                            <div style="height: 30px;">無料通話回数{{$service->free_mint_iteration}}回（毎回{{$service->free_min}}分)</div>
+                            @if($service->free_mint_iteration > 0)
+                                <div style="height: 30px;">お試し通話機能あり（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
+                            @endif
                             <div style=""><a class="anchorColor" href="{{route('user-page-profile', ['id' => $service->seller_id])}}">{{$service->createdBy->name}} {{$service->createdBy->last_name}}</a></div>
                         </div>
                         <div class="col-md-4 text-center p-0">

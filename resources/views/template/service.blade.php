@@ -9,7 +9,9 @@
                 <div class="service_title"><a class="anchorColor" href="{{route('user-display-service', ['id'=>$s->id])}}"><h5 class="card-title">{{$s->title}}</h5></a></div>
                 <div class="row">
                     <div class="col-md-6 p-0">
-                        <div class="mb-2" style="font-size: 12px; height: auto;">無料通話回数{{$s->free_mint_iteration}}回（毎回{{$s->free_min}}分)</div>
+                        @if($s->free_mint_iteration > 0)
+                            <div class="mb-2" style="font-size: 12px; height: auto;">お試し通話機能あり（開始から{{$s->free_min}}分までを{{$s->free_mint_iteration}}回無料）</div>
+                        @endif
                         @if(isset(Auth::user()->id))
                             @if($s->seller_id == Auth::user()->id)
                                 <div class="mb-2 row col-md-10" style="font-size: 12px; height: auto;padding-left: 0px">
@@ -92,13 +94,8 @@
                                         <div class="stars-outer">
                                             <div class="stars-inner" style="width:{{$starPercentage}}"></div>
                                         </div>
-                                    {{-- <td>
-                                    </td> --}}
-                                                    {{-- <tr class="hotel_a">
-                                </tr> --}}
                                 <span>{{$ratings[$s->id]}}</span>
                                 <span>({{$ratingCount[$s->id]}})</span>
-
                             </div>
                         </div>
                     </div>

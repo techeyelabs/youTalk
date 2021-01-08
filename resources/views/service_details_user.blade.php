@@ -173,7 +173,9 @@
         <div class="col-md-12">
             <!-- title and buttons -->
             <div class="text-center title-before-login " style="font-size: 18px"><b>{{$service->title}}</b></div>
-            <div class="text-center description-before-login" style="font-size: 15px;">無料通話回数{{$service->free_mint_iteration}}回（毎回{{$service->free_min}}分)</div>
+            @if($service->free_mint_iteration > 0)
+                <div class="text-center description-before-login" style="font-size: 15px;">お試し通話機能あり（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
+            @endif
             @if(isset(Auth::user()->id))
                 @if($service->seller_id != Auth::user()->id)
                     <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}"><div class="text-center description-before-login anchorColor" style="font-size: 15px;">{{$service->createdBy->name}}{{$service->createdBy->last_name}}</div></a>
@@ -439,12 +441,10 @@
                                 <textarea class="form-control rounded-0" id="replying" name="reply" placeholder="コメントを書く．．" rows="10"></textarea>
                                 <div id="reply_error" style="font-size: 10px; color: red; display: none"><span>コメントを入力してください。</span></div>
                             </div>
-                            
                         </form>
-                            <div class="col-md-12 text-center">
-                                <button id="post_reply" class="btn buttons btn-size" style="margin-top: 10px">送信</button>
-                            </div>
-                        
+                        <div class="col-md-12 text-center">
+                            <button id="post_reply" class="btn buttons btn-size" style="margin-top: 10px">送信</button>
+                        </div>
                     </div>
                 </div>
             </div>
