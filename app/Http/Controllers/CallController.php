@@ -72,11 +72,8 @@ class CallController extends Controller
 
     public function paymentOption(Request $request)
     {
-        
-        //return $request;
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
-        
 
         $service_id = $request->service_id; //grab service id 
         $service = Service::where('id', $service_id)->first(); //fetch relevant service
@@ -228,11 +225,8 @@ class CallController extends Controller
         $prev = Profile::where('user_id', $id)->first();
         $wallet = Wallet::where('user_id', $id)->get();
 
-
-        $id = Auth::user()->id;
         $live_talkroom_seller = Talkroom::where('seller_id', $id)->where('status', 2)->get()->first();
         $live_talkroom_buyer = Talkroom::where('buyer_id', $id)->where('status', 2)->get()->first();
-        //return $live_talkroom_buyer;
 
         if(!$live_talkroom_seller && !$live_talkroom_buyer){
             return view('call.no-talkroom', [

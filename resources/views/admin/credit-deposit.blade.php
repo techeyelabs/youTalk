@@ -6,18 +6,13 @@
         <div class="col-mod-6 col-lg-6">
             <h3 class="box-title text-success m-b-0">Credit Deposit</h3>
             <p class="text-muted m-b-30">List of all credit deposits</p>
-        </div>        
-        {{-- <div class="col-mod-6 col-lg-6 ">
-            <a href="{{ route('send-mass-message') }}" class="waves-effect pull-right"><button class="btn btn-xs btn-info pull-right"><i class="fa fa-plus-circle"></i> Send New Message</button></a>
-        </div>     --}}
+        </div>
     </div>  
     <div class="clear"></div><hr/>
     <ul class="nav nav-tabs" style="margin-bottom: 40px">
-{{--        <li role="presentation"><a href="{{route('pending-deposit')}}">Bank Deposit</a></li>--}}
         <li role="presentation"><a href="{{route('direct-deposit')}}">Direct Deposit</a></li>
         <li role="presentation" class="active"><a href="{{route('credit-deposit')}}">Credit Deposit</a></li>
     </ul>
-
     <div class="table-responsive col-mod-12">
         <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
             <thead>
@@ -35,12 +30,12 @@
                         <td><a href="{{ route('user-details', ['user_id' => $data->user_id])}}"> {{ $data->user->name }} {{ $data->user->last_name }}</td>
                         <td>{{ $data->amount}}</td>
                         <td>{{ $data->created_at}}</td>
-
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+</div>
 @endsection
 
 @section('script')
@@ -98,9 +93,7 @@
 
   
     function doAjax(id) {
-
         var ajaxurl = "{{route('change-service-status')}}";
-
         $.ajax({
             url: ajaxurl,
             type: "POST",
@@ -122,9 +115,7 @@
             flag = 1;
             $('#'+errorId).show();
         }
-
         var amount = $("#" + selectorId).val();
-
         var ajaxurl = "{{route('accept-deposit-request')}}";
 
         if(flag == 0){
@@ -146,7 +137,6 @@
                 });
             }
         }
-
     }
 
     function rejectDeposit(did){

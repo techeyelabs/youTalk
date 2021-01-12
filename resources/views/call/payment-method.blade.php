@@ -113,15 +113,12 @@
                                 </div>
                             </div>
                         </div>
-                    </form> 
-
+                    </form>
                 </div> 
             </div>
             <div class="text-10" id="payment_error" style="color: red; display: none"><span>*決済方法を選択してください！</span></div>
-            
         </div>
     </div>
-
 </div>
 @stop
 @section('custom_js')
@@ -157,19 +154,15 @@
             }
 
             if(flag == 0){
-                if(confirm("こちらの内容でよろしいですか！")){
+                if(confirm("こちらの内容でよろしいですか！")){    //Are you sure you want this content?
                     $("#send_payment").prop('disabled',true);
                     $("#payment_form").submit();
                 } else {
                     $("#send_payment").prop('disabled',false);
                 }
             }
-        }); 
-
-        
-       
+        });
     });
-    
 </script>
 
 <script type="text/javascript">
@@ -184,10 +177,5 @@
             $('.to').datepicker('setStartDate', startDate);
         });
     });
-
 </script>
-
-
-
-
 @stop

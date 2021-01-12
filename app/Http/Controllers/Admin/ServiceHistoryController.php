@@ -8,9 +8,7 @@ use App\Models\Talkroom;
 class ServiceHistoryController extends Controller
 {
     public function index(){
-        
         $talkrooms = Talkroom::where('status', 1)->orderBy('created_at', 'desc')->get();
-        //return $service_histories;
         return view('admin.service-history')->with([
             'talkrooms' => $talkrooms
         ]);
@@ -18,7 +16,6 @@ class ServiceHistoryController extends Controller
 
     public function serviceDetails($id)
     {
-        //return $id;
         $talkroom = Talkroom::where('id', $id)->first();
         //return $talkroom;
         return view('admin.close-talkroom')->with([

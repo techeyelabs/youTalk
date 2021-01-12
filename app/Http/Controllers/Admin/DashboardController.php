@@ -233,16 +233,12 @@ class DashboardController extends Controller
     public function withdrawPointIndex()
     {
         $requests = WithdrawRequest::orderBy('status')->orderBy('created_at', 'desc')->get();
-        // $requests = WithdrawRequest::orderBy('status')->with('user')->orderBy('created_at', 'desc')->get();
-        // dd($requests);
-        //return $requests;
 
         $notif_off = WithdrawRequest::where('view_status', 1)->get();
         foreach($notif_off as $data){
             $data->view_status = 2;
             $data->save();
         }
-
         return view('admin.point-withdraw')->with([
             'withdraw_requests' => $requests
         ]);

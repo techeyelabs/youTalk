@@ -45,43 +45,29 @@
     </div>
 @endsection
 
-
 @section('script')
 <script type="text/javascript">
    $(document).ready(function(){
-            
         function updateWithdrawBadgeDashboard(){
-            
             var ajaxurl = "{{route('withdraw-notification-dashboard')}}";
-            console.log("hello pn");
             $.ajax({
                 url: ajaxurl,
                 type: "GET",
                 data: {
-                        '_token': "{{ csrf_token() }}"
+                    '_token': "{{ csrf_token() }}"
                 },
                 success: function(data){
-                        console.log("pnpn: "+data);
-                        //$data = $(data);
                     if(data > 0){
                         console.log("tktk2: "+data);
                         $('#withdraw_badge_dashboard').html("new");
                         $('#withdraw_badge_dashboard').show();
                     }
-                        
                 },
                 complete: function (data) {
-                        // Schedule the next
-                        
                 }
             }); 
         }
-
-        console.log("main admin");
         updateWithdrawBadgeDashboard();
-            
     });
-    
-    
 </script>
 @endsection

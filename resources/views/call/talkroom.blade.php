@@ -1,14 +1,9 @@
 @extends('navbar')
 
 @section('custom_css')
-    <style>
-        
-    </style>
 @stop
 
-
 @section('content')
-    
 <div class="col-md-12 alternates" style="min-height: 850px">
     <div class="col-md-12 col-sm-12" style="padding: 0px !important">
         <div class="col-md-12 mb-3 remove-pads">
@@ -90,7 +85,6 @@
                 <div class="user-wrapper p-0" id="messages" >
                 </div>
             </div>
-            
         </div>
 
         <div class="col-md-12 mb-5 mt-3 remove-pads">
@@ -110,8 +104,6 @@
                 <div class="col-md-1"></div>
             </div>
         </div>
-
-
     </div>
 
     <!-- MODAL -->
@@ -137,17 +129,10 @@
           </div>
         </div>
       </div>
-
-</div>    
-               
-           
+</div>
         
 @stop
-
-
-
 @section('custom_js')
-
 
 <script>
     // ajax setup form csrf token
@@ -179,8 +164,6 @@
             return true;
         });
     });
-    
-
 
     var auth_id = "{{ Auth::id() }}";
     var seller_id = "{{$talkroom->seller_id}}";
@@ -303,9 +286,6 @@
             scrollTop: $('.message-wrapper').get(0).scrollHeight
         },50);
     }
-
-    
-    
 </script>
 
 
@@ -323,8 +303,7 @@
         price: '{{$talkroom->service->price}}',
     };
     
-    
-    // document.getElementById('call').addEventListener('click', () => {
+
     function call_him(){
         var time_av = $('#limit').val();
         if(time_av != ''){
@@ -337,7 +316,6 @@
             pic: '',
             limit: time_av
         }
-        // chat.call(options);
         window.chat.call(options);
     };
 </script>
@@ -345,11 +323,6 @@
 <script>
     document.getElementById('start_call').addEventListener('click', () => {
         call_him();
-        // if($('#flag').val() == 0){
-        //     document.getElementById('id02').style.display='block';
-        // } else {
-        //     call_him();
-        // }
     });
 </script>
 

@@ -7,12 +7,6 @@ class Chat{
 		this.isReady = false;
 		this.options = options;
 
-		// if(id == null){
-		// 	console.error('please specify your id');
-		// 	return false;
-		// }
-		// this.id = id;
-
 		if(!options.hasOwnProperty('id')){
 			console.error('please specify your id');
 			return false;
@@ -33,6 +27,7 @@ class Chat{
 
 		this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js', this.init.bind(this));
 	}
+
 	loadScript(url, callback){
 	    var script = document.createElement("script")
 	    script.type = "text/javascript";
@@ -49,23 +44,25 @@ class Chat{
 	            callback();
 	        };
 	    }
-
 	    script.src = url;
 	    document.getElementsByTagName("head")[0].appendChild(script);
 	}
+
 	init(){
 		console.log('this is working');
 		this.socket = io(this.server);
 		this.initEvents();
 	}
+
 	initEvents(){
 		this.socket.on('connect', this.connect.bind(this));
 		this.socket.on('disconnect', this.disconnect.bind(this));
 		this.socket.on('call', this.onCall.bind(this));
 		this.socket.on('join', this.onJoin.bind(this));
 	}
+
 	connect(){
-		console.log('connected to the server');
+		//console.log('connected to the server');
 		// this.send('join', {
 		// 	'id'		: this.id,
 		// 	'name'		: this.name,
@@ -75,6 +72,7 @@ class Chat{
 			id: this.id
 		});
 	}
+
 	disconnect(){
 		this.isReady = false;
 		console.log('disconnected from server');
@@ -111,10 +109,12 @@ class Chat{
 		})
         a.click();
 	}
+
 	onJoin(data){
 		console.log('joined to the server');
 		this.isReady = true;
 	}
+
 	call(data, type = 'dialing'){
 		if(navigator.mediaDevices == undefined){
 			alert('お使いのブラウザはサポートされていません!');

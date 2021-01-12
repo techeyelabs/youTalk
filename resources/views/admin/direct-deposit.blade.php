@@ -4,29 +4,21 @@
 <div class="white-box">
     <div class="col-mod-12">
         <div class="col-mod-6 col-lg-6">
-                <h3 class="box-title text-success m-b-0">Direct Deposit</h3>
-                <p class="text-muted m-b-30">List of all direct deposits</p>
-        </div>        
-        {{-- <div class="col-mod-6 col-lg-6 ">
-            <a href="{{ route('send-mass-message') }}" class="waves-effect pull-right"><button class="btn btn-xs btn-info pull-right"><i class="fa fa-plus-circle"></i> Send New Message</button></a>
-        </div>     --}}
+            <h3 class="box-title text-success m-b-0">Direct Deposit</h3>
+            <p class="text-muted m-b-30">List of all direct deposits</p>
+        </div>
     </div>  
     <div class="clear"></div><hr/>
     <ul class="nav nav-tabs">
-{{--        <li role="presentation"><a href="{{route('pending-deposit')}}">Bank Deposit</a></li>--}}
         <li role="presentation" class="active"><a href="{{route('direct-deposit')}}">Direct Deposit</a></li>
         <li role="presentation"><a href="{{route('credit-deposit')}}">Credit Deposit</a></li>
     </ul>
-
     <div class="table-responsive col-mod-12">
         <div class="col-sm-12 text-center" style="margin-top: 40px">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <form action="{{route('add-amount')}}" method="post">
                     {{ csrf_field() }}
-                    {{-- <div class="form-group">
-                        <div><input type="email" class="form-control" name="email" placeholder="email" required></div>
-                    </div> --}}
                     <select class="form-control" tabindex="1" name="id" style="margin-bottom: 10px" required>
                         <option value="">--Select Email --</option>
                         @foreach($users as $data)
@@ -43,7 +35,6 @@
                 </form>
             </div>
             <div class="col-sm-4"></div>
-            
         </div>
         <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
             <thead>
@@ -67,6 +58,7 @@
             </tbody>
         </table>
     </div>
+</div>
 @endsection
 
 @section('script')
@@ -122,11 +114,8 @@
         $('[data-toggle="tooltip"]').tooltip(); 
     });
 
-  
     function doAjax(id) {
-
         var ajaxurl = "{{route('change-service-status')}}";
-
         $.ajax({
             url: ajaxurl,
             type: "POST",

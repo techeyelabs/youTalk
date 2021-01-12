@@ -4,8 +4,8 @@
 <div class="white-box">
     <div class="col-mod-12">
         <div class="col-mod-6 col-lg-6">
-                <h3 class="box-title text-success m-b-0">Service Category </h3>
-                <p class="text-muted m-b-30">Create New Service Category</p>
+            <h3 class="box-title text-success m-b-0">Service Category </h3>
+            <p class="text-muted m-b-30">Create New Service Category</p>
         </div>        
         <div class="col-mod-6 col-lg-6 ">
             <a href="{{ route('service-category-list') }}" class="waves-effect pull-right"><button class="btn btn-xs btn-info "><i class="fa fa-arrow-circle-left"></i> Service Category List</button></a>
@@ -13,7 +13,6 @@
     </div>  
     <div class="clear"></div><hr/>
     <div class="panel-body">
-
         <form action="{{ route('post.service-category') }}" method="post">
             {{ csrf_field() }}
             <div class="form-body">
@@ -25,17 +24,13 @@
                             <label class="control-label">Category Name<span class="text-danger m-1-5">*</span></label>
                             <input type="text" id="category" class="form-control" placeholder="Service category" name="category" required=""> 
                         </div>
-                    </div> 
-                   
+                    </div>
                 </div>
-
                 <div class="form-actions">
                     <button type="submit" class="btn btn-success pull-right"> <i class="fa fa-check"></i> SAVE CATEGORY</button>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
     </div>
-</div>    
 </div>
 @endsection
