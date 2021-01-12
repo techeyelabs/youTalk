@@ -4,8 +4,8 @@
 <div class="white-box">
     <div class="col-mod-12">
         <div class="col-mod-6 col-lg-6">
-            <h3 class="box-title text-success m-b-0">Users</h3>
-            <p class="text-muted m-b-30">List of all Users</p>
+            <h3 class="box-title text-success m-b-0">Point Withdraw</h3>
+            <p class="text-muted m-b-30">List of all Requests</p>
         </div>
     </div>  
     <div class="clear"></div><hr/>
