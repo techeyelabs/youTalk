@@ -170,25 +170,30 @@
     <div class="col-md-2"></div>
 </div>
     <div class="col-md-12 alternates px-0 remove-pads" style="min-height: 850px">
-        <div class="col-md-12">
-            <!-- title and buttons -->
-            <div class="text-center title-before-login " style="font-size: 18px"><b>{{$service->title}}</b></div>
-            @if($service->free_mint_iteration > 0)
-                <div class="text-center description-before-login" style="font-size: 15px;">お試し通話機能あり（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
-            @endif
-            @if(isset(Auth::user()->id))
-                @if($service->seller_id != Auth::user()->id)
-                    <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}"><div class="text-center description-before-login anchorColor" style="font-size: 15px;">{{$service->createdBy->name}}{{$service->createdBy->last_name}}</div></a>
+        <div class="row col-md-12">
+            <div class="col-md-8">
+                <div class="text-center title-before-login " style="font-size: 18px"><b>{{$service->title}}</b></div>
+                @if($service->free_mint_iteration > 0)
+                    <div class="text-center description-before-login" style="font-size: 15px;">お試し通話機能あり（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
                 @endif
-            @endif
+            </div>
+            <div class="col-md-4 justify-content-end">
+                @if(isset(Auth::user()->id))
+                    @if($service->seller_id != Auth::user()->id)
+                        <div class="text-right description-before-login anchorColor" style="font-size: 15px;">
+                            <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}">
+                                {{$service->createdBy->name}}{{$service->createdBy->last_name}}
+                                <img src="{{Request::root()}}/assets/user/{{$service->createdBy->profile->picture}}" style="height: 35px; width: 35px; border-radius: 50%"/>
+                            </a>
+                        </div>
+                    @endif
+                @endif
+            </div>
         </div>
         <div class="col-md-12 px-0">
             <div class="row col-md-12 mt-4 align-items-end">
                 <div class="col-xs-12 col-lg-6 text-lg-left text-center">
-                    {{-- <div class="text-center frame">
-                    </div> --}}
                     <img class="img-thumbnail thumb profile-image" src="{{Request::root()}}/assets/service/{{$service->thumbnail}}">
-
                 </div>
                 @if(isset(Auth::user()->id))
                     <div class="col-xs-12 col-lg-6">

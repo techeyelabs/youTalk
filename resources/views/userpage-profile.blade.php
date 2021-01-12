@@ -2,7 +2,6 @@
 
 @section('custom_css')
     <style>
-
     .btn-style{
         height: 100%;
         width: 80px;
@@ -64,17 +63,6 @@
 
 
 @section('content')
-    {{-- @include('template.mytop')
-    <div class="col-md-12 row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 text-right pr-5">
-            <form action="{{route('profile-edit')}}">
-                <button type="submit" class="buttons" style="background-color: #7BB3AE !important">プロフィール更新 / 編集</button>
-            </form>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
-    <br/> --}}
     <div class="col-md-12 row remove-pads" style="min-height: 850px">
         {{-- <div class="col-md-2"></div> --}}
             <div class="col-md-12 mobile  alternates" >
@@ -106,11 +94,6 @@
                                             @if(Auth::user()->id != $profile_info->user_id)
                                                 @if(!$follow || $follow->status == 1)
                                                     <form action="{{route('follow', ['user_id' => $profile_info->user_id])}}"><button type="submit" class="btn-style">Follow</button></form>
-                                                    <?php
-                                                    // echo '<pre>';
-                                                    // print_r($profile_info->user_id);
-                                                    // exit;
-                                               ?>
                                                 @elseif($follow->status == 2)
                                                     <form action="{{route('follow', ['user_id' => $profile_info->user_id])}}"><button type="submit" class="btn-style" style="color: #EB7A79">Unfollow</button></form>
                                                    
