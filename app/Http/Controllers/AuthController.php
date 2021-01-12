@@ -266,10 +266,7 @@ class AuthController extends Controller
             return Redirect::route('login')->with('success_message', 'パスワードは正常に変更されました');
         }
         return redirect()->back()->with('error_message', '現在のパスワードが一致しません');
-
-
     }
-
 
     public function facebook(Request $request)
     {
@@ -322,9 +319,7 @@ class AuthController extends Controller
         // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
 
-
     }
-
 
     public function google(Request $request)
     {
@@ -378,7 +373,6 @@ class AuthController extends Controller
 
     }
 
-
     public function twitter(Request $request)
     {
         $redirectUrl = $request->root().'/twitter-action';
@@ -428,9 +422,7 @@ class AuthController extends Controller
         Auth::loginUsingId($userId, true);
         // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
-
     }
-
 
     public function yahoo(Request $request)
     {
@@ -476,14 +468,10 @@ class AuthController extends Controller
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Yahoo connected!');
         }
-
         Auth::loginUsingId($userId, true);
         // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
-
     }
-
-
 
     public function logout()
     {

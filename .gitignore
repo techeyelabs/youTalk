@@ -51,6 +51,17 @@ Thumbs.db
 *.zip
 *.gz
 
+#images
+*.jpg
+*.jpeg
+*.jpe
+*.gif
+*.svg
+*.png
+
+#pdf file
+*.pdf
+
 # ENV
 .env
 
