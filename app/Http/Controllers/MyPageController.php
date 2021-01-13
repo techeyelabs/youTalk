@@ -79,9 +79,7 @@ class MyPageController extends Controller
     public function messageNotification()
     {
         $user = Auth::user()->id;
-
         $new_chat = Chat::where('receiver_id', $user)->where('receive_status', 1)->get()->count();
-
         return $new_chat;
     }
 
@@ -474,7 +472,6 @@ class MyPageController extends Controller
         else
             $Message->receiver_id = $request->to_id;
         $Message->sender_id = $sender_id ;
-        // $Message->subject = $request->subject;
         if($request->message_text)
             $Message->message = $request->message_text;
         else
@@ -505,7 +502,6 @@ class MyPageController extends Controller
             $user->is_admin_checked = 1;
             $user->save();
         }
-
         return redirect()->back()->with('success', 'Message sent successfully');
     }
 
@@ -618,9 +614,7 @@ class MyPageController extends Controller
             'messages' => $threads,
             'profile' => $prev
         ];
-        // return view('user.read_message', $data);
-			return view('personal.mypage-chat', $data);
-
+        return view('personal.mypage-chat', $data);
     }
 
     public function indUnread(Request $request)

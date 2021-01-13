@@ -83,22 +83,8 @@ class DashboardController extends Controller
 
     public function messageIndex()
     {
-        // $arr = [];
-        // $arr = new \Illuminate\Database\Eloquent\Collection();
-        // $users = User::get();
-        // //$message = Chat::where('sender_id', 0)->orderBy('created_at', 'desc')->get();
-        // foreach($users as $user){
-        //     $message = Chat::where('sender_id', 0)->where('receiver_id', $user->id)->orderBy('created_at', 'desc')->first();
-        //     $arr->add($message);
-        // }
-        // $arr = $arr->sortByDesc('created_at');
-        // return $arr;
-
         $users = ChatThread::orderBy('updated_at', 'desc')->orderBy('created_at', 'desc')->get();
-        //return $users;
-        return view('admin.message-list')->with([
-            'users' => $users
-        ]);
+        return view('admin.message-list')->with(['users' => $users]);
     }
 
     public function showMessage($user_id)
@@ -246,7 +232,6 @@ class DashboardController extends Controller
 
     public function acceptWithdrawPoint($id)
     {
-        //return $id;
         $withdraw = WithdrawRequest::where('id', $id)->first();
         $withdraw->status = 2;
         $withdraw->save();
