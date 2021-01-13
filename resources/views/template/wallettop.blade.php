@@ -35,7 +35,7 @@
 <div class="col-md-12 row pt-5">
     <div class="col-md-2"></div>
     <div class="col-md-8 text-center" style="font-size: 16px">
-        <div>残高: {{$personal->wallet_balance}} P</div>
+        <div>残高: {{number_format($personal->wallet_balance)}} P</div>
         <div>&nbsp;</div>
     </div>
     <div class="col-md-2"></div>
