@@ -12,7 +12,7 @@
             <div class="row col-md-12" style="padding-left: 0px!important;">
                 <div class="col-md-3" style="padding-right: 0px!important; padding-left: 0px!important;">
                     <a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">
-                        <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$service->thumbnail}}" style="max-width: 95%">
+                        <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$service->thumbnail}}" style="object-fit: cover; width: 150px; height: 120px">
                     </a>
                 </div>
                 <div class="col-md-9 p-2 text-14 mt-3" style="padding-left: 0px!important;">
