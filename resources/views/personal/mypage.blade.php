@@ -55,9 +55,8 @@
                             <div class="col-md-4 text-right p-0">
                                 <span style="font-size: 35px">{{$data->price}}</span><span>円 / 分</span>
                             </div>
-                            <a href="{{route('service-history', ['id' => $data->id])}}" style="border: 2px solid #0000FF"><span class="my-buttons ml-1 mr-1">電話受付履歴</span></a>
-                            &nbsp &nbsp
-                            <a href="{{route('edit-service', ['id' => $data->id])}}" style="border: 2px solid #0000FF"><span class="my-buttons ml-1 mr-1">更新・編集</span></a>
+                            <form action="{{route('service-history', ['id' => $data->id])}}"><button class="my-white" style="font-size: 16px!important;">電話受付履歴</button></form>&nbsp &nbsp
+                            <form action="{{route('edit-service', ['id' => $data->id])}}"><button class="my-white" style="font-size: 16px!important;">更新・編集</button></form>
                         </div>
                     </div>
                     <div class="col-md-12 justify-content-start">
