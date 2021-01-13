@@ -30,7 +30,7 @@
                 <div class="row col-md-12">
                     <div class="col-md-3" style="padding-right: 0px!important;">
                         <a class="anchorColor" href="{{route('user-display-service', ['id' => $data->id])}}">
-                            <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$data->thumbnail}}" style="max-width: 95%">
+                            <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$data->thumbnail}}" style="object-fit: cover; width: 150px; height: 120px">
                         </a>
                     </div>
                     <div class="col-md-8 mt-1" style="padding-left: 0px!important;">
