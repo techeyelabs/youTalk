@@ -20,31 +20,23 @@
                         {{--<td>Date</td>--}}
                     </tr>
                 @foreach($messages as $th)
-                @if($th->other_side == 0)
-                    <tr onclick="show_conv({{Auth::user()->id}}, 0)">
-                        <td><img style="border-radius: 50%; height: 50px; width: 50px" src="{{Request::root().'/assets/systemimg/admin.png'}}"/></td>
-                        <td  style="width: 65%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle; text-align: left">
-                            <span id="{{$th->other_side}}" class="badge badge-pill badge-primary badge-noti" style="margin-bottom:-10px;display: none; margin-top: 0px !important">0</span>
-                            <span class="anchorColor">管理者メッセージ</span>
-                        </td>
-                        {{--<td  style="width: 42%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle"><span>{{$th->created_at}}</span></td>--}}
-                    </tr>
-                @endif
-                @endforeach
-                @foreach($messages as $th)
                     @if($th->other_side == 0)
-                    
+                        <tr onclick="show_conv({{Auth::user()->id}}, 0, '管理者')">
+                            <td><img style="border-radius: 50%; height: 50px; width: 50px" src="{{Request::root().'/assets/systemimg/admin.png'}}"/></td>
+                            <td  style="width: 65%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle; text-align: left">
+                                <span id="{{$th->other_side}}" class="badge badge-pill badge-primary badge-noti" style="margin-bottom:-10px;display: none; margin-top: 0px !important">0</span>
+                                <span class="anchorColor">管理者メッセージ</span>
+                            </td>
+                        </tr>
                     @else
-                        <tr onclick="show_conv({{Auth::user()->id}}, {{$th->other_side}})">
+                        <tr onclick="show_conv({{Auth::user()->id}}, {{$th->other_side}}, '{{$th->threads_all->name}}')">
                             <td style="width: 35%; text-align: center"><img style="border-radius: 50%; height: 50px; width: 50px;" src="{{Request::root().'/assets/user/'.$th->threads_all->profile->picture}}" >&nbsp;</td>
                             <td  style="width: 65%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle; text-align: left">
                                 <span id="{{$th->other_side}}" class="badge badge-pill badge-primary badge-noti" style="margin-bottom:-10px;display: none; margin-top: 0px !important">0</span>
                                 <span class="anchorColor">{{$th->threads_all->name}}</span>
                             </td>
-                            {{--<td  style="width: 42%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle"><span>{{$th->created_at}}</span></td>--}}
                         </tr>
-                    @endif 
-
+                    @endif
                 @endforeach
             </tbody>
             </table>
@@ -57,23 +49,23 @@
     <div class="w3-container">
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-            <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
-            <form class="w3-container" action="{{route('send-message')}}" method="post">
-                <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
-                  
-                </div>
-                <div style="padding: 20px">
-                    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-                    <input type="hidden" id="sender" name="sender"/>
-                    <input type="hidden" id="receiver" name="receiver"/>
-                    <textarea id="message_text" name="message_text" style="border: 1px solid #a8c2ce; width: 100%; border-radius: 10px; padding: 10px"></textarea>
-                </div>
-            </form>
-            <div class="button_div">
-                <button class="msg_send_button" id="sendmsg" onclick="send_msg()">send</button>
-                <button onclick="modalDisplayNone()" class="msg_send_button" style="background-color: #d23434" type="button">Cancel</button>
-            </div>
+                <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
+                <form class="w3-container" action="{{route('send-message')}}" method="post">
+                    <div class="modal-header" id="name"></div>
+                    <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
+                    </div>
+                    <div style="padding: 20px">
 
+                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+                        <input type="hidden" id="sender" name="sender"/>
+                        <input type="hidden" id="receiver" name="receiver"/>
+                        <textarea id="message_text" name="message_text" style="border: 1px solid #a8c2ce; width: 100%; border-radius: 10px; padding: 10px"></textarea>
+                    </div>
+                </form>
+                <div class="button_div">
+                    <button class="msg_send_button" id="sendmsg" onclick="send_msg()">Send</button>
+                    <button onclick="modalDisplayNone()" class="msg_send_button" style="background-color: #d23434" type="button">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
@@ -83,11 +75,12 @@
 
 @section('custom_js')
 <script>
-    function show_conv(id1, id2){
+    function show_conv(id1, id2, name){
         var from = id1;
         var to = id2;
         $('#sender').val(from);
 		$('#receiver').val(to);
+		$('#name').html(name);
         $('#conversation').html(' ');
         document.getElementById('id01').style.display='block';
     }
