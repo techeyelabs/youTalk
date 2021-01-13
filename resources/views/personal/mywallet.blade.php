@@ -30,7 +30,7 @@
                     @foreach($wallet as $w)
                         <tr>
                             <td class="index_cells">{{$w->created_at}}</td>
-                            <td class="table_cells">{{$w->amount}}</td>
+                            <td class="table_cells">{{number_format($w->amount)}}</td>
 {{--                            deposit table type column hide as all deposits are credit card deposit--}}
 {{--                            <td class="table_cells">--}}
 {{--                                <?php--}}
