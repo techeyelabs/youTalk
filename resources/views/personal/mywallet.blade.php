@@ -1,17 +1,6 @@
 @extends('navbar')
 
 @section('custom_css')
-    <style>
-        .my-white{
-            background-color: #ffffff;
-            border: 1px solid gray;
-            box-shadow: 2px 2px #b3b3b3;
-            color: gray;
-            border: 1px solid gray;
-            width: 140px;
-            border-radius: 5px;
-        }
-    </style>
 @stop
 
 @section('content')
