@@ -21,7 +21,7 @@
                                 </div>
                             @endif
                             @include('message')
-                            <form id="registration_form" class="form-horizontal" method="POST" action="{{route('user-register-action', $data['token'])}}">
+                            <form id="registration_form" class="form-horizontal" method="POST" action="{{route('user-register-action', $token)}}">
                                 {{ csrf_field() }}
                                 <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                     <label for="first_name" class="control-label">氏名<span class="text-danger" style="font-size: 10px">＊必須</span></label>
@@ -38,7 +38,7 @@
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="email" class="control-label">メールアドレス <span class="text-danger" style="font-size: 10px">＊必須</span></label>
                                     <div>
-                                        <input id="email" type="email" class="form-control" name="email" placeholder="">
+                                        <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" readonly>
                                         <span class="help-block text-danger" id="errors_email_exists" style="display: none;font-size: 10px">メールアドレスはすでに存在します</span>
                                         <span class="help-block text-danger" id="errors_email" style="display: none;font-size: 10px">メールアドレスを入力してください！</span>
                                         @if ($errors->has('email'))

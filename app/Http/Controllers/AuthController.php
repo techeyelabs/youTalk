@@ -33,7 +33,6 @@ class AuthController extends Controller
     }
 
     public function login(){
-        //return $id;
         if (Auth::user()){
             return redirect()->route('front-home');
         }
@@ -41,12 +40,10 @@ class AuthController extends Controller
     }
 
     public function loginFromService($id){
-        //return $id;
         return view('auth.login', ['service_id'=> $id]);
     }
     
     public function loginAction(Request $request){
-        //return $request;
         if (!Auth::attempt($request->only(['email', 'password']) )) {
             return redirect()->back()->with('error', 'Credentials do not match');
         }
@@ -55,7 +52,6 @@ class AuthController extends Controller
         }else{
             return Redirect::route('user-display-service', ['id'=> $request->service_id]);
         }
-        // return 'hi';
     }
 
     public function user_registration_rules(array $data)
@@ -123,7 +119,7 @@ class AuthController extends Controller
         $data['user'] = User::where('register_token', $token)->first();
         $data['token'] = $token;
         if($data['user']){
-            return view('auth.register', ['data'=>$data]);
+            return view('auth.register', $data);
         }
         abort(404);
     }
@@ -220,7 +216,6 @@ class AuthController extends Controller
  
     public function changePasswordAction(Request $request)
     {
-        // dd($request);
     	$this->validate($request, [
             'current_password' => 'required',
             // 'password' => 'required|confirmed'
@@ -271,7 +266,6 @@ class AuthController extends Controller
     public function facebook(Request $request)
     {
 		$redirectUrl = $request->root().'/facebook-action';
-				// $redirectUrl = 'https://crofun.jp/facebook-action';
         return Socialite::driver('facebook')->setScopes(['email'])->redirectUrl($redirectUrl)->redirect();
     }
 
@@ -304,19 +298,12 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-
-            // $this->updateProfile($User);
-
         }
-
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Facebook connected!');
         }
-
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
 
     }
@@ -331,7 +318,6 @@ class AuthController extends Controller
     {
         $redirectUrl = $request->root().'/google-action';
         $user = Socialite::driver('google')->redirectUrl($redirectUrl)->user();
-        // dd($user);
         $check = User::where('email', $user->email)->first();
         if($check){
             $check->google_id = $user->id;
@@ -357,20 +343,13 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-            // $this->updateProfile($User);
-
         }
-
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Google connected!');
         }
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
-
-
     }
 
     public function twitter(Request $request)
@@ -383,7 +362,6 @@ class AuthController extends Controller
     {
         $redirectUrl = $request->root().'/twitter-action';
         $user = Socialite::driver('twitter')->user();
-        // dd($user);
         $check = User::where('twitter_id', $user->id)->first();
         if($check){
             $check->twitter_id = $user->id;
@@ -409,18 +387,13 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-            // $this->updateProfile($User);
-
         }
-
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Twitter connected!');
         }
 
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
     }
 
@@ -434,7 +407,6 @@ class AuthController extends Controller
     {
         $redirectUrl = $request->root().'/yahoo-action';
         $user = Socialite::driver('yahoo')->user();
-        // dd($user);
         $check = User::where('email', $user->email)->first();
         if($check){
             $check->twitter_id = $user->id;
@@ -460,16 +432,12 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-            // $this->updateProfile($User);
-
         }
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Yahoo connected!');
         }
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
     }
 
