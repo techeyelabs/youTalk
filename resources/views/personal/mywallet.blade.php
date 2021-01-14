@@ -25,23 +25,11 @@
                     <tr>
                         <td class="index_cells" style="width: 45%">日付</td>
                         <td class="table_cells">ポイント</td>
-{{--                        <td class="table_cells">取引内容</td>--}}
                     </tr>
                     @foreach($wallet as $w)
                         <tr>
                             <td class="index_cells">{{$w->created_at}}</td>
                             <td class="table_cells">{{number_format($w->amount)}}</td>
-{{--                            deposit table type column hide as all deposits are credit card deposit--}}
-{{--                            <td class="table_cells">--}}
-{{--                                <?php--}}
-{{--                                    if($w->expense_type ==1)--}}
-{{--                                        echo '電話通話料';--}}
-{{--                                    else if($w->expense_type == 2)--}}
-{{--                                        echo 'クレジット入金';--}}
-{{--                                    else--}}
-{{--                                        echo '銀行振込';--}}
-{{--                                ?>--}}
-{{--                            </td>--}}
                         </tr>
                     @endforeach
                 </tbody>

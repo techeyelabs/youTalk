@@ -6,294 +6,272 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" type="text/css" href="{{Request::root()}}/assets/style.css">
         <link rel="stylesheet" type="text/css" href="{{Request::root()}}/assets/bootstrap-datepicker.css">
-        
-        {{-- <link href="{{Request::root()}}/assets/admin/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" /> --}}
-        {{-- <link href="{{Request::root()}}/admin/plugins/bower_components/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
-    <link href="{{Request::root()}}/admin/plugins/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
-    <link href="{{Request::root()}}/admin/plugins/bower_components/calendar/dist/fullcalendar.css" rel="stylesheet" />
-    <link href="{{Request::root()}}/css/bootstrap-datetimepicker.min.css" id="theme" rel="stylesheet"> --}}
-        
-    
-    
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-    {{-- <script src="{{Request::root()}}/assets/admin/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script> --}}
-    {{-- <script src="{{Request::root()}}/assets/admin/plugins/bower_components/timepicker/bootstrap-timepicker.min.js"></script>
-    <script src="{{Request::root()}}/assets/admin/plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <script src="{{Request::root()}}/assets/js/bootstrap-datetimepicker.min.js"></script> --}}
-    
-    <script src="{{Request::root()}}/assets/bootstrap-datepicker.js"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        
-    <style type="text/css">
-            @import "compass/css3";
-            .anchorColor:hover{
-                color: #D9D9D9 !important;
-            }
-            body{
-                font-size: 12px !important;
-                background-color: #f9f9f9;
-                color: black;
-            }
-            .anchorColor:hover{
-                color: #D9D9D9 !important;
-            }
 
-            .btn-no-border-radius{
-                border-radius: 0px !important;
-            }
-            .border-right{
-                border-right: 1px solid #ced4da;
-            }
-            .front_header{
-                padding-top: 10px;
-                padding-bottom: 10px;
-            }
-            .margin-top{
-                margin-top: 15px;
-            }
-            .bg-white{
-                background-color: #FFF;
-            }
-            .panel-auth{
-                padding: 10px;
-            }
-            .facebook{
-                background-color: #3B5997 !important;
-                border-radius: 0px !important;
-            }
-            .google{
-                background-color: #D34735 !important;
-                border-radius: 0px !important;
-            }
-            .twitter{
-                background-color: #3884B4 !important;
-                border-radius: 0px !important;
-            }
-            .auth_area{
-                background-color: #F1F1F1;
-            }
-            .front_header{
-                background-color: #ffffff;
-                padding-top: 20px;
-                padding-bottom: 20px;
-            }
-            .auth_page_title{
-                padding-top: 15px;
-                padding-bottom: 15px;
-            }
-            .auth_page_title h1{
-                font-size: 20px;
-            }
-            .auth_area{
-                padding-bottom: 100px;
-            }
-            .auth_form_area .area_auth{
-                padding-top: 50px;
-            }
-            .auth_form_area .area_auth .form-group{
-                margin-top: 20px;
-            }
-            .auth_form_area .part_1 h2, .part_2 h2{
-                font-size: 16px;
-            }
-            .part_2 h2{
-                margin-bottom: 30px;
-            }
-            .part_1, .part_2{
-                padding: 40px;
-                padding-top: 0px;
-            }
-            .btn-primary{
-                background-color: #618ca9;
-                border-color: #618ca9;
-            }
-            .auth_form_area .part_1{
-                position: relative;
-            }
-            .auth_form_area .part_1:after{
-                /* content: "";
-                display: block;
-                width: 1px;
-                height: 100%;
-                position: absolute;
-                right: 0px;
-                top:0px;
-                background-color: #C6C6C6; */
-            }
-            .area_auth{
-                padding-bottom: 50px !important;
-            }
-            .btn{
-                cursor: pointer;
-            }
-            .custom_pad{
-                line-height: 20px !important;
-                font-size: 13px !important;
-                font-weight: 800 !important;
-                top: 0px !important;
-            }
-            .badge-noti{
-                float: right !important;
-                margin-bottom: -6px !important;
-                margin-top: 12px !important;
-                margin-left: -10px !important;
-            }
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-            .badge_noti_mobile{
-                margin-left: 9px !important;
-                float: left !important;
-                margin-top: 0px !important;
-                border-radius: 50% !important
-            }
-            
-            .dropdown-menu {
-                width: 230px !important;
-                
-            }
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-            .buttons{
-                /* border: 1px solid #7f9098; */
-                border-radius: 4px;
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <script src="{{Request::root()}}/assets/bootstrap-datepicker.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <style type="text/css">
+                @import "compass/css3";
+                .anchorColor:hover{
+                    color: #D9D9D9 !important;
+                }
+                body{
+                    font-size: 12px !important;
+                    background-color: #f9f9f9;
+                    color: black;
+                }
+                .anchorColor:hover{
+                    color: #D9D9D9 !important;
+                }
+
+                .btn-no-border-radius{
+                    border-radius: 0px !important;
+                }
+                .border-right{
+                    border-right: 1px solid #ced4da;
+                }
+                .front_header{
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                }
+                .margin-top{
+                    margin-top: 15px;
+                }
+                .bg-white{
+                    background-color: #FFF;
+                }
+                .panel-auth{
+                    padding: 10px;
+                }
+                .facebook{
+                    background-color: #3B5997 !important;
+                    border-radius: 0px !important;
+                }
+                .google{
+                    background-color: #D34735 !important;
+                    border-radius: 0px !important;
+                }
+                .twitter{
+                    background-color: #3884B4 !important;
+                    border-radius: 0px !important;
+                }
+                .auth_area{
+                    background-color: #F1F1F1;
+                }
+                .front_header{
+                    background-color: #ffffff;
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                }
+                .auth_page_title{
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                }
+                .auth_page_title h1{
+                    font-size: 20px;
+                }
+                .auth_area{
+                    padding-bottom: 100px;
+                }
+                .auth_form_area .area_auth{
+                    padding-top: 50px;
+                }
+                .auth_form_area .area_auth .form-group{
+                    margin-top: 20px;
+                }
+                .auth_form_area .part_1 h2, .part_2 h2{
+                    font-size: 16px;
+                }
+                .part_2 h2{
+                    margin-bottom: 30px;
+                }
+                .part_1, .part_2{
+                    padding: 40px;
+                    padding-top: 0px;
+                }
+                .btn-primary{
+                    background-color: #618ca9;
+                    border-color: #618ca9;
+                }
+                .auth_form_area .part_1{
+                    position: relative;
+                }
+                .area_auth{
+                    padding-bottom: 50px !important;
+                }
+                .btn{
+                    cursor: pointer;
+                }
+                .custom_pad{
+                    line-height: 20px !important;
+                    font-size: 13px !important;
+                    font-weight: 800 !important;
+                    top: 0px !important;
+                }
+                .badge-noti{
+                    float: right !important;
+                    margin-bottom: -6px !important;
+                    margin-top: 12px !important;
+                    margin-left: -10px !important;
+                }
+
+                .badge_noti_mobile{
+                    margin-left: 9px !important;
+                    float: left !important;
+                    margin-top: 0px !important;
+                    border-radius: 50% !important
+                }
+
+                .dropdown-menu {
+                    width: 230px !important;
+
+                }
+
+                .buttons{
+                    /* border: 1px solid #7f9098; */
+                    border-radius: 4px;
+                    background-color: white;
+                    width: 190px;
+                    padding: 5px;
+                    box-shadow: 1px 1px 1px 1px #7f9098;
+                }
+                .mytabs{
+                    /* width: 33%; */
+                    text-align: center;
+                    /* border: 1px solid gray; */
+                    padding: 20px;
+                }
+                .table_cells{
+                    width: 23%;
+                    text-align: center;
+                    border: 1px solid;
+                    padding: 9px;
+                }
+                .index_cells{
+                    width: 8%;
+                    border: 1px solid;
+                    text-align: center;
+                }
+                td {
+                    vertical-align: top;
+                    border-bottom: 1px solid #eaeaea;
+                    padding: 10px
+                }
+                .btn-size{
+                    width: 80px;
+                    background-color: #FFFFFF;
+                    color: #7f9098;
+                }
+                .mobile_login{
+                    font-size: 10px!important;
+                }
+
+                .remove_border{
+                    border: none;
+                }
+
+                a:active{
+                    background-color: transparent !important;
+                }
+                button:focus {
+                    outline:0px !important;
+                    box-shadow: none !important;
+                    border: 1px solid gray
+                }
+                button {
+                    outline: none;
+                }
+
+                /* select box */
+                select {
+
+                /* styling */
                 background-color: white;
-                width: 190px;
-                padding: 5px;
-                box-shadow: 1px 1px 1px 1px #7f9098;
-            }
-            .mytabs{
-                /* width: 33%; */
-                text-align: center;
-                /* border: 1px solid gray; */
-                padding: 20px;
-            }
-            .table_cells{
-                width: 23%;
-                text-align: center;
-                border: 1px solid;
-                padding: 9px;
-            }
-            .index_cells{
-                width: 8%; 
-                border: 1px solid; 
-                text-align: center;
-            }
-            td {
-                vertical-align: top;
-                border-bottom: 1px solid #eaeaea;
-                padding: 10px
-            }
-            .btn-size{
-                width: 80px;
-                background-color: #FFFFFF;
-                color: #7f9098;
-            }
-            .mobile_login{
-                font-size: 10px!important;
-            }
-            
-            .remove_border{
-                border: none;
-            }
+                border: 1px solid #cecece;
+                border-radius: 4px;
+                display: inline-block;
+                font: inherit;
+                line-height: 24px;
+                padding: 0.5em 3.5em 0.5em 1em;
+                width: 100%;
 
-            a:active{
-                background-color: transparent !important;
-            }
-            button:focus { 
-                outline:0px !important; 
-                box-shadow: none !important;
-                border: 1px solid gray
-            }
-            button {
-                outline: none;
-            }
+                /* reset */
 
-            /* select box */
-            select {
-
-            /* styling */
-            background-color: white;
-            border: 1px solid #cecece;
-            border-radius: 4px;
-            display: inline-block;
-            font: inherit;
-            line-height: 24px;
-            padding: 0.5em 3.5em 0.5em 1em;
-            width: 100%;
-
-            /* reset */
-
-            margin: 0;      
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            }
+                margin: 0;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                }
 
 
-            /* arrows */
+                /* arrows */
 
-            select.minimal {
-                background-image:
-                linear-gradient(45deg, transparent 50%, gray 50%),
-                linear-gradient(135deg, gray 50%, transparent 50%),
-                linear-gradient(to right, #ccc, #ccc);
-                background-position:
-                calc(100% - 15px) calc(1em + 4px),
-                calc(100% - 10px) calc(1em + 4px),
-                calc(100% - 2.5em) 0.7em;
-                background-size:
-                5px 5px,
-                5px 5px,
-                1px 1.5em;
-                background-repeat: no-repeat;
-            }
+                select.minimal {
+                    background-image:
+                    linear-gradient(45deg, transparent 50%, gray 50%),
+                    linear-gradient(135deg, gray 50%, transparent 50%),
+                    linear-gradient(to right, #ccc, #ccc);
+                    background-position:
+                    calc(100% - 15px) calc(1em + 4px),
+                    calc(100% - 10px) calc(1em + 4px),
+                    calc(100% - 2.5em) 0.7em;
+                    background-size:
+                    5px 5px,
+                    5px 5px,
+                    1px 1.5em;
+                    background-repeat: no-repeat;
+                }
 
-            select:-moz-focusring {
-            color: transparent;
-            text-shadow: 0 0 0 #000;
-            }
+                select:-moz-focusring {
+                color: transparent;
+                text-shadow: 0 0 0 #000;
+                }
 
-            .badge-notify{
-                background:red;
-                position:relative;
-                top: -24px;
-                left: -12px;
-            }
+                .badge-notify{
+                    background:red;
+                    position:relative;
+                    top: -24px;
+                    left: -12px;
+                }
 
-            .badge{
-                font-size: 60%;
-            }
+                .badge{
+                    font-size: 60%;
+                }
 
-        </style>
-        @yield('custom_css')
+            </style>
+            @yield('custom_css')
 	</head>
 	<body >
         <div id="navbar" class="navigation_bar col-md-12 row mb-3 ">
@@ -435,48 +413,18 @@
             <?php }?>
         </script>
         <?php }?>
-        
 
-        
         @yield('custom_js')
-        
-
-        <!-- code added by tanvir | make calling system global for logged in users -->
-       
-
-        <script>
-        // //     var interval = 1000;
-        // //     function res_not_count(){
-        //         var ajaxurl = "{{route('reservation-notification-count')}}";
-        //         $.ajax({
-        //             url: ajaxurl,
-        //             type: "GET",
-        //             // data: {
-        //             //         '_token': "{{ csrf_token() }}",
-        //             //         'sender': sender,
-        //             //         'receiver': receiver, 
-        //             //         'message_text': message_text 
-        //             // },
-        //             success: function(data){
-        //                 console.log(data);
-        //                 $('#badge_span').html(data);
-        //                 $('#badge_span_small').html(data);
-        //                 if(data > 0){
-        //                     $('#badge_span').show();
-        //                     $('#badge_span_small').show();
-        //                 }
-        //                 setTimeout(send_msg, interval);
-        //             },
-        //         });
-        //     }
-        // </script>
         
         <script>
             $(document).ready(function(){
+                update_badge_talkroom();
+                update_badge_service();
+                update_badge_message();
+                update_badge_callhistory();
+
                 function update_badge_callhistory(){
-                
                     var ajaxurl = "{{route('callhistory-notification')}}";
-                    //console.log("hello");
                     $.ajax({
                         url: ajaxurl,
                         type: "GET",
@@ -485,29 +433,22 @@
                         },
                         success: function(data){
                             if(data > 0){
-                                //console.log(total);
-                                //$('#service_badge').html(total);
                                 $('#callhistory_badge').show();
-                                //$('#service_badge_mobile').html(total);
                                 $('#callhistory_badge_mobile').show();
 
                                 $('#icon_badge').show();
 
                                 $('#icon_badge_mobile').show();
                             }
-                                
                         },
                         complete: function (data) {
                                 // Schedule the next
-                                
                         }
                     }); 
                 }
 
                 function update_badge_service(){
-                
                     var ajaxurl = "{{route('service-notification')}}";
-                    //console.log("hello");
                     $.ajax({
                         url: ajaxurl,
                         type: "GET",
@@ -517,8 +458,6 @@
                         success: function(data){
                             if(data.countPending +  data.countConfirmed > 0){
                                 var total = data.countPending +  data.countConfirmed;
-                                //console.log(total);
-                                //$('#service_badge').html(total);
                                 $('#service_badge').show();
                                 //$('#service_badge_mobile').html(total);
                                 $('#service_badge_mobile').show();
@@ -527,21 +466,15 @@
 
                                 $('#icon_badge_mobile').show();
                             }
-                                
                         },
                         complete: function (data) {
                                 // Schedule the next
-                                
                         }
                     }); 
                 }
 
-            
-
                 function update_badge_message(){
-                    
                     var ajaxurl = "{{route('message-notification')}}";
-                    //console.log("hello");
                     $.ajax({
                         url: ajaxurl,
                         type: "GET",
@@ -549,31 +482,21 @@
                                 '_token': "{{ csrf_token() }}"
                         },
                         success: function(data){
-                            
                             if(data > 0){
-                                console.log(data);
-                                //$('#message_badge').html(data);
                                 $('#message_badge').show();
-                                //$('#message_badge_mobile').html(data);
                                 $('#message_badge_mobile').show();
-
                                 $('#icon_badge').show();
-
                                 $('#icon_badge_mobile').show();
                             }
-                                
                         },
                         complete: function (data) {
                                 // Schedule the next
-                                
                         }
                     }); 
                 }
 
                 function update_badge_talkroom(){
-                
                     var ajaxurl = "{{route('talkroom-notification')}}";
-                    console.log("hello tk");
                     $.ajax({
                         url: ajaxurl,
                         type: "GET",
@@ -601,23 +524,12 @@
                         },
                         complete: function (data) {
                                 // Schedule the next
-                                
                         }
                     }); 
                 }
-                //setTimeout(update_badge, 1000);
-                update_badge_talkroom();
-                update_badge_service();
-                update_badge_message();
-                update_badge_callhistory();
             });
-
-            // $(function() {
-            //     res_not_count();
-            // });
-            // setTimeout(send_msg, interval);
-            
         </script>
+
         <script type="text/javascript">
             function categoryChange(e){
                 var cat = e.value;
