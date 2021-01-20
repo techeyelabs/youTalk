@@ -50,8 +50,15 @@
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                 <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
+                <div class="row modal-header w3-light-grey">
+                    <div class="col-md-11">
+                        <h4 class="text-center" id="name"></h4>
+                    </div>
+                    <div class="col-md-1">
+                        <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button text-danger font-weight-bold">X</button>
+                    </div>
+                </div>
                 <form class="w3-container" action="{{route('send-message')}}" method="post">
-                    <div class="modal-header text-danger" id="name"></div>
                     <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
                     </div>
                     <div style="padding: 20px">
@@ -63,8 +70,10 @@
                     </div>
                 </form>
                 <div class="button_div">
-                    <button class="msg_send_button" id="sendmsg" onclick="send_msg()">Send</button>
-                    <button onclick="modalDisplayNone()" class="msg_send_button" style="background-color: #d23434" type="button">Cancel</button>
+                    <button class="msg_send_button" id="send_message" onclick="send_msg()">send</button>
+                </div>
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                    <h4></h4>
                 </div>
             </div>
         </div>
@@ -83,6 +92,13 @@
 		$('#name').html(name);
         $('#conversation').html(' ');
         document.getElementById('id01').style.display='block';
+    }
+
+    let modal = document.getElementById('id01');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
 

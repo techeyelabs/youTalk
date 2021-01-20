@@ -239,7 +239,7 @@
                             <div class="after-login-br" style="height: 30px; text-align: right"><br class="before-login-br"></div>
                             @if($service->seller_id != Auth::user()->id)
                                 <div>
-                                    <button type="submit" onclick="show_conv({{Auth::user()->id}}, {{$service->createdBy->id}}, '{{$service->createdBy->name}}')" class="button-before-login" style="background-color: #84bdb8; color: white; border: 1px solid #84bdb8">メッセージをする</button>
+                                    <button id="open-modal" type="submit" onclick="show_conv({{Auth::user()->id}}, {{$service->createdBy->id}}, '{{$service->createdBy->name}}')" class="button-before-login" style="background-color: #84bdb8; color: white; border: 1px solid #84bdb8">メッセージをする</button>
                                 </div>
                             @endif
                         </div>
@@ -409,8 +409,15 @@
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
             <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
+            <div class="row modal-header w3-light-grey">
+                <div class="col-md-11">
+                    <h4 class="text-center" id="name"></h4>
+                </div>
+                <div class="col-md-1">
+                    <button onclick="document.getElementById('id01').style.display='none'" id="close-modal" type="button" class="w3-button text-danger font-weight-bold">X</button>
+                </div>
+            </div>
             <form class="w3-container" action="{{route('send-message')}}" method="post">
-                <div class="modal-header text-danger" id="name"></div>
                 <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
                     <span></span>
                 </div>
@@ -421,10 +428,11 @@
                     <textarea id="message_text" name="message_text" style="border: 1px solid #a8c2ce; width: 100%; border-radius: 10px; padding: 10px"></textarea>
                 </div>
             </form>
-            <div class="button_div"><button class="msg_send_button" type="submit" id="send_message" onclick="send_msg()">send</button></div>
-
+            <div class="button_div">
+                <button class="msg_send_button" id="send_message" onclick="send_msg()">Send</button>
+            </div>
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+                <h4></h4>
             </div>
 
             </div>
@@ -465,11 +473,7 @@
 
 
 <script type="text/javascript">
-
     function replyButton(r_id){
-        //console.log("shiam");
-        //var review_id = $('#reply').attr('name');
-        console.log(r_id);
         $('#review').val(r_id);
     }
 
@@ -519,7 +523,14 @@
 		$('#receiver').val(to);
         $('#name').html(name);
       
-        document.getElementById('id01').style.display='block'
+        document.getElementById('id01').style.display='block';
+    }
+
+    let modal = document.getElementById('id01');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
 
@@ -528,7 +539,6 @@
     var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
     var flag = 0;
     function doAjax() {
-        console.log("here");
         var from = $('#sender').val();
         var to = $('#receiver').val();
 		
