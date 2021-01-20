@@ -453,10 +453,10 @@ class MyPageController extends Controller
         $html_text = '<table style="width: 100%;><tbody>';
         foreach($conv as $con){
             if($con->sender_id == $from)
-                {$html_text .= '<tr><td align="left" style="border: none !important"><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2;
+                {$html_text .= '<tr><td align="left" style="border: none !important"><span class="pl-2">'.$con->created_at.'</span><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2;
                 padding: 10px; text-align: left; font-size: 13px; background-color: #e8e8e8">'.nl2br($con->message).'</p></td></tr>';}
             else if($con->sender_id != $from)
-                {$html_text .= '<tr><td align="right" style="border: none !important"><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2; 
+                {$html_text .= '<tr><td align="right" style="border: none !important"><span class="pr-2">'.$con->created_at.'</span><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2; 
                 padding: 10px; text-align: left; font-size: 13px; background-color: #a8c2ce">'.nl2br($con->message).'</p></td></tr>';}
         }
         $html_text .= '</table></tbody>';
