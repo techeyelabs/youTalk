@@ -625,7 +625,7 @@ class ServiceController extends Controller
         }
 
         $emailData = [
-            'buyer_name' => Auth::user()->name,
+            'buyer_name' => $reservation->reserver->name,
             'subject' => '【YouTalk】電話予約確定のお知らせ！',
             'from_email' => 'support@youtalk.tel',
             'from_name' => 'YouTalk',
@@ -633,7 +633,7 @@ class ServiceController extends Controller
             'root'     => $request->root()
         ];
 
-        Mail::to($service->createdBy->email)
+        Mail::to($reservation->reserver->email)
             ->send(new Common($emailData));
         return redirect()->back();
     }
