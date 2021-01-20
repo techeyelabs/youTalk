@@ -239,7 +239,7 @@
                             <div class="after-login-br" style="height: 30px; text-align: right"><br class="before-login-br"></div>
                             @if($service->seller_id != Auth::user()->id)
                                 <div>
-                                    <button type="submit" onclick="show_conv({{Auth::user()->id}}, {{$service->createdBy->id}})" class="button-before-login" style="background-color: #84bdb8; color: white; border: 1px solid #84bdb8">メッセージをする</button>
+                                    <button type="submit" onclick="show_conv({{Auth::user()->id}}, {{$service->createdBy->id}}, '{{$service->createdBy->name}}')" class="button-before-login" style="background-color: #84bdb8; color: white; border: 1px solid #84bdb8">メッセージをする</button>
                                 </div>
                             @endif
                         </div>
@@ -410,6 +410,7 @@
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
             <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
             <form class="w3-container" action="{{route('send-message')}}" method="post">
+                <div class="modal-header text-danger" id="name"></div>
                 <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
                     <span></span>
                 </div>
@@ -511,11 +512,12 @@
 
 <!-- text chat -->
 <script>
-    function show_conv(id1, id2){
+    function show_conv(id1, id2, name){
         var from = id1;
         var to = id2;
         $('#sender').val(from);
 		$('#receiver').val(to);
+        $('#name').html(name);
       
         document.getElementById('id01').style.display='block'
     }

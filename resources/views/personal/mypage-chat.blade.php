@@ -51,7 +51,7 @@
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                 <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
                 <form class="w3-container" action="{{route('send-message')}}" method="post">
-                    <div class="modal-header" id="name"></div>
+                    <div class="modal-header text-danger" id="name"></div>
                     <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
                     </div>
                     <div style="padding: 20px">
