@@ -170,7 +170,7 @@
                 <br/>
                 <div class="col-md-12 text-center row">
                     <div class="col-md-6 text-md-right mb-3 mb-md-0">
-                        <button type="submit" class="btn buttons btn-size white_buttons" style="color: black">編集する</button>
+                        <button type="submit" class="btn buttons btn-size white_buttons" style="color: black">更新する</button>
                     </div>
         
                     <div class="col-md-6 text-md-left">
