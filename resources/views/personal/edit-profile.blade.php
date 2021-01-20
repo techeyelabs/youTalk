@@ -22,14 +22,14 @@
                 <div class="col-md-12 row">
                     <div class="col-md-2 text-14">氏名</div>
                     <div class="col-md-10">
-                        <input class="input-fields small-screen-input-width-profile" type="text" id="fname" name="fname" placeholder="{{$personal->name}}" readonly/>
+                        <input class="input-fields small-screen-input-width-profile" type="text" id="fname" name="fname" value="{{$personal->name}}"/>
                     </div>
                 </div>
                 <br/>
                 <div class="col-md-12 row">
                     <div class="col-md-2 text-14">メール</div>
                     <div class="col-md-10">
-                    <input class="input-fields small-screen-input-width-profile" type="text" id="email" name="email" placeholder="{{$personal->email}}" readonly/>
+                    <input class="input-fields small-screen-input-width-profile" type="text" id="email" name="email" style="color: #566573" value="{{$personal->email}}" readonly/>
                     </div>
                 </div>
                 <br/>

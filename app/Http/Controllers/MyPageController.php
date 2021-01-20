@@ -421,6 +421,7 @@ class MyPageController extends Controller
                 'note' =>isset($request->note)?$request->note:''
             ];
             $updateOrder = Profile::where('user_id', Auth::user()->id)->update($profiledata);
+            $updateOrder = User::where('id', Auth::user()->id)->update(array('name' => $request->fname));;
         } else {
             return redirect()->to(route('user-login'));
         }
