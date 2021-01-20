@@ -38,8 +38,8 @@
                 <br/>
                 <br/>
                 <div class="col-md-12 text-center mb-3">
-                    <button id="button-of-no-worth" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%" disabled>スタート</button>
-                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
+                    <button id="button-of-no-worth" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 200px; margin-right: 2%" disabled>出品者を呼び出します</button>
+                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
                 </div>
                 <?php
                     } else {
@@ -48,8 +48,8 @@
                 <br/>
                 <br/>
                 <div class="col-md-12 text-center mb-3">
-                    <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 110px; margin-right: 4%">スタート</button>
-                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 110px; margin-right: 4%; color: #7f9098 !important">キャンセル</a>
+                    <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 200px; margin-right: 2%">出品者を呼び出します</button>
+                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
                 </div>
                 <?php
                     }
