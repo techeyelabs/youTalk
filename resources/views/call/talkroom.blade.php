@@ -7,7 +7,14 @@
 <div class="col-md-12 alternates" style="min-height: 850px">
     <div class="col-md-12 col-sm-12" style="padding: 0px !important">
         <div class="col-md-12 mb-3 remove-pads">
-            <div class="mb-2"><span class="text-16">電話通話内容</span></div>
+            @if($talkroom->seller_id != Auth::user()->id)
+                <div class="text-center pb-2">
+                    <span class="text-16">出品者から電話がかかってきますので、この画面まましばらくお待ちください。</span>
+                </div>
+            @endif
+            <div class="mb-2">
+                <span class="text-16">電話通話内容</span>
+            </div>
             <div class="p-2 text-14" style="border: 2px solid rgba(158, 148, 148, 0.5)">
                 <div class="col-md-12 row" style="font-size: 14px"><a class="anchorColor" href="{{route('user-display-service', ['id' => $talkroom->service->id])}}"><h6>{{$talkroom->service->title}}</h6></a></div>
                 <div class="row pl-3">
@@ -22,7 +29,7 @@
             </div>  
         </div>
 
-        <div class="col-md-8 mb-5 text-14 remove-pads">
+        <div class="col-md-8 mb-3 text-14 remove-pads">
             <div class="p-2" style="border: 2px solid rgba(158, 148, 148, 0.5)">
                 <div class="" style="">
                     <table style="width: 100%">
@@ -58,6 +65,11 @@
                     </table>
                 </div> 
             </div>
+        </div>
+        <div class="col-md-8 mb-3 text-16 remove-pads">
+            <span>
+                ※別のアプリでマイクを利用している場合、正常に通話できない場合があります。<br>一度、アプリを終了してから再度おかけなおしください。
+            </span>
         </div>
 
         @if($talkroom->seller_id == Auth::user()->id)
