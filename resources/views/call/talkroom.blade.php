@@ -15,6 +15,11 @@
             <div class="mb-2">
                 <span class="text-16">電話通話内容</span>
             </div>
+            @if($talkroom->seller_id == Auth::user()->id)
+                <div class="pb-2">
+                    <span class="text-16">購入者： {{$talkroom->buyer->name}}様</span>
+                </div>
+            @endif
             <div class="p-2 text-14" style="border: 2px solid rgba(158, 148, 148, 0.5)">
                 <div class="col-md-12 row" style="font-size: 14px"><a class="anchorColor" href="{{route('user-display-service', ['id' => $talkroom->service->id])}}"><h6>{{$talkroom->service->title}}</h6></a></div>
                 <div class="row pl-3">
