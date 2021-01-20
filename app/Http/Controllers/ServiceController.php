@@ -132,16 +132,18 @@ class ServiceController extends Controller
             if($request->edit_flag == 0){
                 if ($request->hasFile('thumbimg')) {
                     $extension = $request->thumbimg->extension();
-                    $name = time().rand(1000,9999).'.'.$extension;
+                    $imgName = time().rand(1000,9999).'.'.$extension;
                     $img = Image::make($request->thumbimg);
-                    $img->save(public_path().'/assets/service/'.$name);
+                    $img->save(public_path().'/assets/service/'.$imgName);
                     // $path = $request->image->storeAs('products', $name);
+                }
+                else{
+                    $imgName = null;
                 }
                 $title = isset($request->title)?$request->title:'';
                 $price = isset($request->price)?$request->price:0;
                 $description = isset($request->description)?$request->description:'';
                 $instruction = isset($request->instructions)?$request->instructions:'';
-                $thunbimg = $name;
         
                 $ser = new Service();
                 $ser->category_id = $request->service_category;
@@ -150,7 +152,7 @@ class ServiceController extends Controller
                 $ser->price = $price;
                 $ser->free_min = isset($request->min)?$request->min:0;
                 $ser->free_mint_iteration = isset($request->times)?$request->times:0;
-                $ser->thumbnail = $thunbimg;
+                $ser->thumbnail = $imgName;
                 $ser->details = $description;
                 $ser->payment_instructions = $instruction;
                 $ser->status = 1;

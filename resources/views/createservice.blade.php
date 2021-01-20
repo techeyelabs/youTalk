@@ -38,7 +38,7 @@
                     <div class="col-md-12 text-center mb-3"><span class="text-16">相談できるサービスを入力</span></div>
                     <form id="service_form" action="{{route('new-service-post')}}" enctype="multipart/form-data" method="post">
                         {{ csrf_field() }}
-                        <input type="hidden" value="{{isset($service_prev->id)?$service_prev->id: 0}}" id="edit_flag" name="edit_flag"/>
+                        <input type="hidden" value="{{isset($service_prev->id) ? $service_prev->id: 0}}" id="edit_flag" name="edit_flag"/>
                         <div class="col-md-12 row">
                             <div class="col-md-2"><span class="text-14">カテゴリー選択</span><br><span class="text-danger" style="font-size: 10px">＊必須</span></div>
                             <div class="col-md-10">
@@ -104,15 +104,16 @@
                         </div>
                         <br/>
                         <div class="col-md-12 row">
-                            <div class="col-md-2"><span class="text-14">画像</span><br><span class="text-danger" style="font-size: 10px"> ＊必須</span></div>
+                            <div class="col-md-2">
+                                <span class="text-14">画像</span>
+                            </div>
                             <div class="col-md-10">
                                 @php
                                     $flag = 0;
                                 @endphp
                                 <div class="">
                                     <div>
-                                        <input type="file" id="thumbimg" name="thumbimg" onblur="removeAlert('thumbimg','image_error')"/>
-                                        <span style="color:red">(「画像サイズは2メガ以内にしてください！」)</span>
+                                        <input type="file" id="thumbimg" name="thumbimg" onblur="removeAlert('thumbimg','image_error')"/><br>
                                     </div>
                                     @if(isset($service_prev->thumbnail))
                                         <div class="mt-2" id="edit_img">
@@ -123,8 +124,11 @@
                                           $flag = 1;
                                         @endphp
                                     @endif
+                                    <div id="image_error" class="red_alerts">
+                                        <span class="text-10">画像アップロードしてください！</span>
+                                    </div>
+                                    <span style="color:red">(「画像サイズは2メガ以内にしてください！」)</span>
                                 </div>
-                                <div id="image_error" class="red_alerts"><span class="text-10">画像アップロードしてください！</span></div>
                             </div>
                         </div>
                         <br/>
@@ -198,7 +202,7 @@
                 flag = 1;
                 $('#price_error').show();
             }
-            if($('#thumbimg').val() == '' || $('#thumbimg').val() == null){
+            /*if($('#thumbimg').val() == '' || $('#thumbimg').val() == null){
                 if($('#edit_img').html() == ''){
                     flag = 1;
                     $('#image_error').show();
@@ -207,7 +211,7 @@
                     flag = 1;
                     $('#image_error').show();
                 }
-            }
+            }*/
             // if($('#instructions').val() == '' || $('#instructions').val() == null){
             //     flag = 1;
             //     $('#instruction_error').show();
