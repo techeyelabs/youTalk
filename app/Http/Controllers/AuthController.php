@@ -44,7 +44,7 @@ class AuthController extends Controller
     }
     
     public function loginAction(Request $request){
-        if (!Auth::attempt($request->only(['email', 'password']) )) {
+        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1])) {
             return redirect()->back()->with('error', 'Credentials do not match');
         }
         if($request->service_id == 0){
