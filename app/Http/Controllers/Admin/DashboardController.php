@@ -255,4 +255,15 @@ class DashboardController extends Controller
         $withdraw_notif = WithdrawRequest::where('view_status', 1)->get()->count();
         return $withdraw_notif; 
     }
+
+    public function systemFeeForUser(Request $request)
+    {
+        $fee = $request->input('systemFee');
+        $userId = $request->input('userId');
+        $profile = Profile::where('user_id', $userId)->first();
+        $profile->system_fee = $fee;
+        $profile->save();
+
+        return redirect()->back();
+    }
 }

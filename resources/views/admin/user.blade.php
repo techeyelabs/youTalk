@@ -16,9 +16,10 @@
                     <th >Created At</th>
                     <th >Name </th>
                     <th >Email</th>
-                    <th style="display: none">Action</th> 
                     <th >Deposit Balance</th>
                     <th >Income Balance</th>
+                    <th >System Fee</th>
+                    <th >Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,21 +28,31 @@
                     <td>{{ date('d-m-Y', strtotime($data->created_at)) }}</td>
                     <td><a href="{{route('user-details', ['id' => $data->id])}}">{{ $data->name }}</a></td>
                     <td>{{ $data->email }}</td>
-                    <td style="display: none">
+                    <td>{{ $data->wallet_balance }}</td>
+                    <td>{{ ($data->earning_balance > 0)? $data->earning_balance: 0}}</td>
+                    <td>
+                        @if(isset($data->profile))
+                            <form action="{{route("system-fee-update")}}" method="POST">
+                                <input type="number" name="systemFee" value="{{$data->profile->system_fee}}" style="max-width: 70px">
+                                <input type="hidden" name="userId" value="{{$data->id}}">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <button type="submit">Update</button>
+                            </form>
+                        @endif
+                    </td>
+                    <td>
                         @if($data->status == 1)
                             <button class="btn btn-danger" onclick="doAjax({{$data->id}})">disable</button>
                         @else
                             <button class="btn btn-success"  onclick="doAjax({{$data->id}})">enable</button>
                         @endif
 
-                        @if($data->is_admin_checked == 1)
+                        {{--@if($data->is_admin_checked == 1)
                             <a class="btn btn-info" href="{{route('show-messages', ['id' => $data->id])}}" style="color: white !important">chat <span class="badge" >new</span></a>
                         @else
                             <a class="btn btn-info" href="{{route('show-messages', ['id' => $data->id])}}" style="color: white !important">chat</a>
-                        @endif
+                        @endif--}}
                     </td>
-                    <td>{{ $data->wallet_balance }}</td>
-                    <td>{{ ($data->earning_balance > 0)? $data->earning_balance: 0}}</td>
                 </tr>
             @endforeach
             </tbody>

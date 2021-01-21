@@ -208,6 +208,8 @@ Route::group(['prefix' => 'admin'], function () {
     
         ])->name('change-user-status');
 
+        Route::post('system-fee-update', 'Admin\DashboardController@systemFeeForUser')->name('system-fee-update');
+
         Route::get('reservation-list', [
 
             'uses' => 'Admin\ReservationController@index'
