@@ -18,11 +18,13 @@
                 <div class="col-md-9 p-2 text-14 mt-3" style="padding-left: 0px!important;">
                     <div class="col-md-12 row pl-3" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">{{$service->title}}</a></div>
                     <div class="row pl-3">
-                        <div class="col-md-8 p-0">
+                        <div class="row col-md-8 p-0">
                             @if($service->free_mint_iteration > 0)
-                                <div style="height: 30px;">お試し通話機能あり（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
+                                <div class="row">
+                                    <div>お試し通話機能あり</div><div>（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
+                                </div>
                             @endif
-                            <div style=""><a class="anchorColor" href="{{route('user-page-profile', ['id' => $service->seller_id])}}">{{$service->createdBy->name}} {{$service->createdBy->last_name}}</a></div>
+                            <div class="row col-md-12 pl-0 mt-2"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $service->seller_id])}}">{{$service->createdBy->name}} {{$service->createdBy->last_name}}</a></div>
                         </div>
                         <div class="col-md-4 text-center p-0">
                             <span style="font-size: 35px">{{$service->price}}</span><span> 円 / 分</span>
