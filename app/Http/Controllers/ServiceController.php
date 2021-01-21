@@ -820,12 +820,7 @@ class ServiceController extends Controller
                     }
                 }
             }
-
-
         }
-        //return $res_dateTime;
-
-
     }
 
     public function openReservedTalkroom()
@@ -1004,11 +999,8 @@ class ServiceController extends Controller
         $test->current_talkroom_close = date('Y-m-d H:i:s');
         $test->save();
 
-       
-
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
-        // dd($time_slot);
 
         $res_dateTime = [];
         $active_talkrooms = Talkroom::where('status', 2)->get();
@@ -1075,10 +1067,8 @@ class ServiceController extends Controller
                 $data->status = 1;
                 $data->save();
             }
-            
             $res_dateTime = [];
         }
-
     }
 
     public function runningCallClose()
@@ -1147,7 +1137,7 @@ class ServiceController extends Controller
                     'amount' => $data->cost,
                     'from_email' => 'support@youtalk.tel',
                     'from_name' => 'YouTalk',
-                    'template' => 'emailtemplates.layouts.talkroom-close-notification',
+                    'template' => 'emailtemplates.layouts.autoTalkroomCloseNotification',
                     // 'root'     => $request->root(),
                     'email'     => $data->buyer->email
                 ];
@@ -1155,8 +1145,6 @@ class ServiceController extends Controller
                 Mail::to($data->buyer->email)
                     ->send(new Common($emailData));
             }
-
         }
     }
-
 }
