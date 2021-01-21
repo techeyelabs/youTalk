@@ -134,7 +134,9 @@
     <div class=" row">
         <div class="col-md-12 alternates">
             @foreach($service as $s)
-                @include('template.service')
+                @if($s->createdBy->status)
+                    @include('template.service')
+                @endif
             @endforeach
         </div>
     </div>
