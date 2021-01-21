@@ -76,19 +76,19 @@
                             <div class="col-md-10">
                                 <select class="custom-select" style="width:45% !important; height:38px!important;" id="price" name="price" onblur="removeAlert('price','price_error')"/>
                                     <option value="">選択してください</option>
-                                    <option value="60">60</option>
-                                    <option value="80">80</option>
-                                    <option value="100">100</option>
-                                    <option value="120">120</option>
-                                    <option value="140">140</option>
-                                    <option value="160">160</option>
-                                    <option value="180">180</option>
-                                    <option value="200">200</option>
-                                    <option value="220">220</option>
-                                    <option value="240">240</option>
-                                    <option value="260">260</option>
-                                    <option value="280">280</option>
-                                    <option value="300">300</option>
+                                    <option value="60" @if(isset($service_prev) && $service_prev->price == 60) selected @endif >60</option>
+                                    <option value="80" @if(isset($service_prev) && $service_prev->price == 80) selected @endif >80</option>
+                                    <option value="100" @if(isset($service_prev) && $service_prev->price == 100) selected @endif >100</option>
+                                    <option value="120" @if(isset($service_prev) && $service_prev->price == 120) selected @endif >120</option>
+                                    <option value="140" @if(isset($service_prev) && $service_prev->price == 140) selected @endif >140</option>
+                                    <option value="160" @if(isset($service_prev) && $service_prev->price == 160) selected @endif >160</option>
+                                    <option value="180" @if(isset($service_prev) && $service_prev->price == 180) selected @endif >180</option>
+                                    <option value="200" @if(isset($service_prev) && $service_prev->price == 200) selected @endif >200</option>
+                                    <option value="220" @if(isset($service_prev) && $service_prev->price == 220) selected @endif >220</option>
+                                    <option value="240" @if(isset($service_prev) && $service_prev->price == 240) selected @endif >240</option>
+                                    <option value="260" @if(isset($service_prev) && $service_prev->price == 260) selected @endif >260</option>
+                                    <option value="280" @if(isset($service_prev) && $service_prev->price == 280) selected @endif >280</option>
+                                    <option value="300" @if(isset($service_prev) && $service_prev->price == 300) selected @endif >300</option>
                                 </select>  円 / 分
                             </div>
                         </div>
@@ -143,7 +143,11 @@
                     </form>
                     <div class="row col-md-12 text-center">
                         <div class="col-md-6 text-md-right mb-3 mb-md-0">
-                            <button id="send_service" class="btn buttons btn-size" style="width: 120px; color: black">作成する</button>
+                            @if(isset($service_prev))
+                                <button id="send_service" class="btn buttons btn-size" style="width: 120px; color: black">更新する</button>
+                            @else
+                                <button id="send_service" class="btn buttons btn-size" style="width: 120px; color: black">作成する</button>
+                            @endif
                         </div>
 
                         <div class="col-md-6 text-md-left">
