@@ -35,12 +35,18 @@
         <div class="col-md-12 col-sm-12 p-0">
             <div class="col-md-12 p-0">
                 @if($serviceCount < 2)
-                    <div class="col-md-12 text-center mb-3"><span class="text-16">相談できるサービスを入力</span></div>
+                    <div class="col-md-12 text-center mb-3">
+                        <span class="text-16">相談できるサービスを入力</span>
+                    </div>
+
                     <form id="service_form" action="{{route('new-service-post')}}" enctype="multipart/form-data" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" value="{{isset($service_prev->id) ? $service_prev->id: 0}}" id="edit_flag" name="edit_flag"/>
                         <div class="col-md-12 row">
-                            <div class="col-md-2"><span class="text-14">カテゴリー選択</span><br><span class="text-danger" style="font-size: 10px">＊必須</span></div>
+                            <div class="col-md-2">
+                                <span class="text-14">カテゴリー選択</span><br>
+                                <span class="text-danger" style="font-size: 10px">＊必須</span>
+                            </div>
                             <div class="col-md-10">
                                 <div class="form-group mb-0" >
                                     {{-- minimal_createservice form-control small-screen-input-width --}}
@@ -73,8 +79,8 @@
                         <br/>
                         <div class="col-md-12 row">
                             <div class="col-md-2"><span class="text-14">通話料</span><br><span class="text-danger" style="font-size: 10px"> ＊必須</span></div>
-                            <div class="col-md-10">
-                                <select class="custom-select" style="width:45% !important; height:38px!important;" id="price" name="price" onblur="removeAlert('price','price_error')"/>
+                            <div class="col-md-5">
+                                <select class="custom-select" style="width:80% !important; height:38px!important;" id="price" name="price" onblur="removeAlert('price','price_error')"/>
                                     <option value="">選択してください</option>
                                     <option value="60" @if(isset($service_prev) && $service_prev->price == 60) selected @endif >60</option>
                                     <option value="80" @if(isset($service_prev) && $service_prev->price == 80) selected @endif >80</option>
@@ -90,6 +96,9 @@
                                     <option value="280" @if(isset($service_prev) && $service_prev->price == 280) selected @endif >280</option>
                                     <option value="300" @if(isset($service_prev) && $service_prev->price == 300) selected @endif >300</option>
                                 </select>  円 / 分
+                            </div>
+                            <div class="col-md-4 text-left pt-2 font-weight-bold">
+                                @if(isset($profile->system_fee)) 手数料{{$profile->system_fee}}％ @endif
                             </div>
                         </div>
                         <br/>
@@ -170,28 +179,14 @@
 <script src="{{Request::root()}}/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
 		CKEDITOR.replace( 'description' ,{
-			// filebrowserBrowseUrl : 'ckeditor1/plugins/imageuploader/imgbrowser.php',
-			// filebrowserUploadUrl : '/browser1/upload/type/all',
 		    filebrowserImageBrowseUrl : '{{Request::root()}}/ckeditor/plugins/imageuploader/imgbrowser.php',
-			// filebrowserImageUploadUrl : '/browser3/upload/type/image',
-		    // filebrowserWindowWidth  : 800,
-		    // filebrowserWindowHeight : 500,
 			extraPlugins: 'imageuploader'
-			// extraPlugins: 'dropler'
 		});
-
-	
-	    // ClassicEditor
-	    //     .create( document.querySelector( '#exampleInputDescription' ) )
-	    //     .catch( error => {
-	    //         console.error( error );
-        //     } );
 	
 	</script>
 <script>
     $(document).ready(function() {
         var prevflag = "{{$flag}}";
-        //console.log('flag:'+prevflag);
         $("#send_service").click(function(){
             var flag = 0;
             if($('#service_category').val() == '' || $('#service_category').val() == null){
@@ -206,24 +201,7 @@
                 flag = 1;
                 $('#price_error').show();
             }
-            /*if($('#thumbimg').val() == '' || $('#thumbimg').val() == null){
-                if($('#edit_img').html() == ''){
-                    flag = 1;
-                    $('#image_error').show();
-                }
-                if(prevflag == 1){
-                    flag = 1;
-                    $('#image_error').show();
-                }
-            }*/
-            // if($('#instructions').val() == '' || $('#instructions').val() == null){
-            //     flag = 1;
-            //     $('#instruction_error').show();
-            // }
-            // if($('#description').val() == '' || $('#description').val() == null){
-            //     flag = 1;
-            //     $('#detail_error').show();
-            // }
+
             textbox_data = CKEDITOR.instances.description.getData();
             if (textbox_data==='')
             {
