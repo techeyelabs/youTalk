@@ -79,7 +79,7 @@ class MyPageController extends Controller
     public function messageNotification()
     {
         $user = Auth::user()->id;
-        $new_chat = Chat::where('receiver_id', $user)->where('receive_status', 1)->get()->count();
+        $new_chat = Chat::where('receiver_id', $user)->where('receive_status', 0)->get()->count();
         return $new_chat;
     }
 
@@ -439,6 +439,11 @@ class MyPageController extends Controller
             'to' => $to,
         ];
         $conv_left = Chat::select('*')->skip(10)->take(10)->get();
+
+        if($request->readStatus){
+            $this->messageReceiveStatusChange($from, $to);
+        }
+
         $conv = DB::table('chats')
                     ->select('*')
                     ->where(function ($query) use($from, $to) {
@@ -477,6 +482,7 @@ class MyPageController extends Controller
             $Message->message = $request->message_text;
         else
             $Message->message = $request->message;
+        $Message->receive_status = 0;
         $Message->save();
 
         if($request->receiver == 0){
@@ -622,7 +628,17 @@ class MyPageController extends Controller
     {
         $other = $request->sender;
         $receiver = Auth::user()->id;
-        $count = Chat::where('sender_id', $other)->where('receiver_id', $receiver)->where('receive_status', 1)->count();
+        $count = Chat::where('sender_id', $other)->where('receiver_id', $receiver)->where('receive_status', 0)->count();
         return $count;
+    }
+
+    public function messageReceiveStatusChange($receiver, $sender)
+    {
+        DB::table('chats')
+            ->where('receiver_id', $receiver)
+            ->where('sender_id', $sender)
+            ->where('receive_status', 0)
+            ->update(['receive_status' => 1]);
+        return redirect()->back();
     }
 }

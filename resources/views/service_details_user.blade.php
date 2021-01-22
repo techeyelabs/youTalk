@@ -478,9 +478,6 @@
     }
 
     $('#post_reply').click(function(){
-        //console.log('from from:');
-        //var name = $('#review').val();
-        console.log($('#replying').val());
         var flag = 0;
         if($('#replying').val() == '' || $('#replying').val() == null){
             $('#reply_error').show();
@@ -522,7 +519,6 @@
         $('#sender').val(from);
 		$('#receiver').val(to);
         $('#name').html(name);
-      
         document.getElementById('id01').style.display='block';
     }
 
@@ -541,6 +537,10 @@
     function doAjax() {
         var from = $('#sender').val();
         var to = $('#receiver').val();
+        let readStatus = 0;
+        if($('#id01').css('display') === 'block'){
+            readStatus = 1;
+        }
 		
         var ajaxurl = "{{route('user-get-conversation')}}";
         {{--ajaxurl = ajaxurl.replace(':id1', from);
@@ -552,7 +552,8 @@
             data: {
                     '_token': "{{ csrf_token() }}",
                     'from': from,
-                    'to': to 
+                    'to': to,
+                    'readStatus': readStatus
             },
             success: function(data){
                     $data = $(data); // the HTML content that controller has produced

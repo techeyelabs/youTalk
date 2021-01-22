@@ -5,20 +5,17 @@
 @stop
 
 
-@section('content')   
-    {{-- @include('template.mytop') --}}
-    {{-- <br/> --}}
+@section('content')
     <div class="col-md-12 row">
     @php $index = 1; @endphp
         <div class="col-md-2"></div>
         <div class="col-md-8 text-center">
             <table style="width: 100%">
             <tbody>
-                    <tr>
-                        <td></td>
-                        <td style="text-align: left">メッセージ一覧</td>
-                        {{--<td>Date</td>--}}
-                    </tr>
+                <tr>
+                    <td></td>
+                    <td style="text-align: left">メッセージ一覧</td>
+                </tr>
                 @foreach($messages as $th)
                     @if($th->other_side == 0)
                         <tr onclick="show_conv({{Auth::user()->id}}, 0, '管理者')">
@@ -134,21 +131,23 @@
     var interval = 500;  // 1000 = 1 second, 3000 = 3 seconds
     var flag = 0;
     function doAjax() {
-        console.log("here");
         var from = $('#sender').val();
         var to = $('#receiver').val();
+        let readStatus = 0;
+        if($('#id01').css('display') === 'block'){
+            readStatus = 1;
+        }
 		
         var ajaxurl = "{{route('user-get-conversation')}}";
-        {{--ajaxurl = ajaxurl.replace(':id1', from);
-        ajaxurl = ajaxurl.replace(':id2', to);
-        alert(ajaxurl);--}}
+
         $.ajax({
             url: ajaxurl,
             type: "POST",
             data: {
                     '_token': "{{ csrf_token() }}",
                     'from': from,
-                    'to': to 
+                    'to': to,
+                    'readStatus': readStatus
             },
             success: function(data){
                     $data = $(data); // the HTML content that controller has produced
