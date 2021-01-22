@@ -70,7 +70,7 @@
                     </div>
                 </form>
                 <div class="button_div">
-                    <button class="msg_send_button" id="send_message" onclick="send_msg()">send</button>
+                    <button class="msg_send_button" id="send_message" onclick="send_msg()">Send</button>
                 </div>
                 <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
                     <h4></h4>
