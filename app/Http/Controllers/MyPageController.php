@@ -608,17 +608,31 @@ class MyPageController extends Controller
 
     public function inboxMessage(Request $request)
     {
-        $id = Auth::user()->id;
-        $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
-        $prev = Profile::where('user_id', $id)->first();
-        // $data['messages'] = Message::where('to_id', Auth::user()->id)->where('is_deleted', false)->orderBy('created_at', 'desc')->paginate(20);
-        $left = Chat::select('sender_id AS other_side')->where('receiver_id', Auth::user()->id)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('sender_id');
-        $right = Chat::select('receiver_id AS other_side')->where('sender_id', Auth::user()->id)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('receiver_id')->union($left)->get();
-        // $threads = $left->merge($right);
-        $threads = $right;
+        $user = Auth::user()->id;
+        $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $user)->first();
+        $prev = Profile::where('user_id', $user)->first();
+        $left = Chat::select('sender_id AS other_side','receive_status')->where('receiver_id', $user)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('sender_id');
+        $right = Chat::select('receiver_id AS other_side','receive_status')->where('sender_id', $user)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('receiver_id')->union($left)->get();
+
+        $msgList = array();
+        foreach ($right as $chat){
+            $unread = Chat::where(function($q) use($chat, $user) {
+                                $q->where(function ($r) use($chat, $user) {
+                                    $r->where('receiver_id', $user)->Where('sender_id', $chat->other_side);
+                                })
+                                ->orWhere(function ($s) use($chat, $user){
+                                    $s->where('sender_id', $user)->Where('receiver_id', $chat->other_side);
+                                });
+                            })
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+            array_push($msgList, $unread);
+        }
+
         $data = [
             'personal' => $personal,
-            'messages' => $threads,
+            'thread' => $right,
+            'messages' => $msgList,
             'profile' => $prev
         ];
         return view('personal.mypage-chat', $data);

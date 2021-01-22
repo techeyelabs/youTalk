@@ -16,21 +16,36 @@
                     <td></td>
                     <td style="text-align: left">メッセージ一覧</td>
                 </tr>
-                @foreach($messages as $th)
+                @foreach($thread as $index => $th)
                     @if($th->other_side == 0)
                         <tr onclick="show_conv({{Auth::user()->id}}, 0, '管理者')">
                             <td><img style="border-radius: 50%; height: 50px; width: 50px" src="{{Request::root().'/assets/systemimg/admin.png'}}"/></td>
-                            <td  style="width: 65%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle; text-align: left">
-                                <span id="{{$th->other_side}}" class="badge badge-pill badge-primary badge-noti" style="margin-bottom:-10px;display: none; margin-top: 0px !important">0</span>
-                                <span class="anchorColor">管理者メッセージ</span>
+                            <td  style="width: 65%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle;">
+                                <span id="{{$th->other_side}}" class="badge badge-pill badge-danger badge-noti" style="margin-bottom:-10px; border-radius: 50%; font-size: 8px; width: 13px; height: 13px; color: red; display:@if($messages[$index]->receive_status == 0) block @else none @endif; margin-top: 0px !important">2</span>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span class="anchorColor">管理者メッセージ</span>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <span class="anchorColor" style="font-size: 12px">{{$messages[$index]->created_at}}</span>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @else
                         <tr onclick="show_conv({{Auth::user()->id}}, {{$th->other_side}}, '{{$th->threads_all->name}}')">
                             <td style="width: 35%; text-align: center"><img style="border-radius: 50%; height: 50px; width: 50px;" src="{{Request::root().'/assets/user/'.$th->threads_all->profile->picture}}" >&nbsp;</td>
-                            <td  style="width: 65%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle; text-align: left">
-                                <span id="{{$th->other_side}}" class="badge badge-pill badge-primary badge-noti" style="margin-bottom:-10px;display: none; margin-top: 0px !important">0</span>
-                                <span class="anchorColor">{{$th->threads_all->name}}</span>
+                            <td  style="width: 65%; font-size: 16px; color: gray; cursor: pointer; vertical-align: middle;">
+                                <span id="{{$th->other_side}}" class="badge badge-pill badge-danger badge-noti" style="margin-bottom:-10px; border-radius: 50%; font-size: 8px; width: 13px; height: 13px; color: red; display: @if($messages[$index]->receive_status == 0) block @else none @endif; margin-top: 0px !important">2</span>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span class="anchorColor">{{$th->threads_all->name}}</span>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <span class="anchorColor" style="font-size: 12px">{{$messages[$index]->created_at}}</span>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
                     @endif
