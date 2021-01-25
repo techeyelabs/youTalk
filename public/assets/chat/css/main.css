@@ -27,6 +27,7 @@ video{
 	height: 0px;
 }
 audio{
+	opacity: 0;
 	width: 0px;
 	height: 0px;
 }
@@ -49,10 +50,14 @@ audio{
 	margin: 0px 10px;
 }
 .item.accept{
+	width: 88px !important;
+	height: 45px !important;
 	background-color: rgba(97, 193, 47, .5);
 	color: #eee;
 }
 .item.cancel{
+	width: 76px !important;
+	height: 38px !important;
 	background-color: rgba(254, 64, 42, .5);
 	color: #eee;
 }
@@ -76,7 +81,7 @@ audio{
 	width: 150px;
 	height: 150px;
 	z-index: 15;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	margin: -75px 0 0 -75px;
 }
@@ -88,7 +93,7 @@ audio{
 .footer{
 	width: 100%;
 	position: absolute;
-	bottom: 20px;
+	top: 64%;
 }
 .summary{
 	margin-top: 15px;
