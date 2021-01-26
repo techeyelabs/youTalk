@@ -161,7 +161,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 @stop
 
-
 @section('content')
 <div class=" row">
     <div class="col-md-2"></div>
@@ -171,23 +170,30 @@
     <div class="col-md-2"></div>
 </div>
     <div class="col-md-12 alternates px-0 remove-pads" style="min-height: 850px">
-        <div class="col-md-12">
-            <!-- title and buttons -->
-            <div class="text-center title-before-login " style="font-size: 18px"><b>{{$service->title}}</b></div>
-            <div class="text-center description-before-login" style="font-size: 15px;">無料通話回数{{$service->free_mint_iteration}}回（毎回{{$service->free_min}}分)</div>
-            @if(isset(Auth::user()->id))
-                @if($service->seller_id != Auth::user()->id)
-                    <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}"><div class="text-center description-before-login anchorColor" style="font-size: 15px;">{{$service->createdBy->name}}{{$service->createdBy->last_name}}</div></a>
+        <div class="row col-md-12">
+            <div class="col-md-8">
+                <div class="text-center title-before-login " style="font-size: 18px"><b>{{$service->title}}</b></div>
+                @if($service->free_mint_iteration > 0)
+                    <div class="text-center description-before-login" style="font-size: 15px;">お試し通話機能あり（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
                 @endif
-            @endif
+            </div>
+            <div class="col-md-4 justify-content-end">
+                @if(isset(Auth::user()->id))
+                    @if($service->seller_id != Auth::user()->id)
+                        <div class="text-right description-before-login anchorColor" style="font-size: 15px;">
+                            <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}">
+                                {{$service->createdBy->name}}{{$service->createdBy->last_name}}
+                                <img src="{{Request::root()}}/assets/user/{{$service->createdBy->profile->picture}}" style="height: 35px; width: 35px; border-radius: 50%"/>
+                            </a>
+                        </div>
+                    @endif
+                @endif
+            </div>
         </div>
         <div class="col-md-12 px-0">
             <div class="row col-md-12 mt-4 align-items-end">
                 <div class="col-xs-12 col-lg-6 text-lg-left text-center">
-                    {{-- <div class="text-center frame">
-                    </div> --}}
                     <img class="img-thumbnail thumb profile-image" src="{{Request::root()}}/assets/service/{{$service->thumbnail}}">
-
                 </div>
                 @if(isset(Auth::user()->id))
                     <div class="col-xs-12 col-lg-6">
@@ -229,27 +235,14 @@
                             @else
                                 <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important; color:white">🚫 電話予約する</button>
                             @endif
-                            {{-- @if($service->free_min != 0 && $service->free_mint_iteration != 0)
-                                <div class="mt-2">
-                                    <span class="span-font-size-after-login" style="color: gray;">無料通話回数 {{$service->free_mint_iteration}} 回（毎回 {{$service->free_min}} 分）  </span>
-                                </div>
-                            @endif --}}
+
                             <div class="after-login-br" style="height: 30px; text-align: right"><br class="before-login-br"></div>
-                            @if($service->seller_id == Auth::user()->id)
-                                <div style="width: 100%; text-align: right">
-                                    <a href="{{route('service-history', ['id' => $service->id])}}"><span class="my-buttons">電話受付履歴</span></a>&nbsp;/&nbsp;<a href="{{route('edit-service', ['id' => $service->id])}}"><span class="my-buttons">更新・編集</span></a>
-                                </div>
-                                {{--<a href="{{route('service-history', ['id' => $service->id])}}"><button type="submit" class="button-before-login" >電話受付履歴</button></a>
-                                <div class="after-login-br" style="height: 30px"><br class="before-login-br"></div>
-                                <a href="{{route('edit-service', ['id' => $service->id])}}"><button type="submit" class="button-before-login" >更新/編集</button></a>--}}
-                            @else
+                            @if($service->seller_id != Auth::user()->id)
                                 <div>
-                                    <button type="submit" onclick="show_conv({{Auth::user()->id}}, {{$service->createdBy->id}})" class="button-before-login" style="background-color: #84bdb8; color: white; border: 1px solid #84bdb8">メッセージをする</button>
+                                    <button id="open-modal" type="submit" onclick="show_conv({{Auth::user()->id}}, {{$service->createdBy->id}}, '{{$service->createdBy->name}}')" class="button-before-login" style="background-color: #84bdb8; color: white; border: 1px solid #84bdb8">メッセージをする</button>
                                 </div>
                             @endif
-                            
                         </div>
-
                     </div>
                 @else
                     <div class="col-md-5 text-center button_holder" >
@@ -416,6 +409,14 @@
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
             <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
+            <div class="row modal-header w3-light-grey">
+                <div class="col-md-11">
+                    <h4 class="text-center" id="name"></h4>
+                </div>
+                <div class="col-md-1">
+                    <button onclick="document.getElementById('id01').style.display='none'" id="close-modal" type="button" class="w3-button text-danger font-weight-bold">X</button>
+                </div>
+            </div>
             <form class="w3-container" action="{{route('send-message')}}" method="post">
                 <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
                     <span></span>
@@ -427,10 +428,11 @@
                     <textarea id="message_text" name="message_text" style="border: 1px solid #a8c2ce; width: 100%; border-radius: 10px; padding: 10px"></textarea>
                 </div>
             </form>
-            <div class="button_div"><button class="msg_send_button" type="submit" id="send_message" onclick="send_msg()">send</button></div>
-
+            <div class="button_div">
+                <button class="msg_send_button" id="send_message" onclick="send_msg()">Send</button>
+            </div>
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+                <h4></h4>
             </div>
 
             </div>
@@ -453,12 +455,10 @@
                                 <textarea class="form-control rounded-0" id="replying" name="reply" placeholder="コメントを書く．．" rows="10"></textarea>
                                 <div id="reply_error" style="font-size: 10px; color: red; display: none"><span>コメントを入力してください。</span></div>
                             </div>
-                            
                         </form>
-                            <div class="col-md-12 text-center">
-                                <button id="post_reply" class="btn buttons btn-size" style="margin-top: 10px">送信</button>
-                            </div>
-                        
+                        <div class="col-md-12 text-center">
+                            <button id="post_reply" class="btn buttons btn-size" style="margin-top: 10px">送信</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -473,18 +473,11 @@
 
 
 <script type="text/javascript">
-
     function replyButton(r_id){
-        //console.log("shiam");
-        //var review_id = $('#reply').attr('name');
-        console.log(r_id);
         $('#review').val(r_id);
     }
 
     $('#post_reply').click(function(){
-        //console.log('from from:');
-        //var name = $('#review').val();
-        console.log($('#replying').val());
         var flag = 0;
         if($('#replying').val() == '' || $('#replying').val() == null){
             $('#reply_error').show();
@@ -520,13 +513,20 @@
 
 <!-- text chat -->
 <script>
-    function show_conv(id1, id2){
+    function show_conv(id1, id2, name){
         var from = id1;
         var to = id2;
         $('#sender').val(from);
 		$('#receiver').val(to);
-      
-        document.getElementById('id01').style.display='block'
+        $('#name').html(name);
+        document.getElementById('id01').style.display='block';
+    }
+
+    let modal = document.getElementById('id01');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
 
@@ -535,9 +535,12 @@
     var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
     var flag = 0;
     function doAjax() {
-        console.log("here");
         var from = $('#sender').val();
         var to = $('#receiver').val();
+        let readStatus = 0;
+        if($('#id01').css('display') === 'block'){
+            readStatus = 1;
+        }
 		
         var ajaxurl = "{{route('user-get-conversation')}}";
         {{--ajaxurl = ajaxurl.replace(':id1', from);
@@ -549,7 +552,8 @@
             data: {
                     '_token': "{{ csrf_token() }}",
                     'from': from,
-                    'to': to 
+                    'to': to,
+                    'readStatus': readStatus
             },
             success: function(data){
                     $data = $(data); // the HTML content that controller has produced

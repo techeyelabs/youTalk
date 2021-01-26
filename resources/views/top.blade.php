@@ -7,97 +7,81 @@
         color: #D9D9D9 !important;
     }
     @media (max-width: 570px){
-            .mobile_price{
-                font-size: 25px!important;
-            }
-            .mobile{
-                text-align: left!important;
-                padding: 0px ;
-            }
-            .mobile_rate{
-                text-align: right!important;
-                font-size: 14px!important;
-                padding: 0px ;
-            }
-            
+        .mobile_price{
+            font-size: 25px!important;
         }
-
-        .select_box{
-            width: 100%;
-            height: 39px;
-            border: 1px solid #cecece;
-            border-radius: 4px;
+        .mobile{
+            text-align: left!important;
+            padding: 0px ;
         }
-
-        .seller_rating_tds{
-            padding: 0px !important;
-            border: none
+        .mobile_rate{
+            text-align: right!important;
+            font-size: 14px!important;
+            padding: 0px ;
         }
-
-        
-        @media (min-width: 570px){
-            .service_title{
-                overflow-y: hidden
-            }
+    }
+    .select_box{
+        width: 100%;
+        height: 39px;
+        border: 1px solid #cecece;
+        border-radius: 4px;
+    }
+    .seller_rating_tds{
+        padding: 0px !important;
+        border: none
+    }
+    @media (min-width: 570px){
+        .service_title{
+            overflow-y: hidden
         }
-
-        /*---------- general ----------*/
-
-
-        .stars-outer {
-        display: inline-block;
-        position: relative;
-        font-family: FontAwesome;
-        }
-
-        .stars-outer::before {
-        content: "\f006 \f006 \f006 \f006 \f006";
-        }
-
-        .stars-inner {
-        position: absolute;
-        top: 0;
-        left: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 0;
-        }
-
-        .stars-inner::before {
-        content: "\f005 \f005 \f005 \f005 \f005";
-        color: #f8ce0b;
-        }
-
-        .attribution {
-        font-size: 12px;
-        color: #444;
-        text-decoration: none;
-        text-align: center;
-        position: fixed;
-        right: 10px;
-        bottom: 10px;
-        z-index: -1;
-        }
-        .attribution:hover {
-        color: #1fa67a;
-        }
-
-        button:focus,
-        textarea:focus,
-        select:focus,
-        input:focus {
-            outline: 0 !important;
-        }
-
-        .form-control:focus {
-            border-color: #ccc;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-        }
-
+    }
+    /*---------- general ----------*/
+    .stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+    }
+    .stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+    }
+    .stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    }
+    .stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #f8ce0b;
+    }
+    .attribution {
+    font-size: 12px;
+    color: #444;
+    text-decoration: none;
+    text-align: center;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: -1;
+    }
+    .attribution:hover {
+    color: #1fa67a;
+    }
+    button:focus,
+    textarea:focus,
+    select:focus,
+    input:focus {
+        outline: 0 !important;
+    }
+    .form-control:focus {
+        border-color: #ccc;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
 </style>
 @stop
-
 
 @section('content')
     <div class="row">
@@ -150,7 +134,9 @@
     <div class=" row">
         <div class="col-md-12 alternates">
             @foreach($service as $s)
-                @include('template.service')
+                @if($s->createdBy->status)
+                    @include('template.service')
+                @endif
             @endforeach
         </div>
     </div>

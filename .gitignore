@@ -6,6 +6,7 @@
 # Node artifact files
 node_modules/
 dist/
+vendor/
 
 # Compiled Java class files
 *.class
@@ -47,6 +48,22 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+*.zip
+*.gz
+
+#images
+*.jpg
+*.jpeg
+*.jpe
+*.gif
+*.svg
+*.png
+
+#pdf file
+*.pdf
 
 # ENV
 .env
+
+composer.lock
+package-lock.json

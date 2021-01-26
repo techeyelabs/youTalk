@@ -83,22 +83,8 @@ class DashboardController extends Controller
 
     public function messageIndex()
     {
-        // $arr = [];
-        // $arr = new \Illuminate\Database\Eloquent\Collection();
-        // $users = User::get();
-        // //$message = Chat::where('sender_id', 0)->orderBy('created_at', 'desc')->get();
-        // foreach($users as $user){
-        //     $message = Chat::where('sender_id', 0)->where('receiver_id', $user->id)->orderBy('created_at', 'desc')->first();
-        //     $arr->add($message);
-        // }
-        // $arr = $arr->sortByDesc('created_at');
-        // return $arr;
-
         $users = ChatThread::orderBy('updated_at', 'desc')->orderBy('created_at', 'desc')->get();
-        //return $users;
-        return view('admin.message-list')->with([
-            'users' => $users
-        ]);
+        return view('admin.message-list')->with(['users' => $users]);
     }
 
     public function showMessage($user_id)
@@ -233,16 +219,12 @@ class DashboardController extends Controller
     public function withdrawPointIndex()
     {
         $requests = WithdrawRequest::orderBy('status')->orderBy('created_at', 'desc')->get();
-        // $requests = WithdrawRequest::orderBy('status')->with('user')->orderBy('created_at', 'desc')->get();
-        // dd($requests);
-        //return $requests;
 
         $notif_off = WithdrawRequest::where('view_status', 1)->get();
         foreach($notif_off as $data){
             $data->view_status = 2;
             $data->save();
         }
-
         return view('admin.point-withdraw')->with([
             'withdraw_requests' => $requests
         ]);
@@ -250,7 +232,6 @@ class DashboardController extends Controller
 
     public function acceptWithdrawPoint($id)
     {
-        //return $id;
         $withdraw = WithdrawRequest::where('id', $id)->first();
         $withdraw->status = 2;
         $withdraw->save();
@@ -273,5 +254,16 @@ class DashboardController extends Controller
     {
         $withdraw_notif = WithdrawRequest::where('view_status', 1)->get()->count();
         return $withdraw_notif; 
+    }
+
+    public function systemFeeForUser(Request $request)
+    {
+        $fee = $request->input('systemFee');
+        $userId = $request->input('userId');
+        $profile = Profile::where('user_id', $userId)->first();
+        $profile->system_fee = $fee;
+        $profile->save();
+
+        return redirect()->back();
     }
 }

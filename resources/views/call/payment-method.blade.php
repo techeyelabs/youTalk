@@ -1,12 +1,7 @@
 @extends('navbar')
 
 @section('custom_css')
-
-<style>
-    
-    </style>
 @stop
-
 
 @section('content')
     
@@ -14,47 +9,54 @@
     <div class="col-md-12 col-sm-12">
         <div class="col-md-12 mb-5 pt-3" style="border: 1px solid #a2a2a280">
             <div class="mb-2 text-16"><span>電話通話内容</span></div>
-            <div class="p-2 text-14">
-                <div class="col-md-12 row pl-3" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">{{$service->title}}</a></div>
-                <div class="row pl-3">
-                    <div class="col-md-8 p-0">
-                        <div style="height: 30px;">無料通話回数{{$service->free_mint_iteration}}回（毎回{{$service->free_min}}分)</div>
-                        <div style=""><a class="anchorColor" href="{{route('user-page-profile', ['id' => $service->seller_id])}}">{{$service->createdBy->name}} {{$service->createdBy->last_name}}</a></div>
-                    </div>
-                
-                <div class="col-md-4 text-center p-0">
-                    <span style="font-size: 35px">{{$service->price}}</span><span> 円 / 分</span>
+            <div class="row col-md-12" style="padding-left: 0px!important;">
+                <div class="col-md-3" style="padding-right: 0px!important; padding-left: 0px!important;">
+                    <a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">
+                        <img class="img-thumbnail" src="{{Request::root()}}/assets/service/{{$service->thumbnail}}" style="object-fit: cover; width: 150px; height: 120px">
+                    </a>
                 </div>
-                </div>  
+                <div class="col-md-9 p-2 text-14 mt-3" style="padding-left: 0px!important;">
+                    <div class="col-md-12 row pl-3" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $service->id])}}">{{$service->title}}</a></div>
+                    <div class="row pl-3">
+                        <div class="row col-md-8 p-0">
+                            @if($service->free_mint_iteration > 0)
+                                <div class="row">
+                                    <div>お試し通話機能あり</div><div>（開始から{{$service->free_min}}分までを{{$service->free_mint_iteration}}回無料）</div>
+                                </div>
+                            @endif
+                            <div class="row col-md-12 pl-0 mt-2"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $service->seller_id])}}">{{$service->createdBy->name}} {{$service->createdBy->last_name}}</a></div>
+                        </div>
+                        <div class="col-md-4 text-center p-0">
+                            <span style="font-size: 35px">{{$service->price}}</span><span> 円 / 分</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br/>
-            <br/>
-            <div class="text-center">
+            <div class="text-center mt-5">
                 <?php 
                     if($available_mins == 0){
                 ?>  
-                    <div><span style="color: red">ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
-                    <br/>
-                    <br/>
-                    <div class="col-md-12 text-center mb-3">
-                        <button id="button-of-no-worth" class="btn mr-5 buttons btn-size" style="width: 120px" disabled>送信</button>
-                        <a class="btn buttons btn-size" href="{{ url()->previous() }}" style="width: 120px; color: #7f9098 !important">キャンセル</a>
-                    </div>
+                <div><span style="color: red">ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
+                <br/>
+                <br/>
+                <div class="col-md-12 text-center mb-3">
+                    <button id="button-of-no-worth" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 200px; margin-right: 2%" disabled>出品者を呼び出します</button>
+                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
+                </div>
                 <?php
                     } else {
                 ?>
-                    <div><span>ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
-                    <br/>
-                    <br/>
-                    <div class="col-md-12 text-center mb-3">
-                        <button id="send_payment" class="btn mr-5 buttons btn-size" style="width: 120px">送信</button>
-                        <a class="btn buttons btn-size" href="{{ url()->previous() }}" style="width: 120px; color: #7f9098 !important">キャンセル</a>
-                    </div>
+                <div><span>ポイント残高  {{$balance}} P, {{$available_mins}}分通話可能です</span></div>
+                <br/>
+                <br/>
+                <div class="col-md-12 text-center mb-3">
+                    <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 200px; margin-right: 2%">出品者を呼び出します</button>
+                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
+                </div>
                 <?php
                     }
                 ?>
             </div>
-            
         </div>
 
         <div class="col-md-12" style="display: none">
@@ -113,23 +115,14 @@
                                 </div>
                             </div>
                         </div>
-                    </form> 
-
+                    </form>
                 </div> 
             </div>
             <div class="text-10" id="payment_error" style="color: red; display: none"><span>*決済方法を選択してください！</span></div>
-            
         </div>
     </div>
-
-</div>    
-               
-           
-        
+</div>
 @stop
-
-
-
 @section('custom_js')
 
 <script>
@@ -137,7 +130,6 @@
         $("#send_payment").click(function(){
             var flag = 0;
             var hh = $("input[name='paymentOptions']:checked").val();
-            console.log(hh);
 
             if(hh == undefined){
                 flag = 1;
@@ -162,25 +154,17 @@
                     $('#cvc_error').show();
                 }
             }
-            
-            // if($('#description').val() == '' || $('#description').val() == null){
-            //     flag = 1;
-            //     $('#detail_error').show();
-            // }
+
             if(flag == 0){
-                if(confirm("こちらの内容でよろしいですか！")){
+                if(confirm("こちらの内容でよろしいですか！")){    //Are you sure you want this content?
                     $("#send_payment").prop('disabled',true);
                     $("#payment_form").submit();
                 } else {
                     $("#send_payment").prop('disabled',false);
                 }
             }
-        }); 
-
-        
-       
+        });
     });
-    
 </script>
 
 <script type="text/javascript">
@@ -195,10 +179,5 @@
             $('.to').datepicker('setStartDate', startDate);
         });
     });
-
 </script>
-
-
-
-
 @stop

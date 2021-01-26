@@ -6,62 +6,44 @@
         <div class="col-mod-6 col-lg-6">
                 <h3 class="box-title text-success m-b-0">TALK ROOM HISTORY</h3>
                 <p class="text-muted m-b-30">List of all talk room histories</p>
-        </div>        
-        {{-- <div class="col-mod-6 col-lg-6 ">
-            <a href="{{ route('add_product') }}" class="waves-effect pull-right"><button class="btn btn-xs btn-info pull-right"><i class="fa fa-arrow-circle-left"></i> ADD NEW PRODUCT</button></a>
-        </div>     --}}
+        </div>
     </div>  
     <div class="clear"></div><hr/>
 <div class="table-responsive col-mod-12">
-
-                                
-
-        <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
-            <thead>
-                <tr role="row">
-                    <th style="display: none">SL</th>
-                    <th>Date&Time</th>
-                    <th >Talk Room Title</th>
-                    <th >Seller Name</th>
-                    <th>Buyer Name</th>
-                    <th>Talk Time</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-
-                
-            @foreach($talkrooms as $k => $data)
-
- 
-            <tr role="row" class="odd">
-                <?php
-                    $year = date('Y', strtotime($data->created_at));
-                    $day = date('d', strtotime($data->created_at));
-                    $month = date('m', strtotime($data->created_at));
-                    $time = date('H:i:s', strtotime($data->created_at));
-                    $res = $year.'年'.$month.'月'.$day.'日'.' '.$time;
-                ?>
-                <td style="display: none">{{$k+1}}</td>
-                <td>{{ $res }}</td>
-                <td><a href="{{ route('talkroom-details', ['talkroom_id' => $data->id])}}"> {{ $data->service->title }}</a></td>
-                <td><a href="{{ route('user-details', ['seller_id' => $data->seller_id])}}"> {{ $data->seller->name}}</a></td>
-                <td><a href="{{ route('user-details', ['buyer_id' => $data->buyer_id])}}"> {{ $data->buyer->name}}</a></td>
-                <td>{{ $data->duration }}</td>
-                <td>{{ $data->cost }}</td>
+    <table id="myTable" class="table table-bordered table-striped dataTable no-footer" role="grid" aria-describedby="myTable_info">
+        <thead>
+            <tr role="row">
+                <th style="display: none">SL</th>
+                <th>Date&Time</th>
+                <th >Talk Room Title</th>
+                <th >Seller Name</th>
+                <th>Buyer Name</th>
+                <th>Talk Time</th>
+                <th>Amount</th>
             </tr>
-
+        </thead>
+        <tbody>
+            @foreach($talkrooms as $k => $data)
+                <tr role="row" class="odd">
+                    <?php
+                        $year = date('Y', strtotime($data->created_at));
+                        $day = date('d', strtotime($data->created_at));
+                        $month = date('m', strtotime($data->created_at));
+                        $time = date('H:i:s', strtotime($data->created_at));
+                        $res = $year.'年'.$month.'月'.$day.'日'.' '.$time;
+                    ?>
+                    <td style="display: none">{{$k+1}}</td>
+                    <td>{{ $res }}</td>
+                    <td><a href="{{ route('talkroom-details', ['talkroom_id' => $data->id])}}"> {{ $data->service->title }}</a></td>
+                    <td><a href="{{ route('user-details', ['seller_id' => $data->seller_id])}}"> {{ $data->seller->name}}</a></td>
+                    <td><a href="{{ route('user-details', ['buyer_id' => $data->buyer_id])}}"> {{ $data->buyer->name}}</a></td>
+                    <td>{{ $data->duration }}</td>
+                    <td>{{ $data->cost }}</td>
+                </tr>
             @endforeach
-                
-                
-
-            </tbody>
-        </table>
-
-            
+        </tbody>
+    </table>
 </div>
-
 @endsection
 
 @section('script')
@@ -115,27 +97,5 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
     });
-
-  
-        // function doAjax(id) {
-        
-        //     var ajaxurl = "{{route('change-user-status')}}";
-            
-        //     $.ajax({
-        //         url: ajaxurl,
-        //         type: "POST",
-        //         data: {
-        //                 '_token': "{{ csrf_token() }}",
-        //                 'id': id
-        //         },
-        //         success: function(data){
-        //             location.reload();
-        //         },
-        //     });
-        // }
-
-
-    
-    
 </script>
 @endsection

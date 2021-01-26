@@ -1,24 +1,33 @@
 @extends('navbar')
 
 @section('custom_css')
-    <style>
-        
-    </style>
 @stop
 
-
 @section('content')
-    
 <div class="col-md-12 alternates" style="min-height: 850px">
     <div class="col-md-12 col-sm-12" style="padding: 0px !important">
         <div class="col-md-12 mb-3 remove-pads">
-            <div class="mb-2"><span class="text-16">電話通話内容</span></div>
+            @if($talkroom->seller_id != Auth::user()->id)
+                <div class="text-center pb-2">
+                    <span class="text-16">出品者から電話がかかってきますので、この画面まましばらくお待ちください。</span>
+                </div>
+            @endif
+            <div class="mb-2">
+                <span class="text-16">電話通話内容</span>
+            </div>
+            @if($talkroom->seller_id == Auth::user()->id)
+                <div class="pb-2">
+                    <span class="text-16">購入者： {{$talkroom->buyer->name}}様</span>
+                </div>
+            @endif
             <div class="p-2 text-14" style="border: 2px solid rgba(158, 148, 148, 0.5)">
                 <div class="col-md-12 row" style="font-size: 14px"><a class="anchorColor" href="{{route('user-display-service', ['id' => $talkroom->service->id])}}"><h6>{{$talkroom->service->title}}</h6></a></div>
                 <div class="row pl-3">
                     <div class="col-md-8 p-0">
-                        <div style="height: 30px;">無料通話回数{{$talkroom->service->free_mint_iteration}}回（毎回{{$talkroom->service->free_min}}分)</div>
-                        <div style=""><a class="anchorColor" href="{{route('user-page-profile', ['id' => $talkroom->service->seller_id])}}">{{$talkroom->service->createdBy->name}} {{$talkroom->service->createdBy->last_name}}</a></div>
+                        <div class="row">
+                            <div>お試し通話機能あり</div><div>（開始から{{$talkroom->service->free_min}}分までを{{$talkroom->service->free_mint_iteration}}回無料）</div>
+                        </div>
+                        <div class="mt-2"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $talkroom->service->seller_id])}}">{{$talkroom->service->createdBy->name}} {{$talkroom->service->createdBy->last_name}}</a></div>
                     </div>
                     <div class="col-md-4 text-center p-0">
                         <span style="font-size: 35px">{{$talkroom->service->price}}</span><span> 円 / 分</span>
@@ -27,7 +36,7 @@
             </div>  
         </div>
 
-        <div class="col-md-8 mb-5 text-14 remove-pads">
+        <div class="col-md-8 mb-3 text-14 remove-pads">
             <div class="p-2" style="border: 2px solid rgba(158, 148, 148, 0.5)">
                 <div class="" style="">
                     <table style="width: 100%">
@@ -64,6 +73,11 @@
                 </div> 
             </div>
         </div>
+        <div class="col-md-8 mb-3 text-16 remove-pads">
+            <span>
+                ※別のアプリでマイクを利用している場合、正常に通話できない場合があります。<br>一度、アプリを終了してから再度おかけなおしください。
+            </span>
+        </div>
 
         @if($talkroom->seller_id == Auth::user()->id)
             <div class="col-md-12 mb-5 text-center remove-pads">
@@ -90,7 +104,6 @@
                 <div class="user-wrapper p-0" id="messages" >
                 </div>
             </div>
-            
         </div>
 
         <div class="col-md-12 mb-5 mt-3 remove-pads">
@@ -110,8 +123,6 @@
                 <div class="col-md-1"></div>
             </div>
         </div>
-
-
     </div>
 
     <!-- MODAL -->
@@ -137,17 +148,10 @@
           </div>
         </div>
       </div>
-
-</div>    
-               
-           
+</div>
         
 @stop
-
-
-
 @section('custom_js')
-
 
 <script>
     // ajax setup form csrf token
@@ -179,8 +183,6 @@
             return true;
         });
     });
-    
-
 
     var auth_id = "{{ Auth::id() }}";
     var seller_id = "{{$talkroom->seller_id}}";
@@ -303,9 +305,6 @@
             scrollTop: $('.message-wrapper').get(0).scrollHeight
         },50);
     }
-
-    
-    
 </script>
 
 
@@ -323,8 +322,7 @@
         price: '{{$talkroom->service->price}}',
     };
     
-    
-    // document.getElementById('call').addEventListener('click', () => {
+
     function call_him(){
         var time_av = $('#limit').val();
         if(time_av != ''){
@@ -337,7 +335,6 @@
             pic: '',
             limit: time_av
         }
-        // chat.call(options);
         window.chat.call(options);
     };
 </script>
@@ -345,11 +342,6 @@
 <script>
     document.getElementById('start_call').addEventListener('click', () => {
         call_him();
-        // if($('#flag').val() == 0){
-        //     document.getElementById('id02').style.display='block';
-        // } else {
-        //     call_him();
-        // }
     });
 </script>
 

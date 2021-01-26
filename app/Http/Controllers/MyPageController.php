@@ -79,9 +79,7 @@ class MyPageController extends Controller
     public function messageNotification()
     {
         $user = Auth::user()->id;
-
-        $new_chat = Chat::where('receiver_id', $user)->where('receive_status', 1)->get()->count();
-
+        $new_chat = Chat::where('receiver_id', $user)->where('receive_status', 0)->get()->count();
         return $new_chat;
     }
 
@@ -147,13 +145,10 @@ class MyPageController extends Controller
         // gateway data preparation
         $id = Auth::user()->id;
         $amount = Wallet::where('user_id', $id)->first()->amount;
-        // dd($amount);
         $fromUser = User::select('email', 'name')->where('id', $id)->first();
         $email = $fromUser->email;
         $name = $fromUser->name;
         $TransactionId = 'YT-'.time().'-'.mt_rand(1000, 9999).'-BL';
-        
-
 
         // Regular 
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
@@ -186,9 +181,6 @@ class MyPageController extends Controller
         if($SiteIdCheck == $request->SiteId && $SitePassCheck == $request->SitePass){
             $depositor = $request->CustomerId;
             $Amount = $request->Amount;
-           
-            
-            // $Result = $request->Result;
     
             $user = User::where('id', $depositor)->first();
             $user->wallet_balance = $user->wallet_balance + $request->Amount;
@@ -214,35 +206,16 @@ class MyPageController extends Controller
             $gatewayresponse->other = $request->other;
             $gatewayresponse->Result = $request->Result;
             $gatewayresponse->save();
-
-            // return response()->json([
-            //     "status" => 200
-            //   ]);
         } else{
             return response()->json([
                 "status" => 404
               ]);
         }
-        
-        
         return redirect()->route('my-wallet');
     }
-    
-   
+
     public function addwalletaction(Request $request)
     {
-        // $user = User::where('id', Auth::user()->id)->first();
-        // $user->wallet_balance = $user->wallet_balance + $request->amount;
-        // $user->save();
-
-        // $wallet = new Wallet();
-        // $wallet->user_id = Auth::user()->id;
-        // $wallet->service_id = 0;
-        // $wallet->expense_type = 3;
-        // $wallet->amount = $request->amount;
-        // $wallet->save();
-        // return redirect()->route('my-wallet');
-
         $method = $request->method + 1;
         if($method == 3){
             $newpen = new PendingBankDeposit();
@@ -252,58 +225,10 @@ class MyPageController extends Controller
             $newpen->save();
 
             $user = User::find(Auth::user()->id);
-
-            // $emailData = [
-            //     'subject' => '【ココテル】ポイント購入振込先のお知らせ',
-            //     'from_email' => 'info@coco-tel.biz',
-            //     'from_name' => 'cocotel',
-            //     'amount' => $request->amount,
-            //     'template' => 'user.email.bankdeposit',
-            //     'root'     => $request->root()
-            // ];
-    
-            // Mail::to($user->email)
-            //     ->send(new Common($emailData));
-
-
-        } else if($method == 2){
-            // $y = date('Y');
-            // $m = date('m');
-            // $d = date('d');
-            // $h = date('H');
-            // $i = date('i');
-            // $s = date('s');
-            // $shopcode = $y.$m.$d.$h.$i.$s.rand(10, 1000);
-            // $user = User::find(Auth::user()->id);
-            // $data = [
-            //     'ShopId'        => 'j0026s001',
-            //     'Job'           => 'CAPTURE',
-            //     'Amount'        => $request->amount,
-            //     'ShopCode'      => $shopcode,
-            //     'RetUrl'        => 'https://coco-tel.com/addwallet-callback',
-            //     'CancelUrl'     => 'https://coco-tel.com/addwallet-cancel',
-            //     'Email'         => $user->email,
-            //     'Phone'         => isset($user->profile->phone)?$user->profile->phone:'No phone no provided',
-            //     'ItemType'      => 0,
-            //     'Item'          => $request->amount.'P'.'(¥'.$request->amount.')',
-            //     'ShopData1'     => Auth::user()->id,
-            // ];
-            // return view('personal.gateway', $data);
-            // $wallet_ex = new Wallet();
-            // $wallet_ex->user_id = Auth::user()->id;
-            // $wallet_ex->service_id = 0;
-            // $wallet_ex->expense_type = $method;
-            // $wallet_ex->amount = $request->amount;
-            // $wallet_ex->save();
-
-            // $user = User::find(Auth::user()->id);
-            // $user->wallet_balance = $user->wallet_balance + $request->amount;
-            // $user->save();
-
-            // return redirect()->route('my-wallet');
+        }
+        else if($method == 2){
             $depositor = Auth::user()->id;
             $Amount = $request->amount;
-            // $Result = $request->Result;
 
             $user = User::where('id', $depositor)->first();
             $user->wallet_balance = $user->wallet_balance + $Amount;
@@ -315,7 +240,6 @@ class MyPageController extends Controller
             $wallet->expense_type = 2;
             $wallet->amount = $Amount;
             $wallet->save();
-            // return redirect()->route('addwallet-callback');
         }
         return redirect()->route('my-wallet');
     }
@@ -355,7 +279,6 @@ class MyPageController extends Controller
         $user = User::find(Auth::user()->id);
         $user->earning_balance = $user->earning_balance - $request->amount;
         $user->save();
-
 
         $data = [
             'status' => 200
@@ -401,14 +324,12 @@ class MyPageController extends Controller
         $follow =  Follow::where('seller_id', $user_id)->where('follower_id', $id)->first();
         $completed_services = Talkroom::where('seller_id', $user_id)->where('status', 1)->get()->count();
 
-        //return $follow_count;
-
         $services = Service::where('seller_id', $user_id)->get();
         $reviews = Review::where('seller_id', $user_id)->get();
         $avg_rating = Review::where('seller_id', $user_id)->avg('rating');
         $avg_rating = number_format($avg_rating,1);
         $total_ratings = $reviews->count();
-        //return $avg_rating;
+
         $data = [
             'personal' => $personal,
             'profile_info' => $profile_info,
@@ -421,13 +342,11 @@ class MyPageController extends Controller
             'total_ratings' => $total_ratings,
             'completed_services' => $completed_services
         ];
-        // dd($personal);
         return view('userpage-profile', $data);
     }
 
     public function userFollow($seller_id)
     {
-        //return $seller_id;
         $id = Auth::user()->id;
         
         $seller = Follow::where('seller_id', $seller_id)->where('follower_id', $id)->first();
@@ -435,13 +354,14 @@ class MyPageController extends Controller
             $new = new Follow;
             $new->seller_id = $seller_id;
             $new->follower_id = $id;
-            // dd($new);
             $new->status = 2;
             $new->save();
-        }elseif($seller->status == 1){
+        }
+        elseif($seller->status == 1){
             $seller->status = 2;
             $seller->save();
-        }elseif($seller->status == 2){
+        }
+        elseif($seller->status == 2){
             $seller->status = 1;
             $seller->save();
         }
@@ -455,7 +375,6 @@ class MyPageController extends Controller
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $prev = Profile::where('user_id', $id)->first();
 
-        //return $prev;
         $data = [
             'profile' => $prev,
             'personal' => $personal
@@ -465,15 +384,13 @@ class MyPageController extends Controller
 
     public function profileEditAction(Request $request)
     {
-        //return $request;
-        // dd($request);
         if(Auth::user()->id){
             if ($request->hasFile('dp')) {
                 $extension = $request->dp->extension();
                 $name = time().rand(1000,9999).'.'.$extension;
                 $img = Image::make($request->dp);
                 $img->save(public_path().'/assets/user/'.$name);
-                // $path = $request->image->storeAs('products', $name);
+                $img->save(public_path().'/assets/user/'.$name);
             }
             if(isset($name)){
                 $profiledata = [
@@ -504,11 +421,13 @@ class MyPageController extends Controller
                 'note' =>isset($request->note)?$request->note:''
             ];
             $updateOrder = Profile::where('user_id', Auth::user()->id)->update($profiledata);
+            $updateOrder = User::where('id', Auth::user()->id)->update(array('name' => $request->fname));;
         } else {
             return redirect()->to(route('user-login'));
         }
         return redirect()->to(route('my-page-profile'));
     }
+
     public function getMessage(Request $request)
     {
         DB::enableQueryLog();
@@ -520,6 +439,11 @@ class MyPageController extends Controller
             'to' => $to,
         ];
         $conv_left = Chat::select('*')->skip(10)->take(10)->get();
+
+        if($request->readStatus){
+            $this->messageReceiveStatusChange($from, $to);
+        }
+
         $conv = DB::table('chats')
                     ->select('*')
                     ->where(function ($query) use($from, $to) {
@@ -535,10 +459,10 @@ class MyPageController extends Controller
         $html_text = '<table style="width: 100%;><tbody>';
         foreach($conv as $con){
             if($con->sender_id == $from)
-                {$html_text .= '<tr><td align="left" style="border: none !important"><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2;
+                {$html_text .= '<tr><td align="left" style="border: none !important"><span class="pl-2">'.$con->created_at.'</span><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2;
                 padding: 10px; text-align: left; font-size: 13px; background-color: #e8e8e8">'.nl2br($con->message).'</p></td></tr>';}
             else if($con->sender_id != $from)
-                {$html_text .= '<tr><td align="right" style="border: none !important"><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2; 
+                {$html_text .= '<tr><td align="right" style="border: none !important"><span class="pr-2">'.$con->created_at.'</span><p style="width: 60%; border-radius: 10px; border: 1px solid #d2d2d2; 
                 padding: 10px; text-align: left; font-size: 13px; background-color: #a8c2ce">'.nl2br($con->message).'</p></td></tr>';}
         }
         $html_text .= '</table></tbody>';
@@ -547,7 +471,6 @@ class MyPageController extends Controller
 
     public function sendMessage(Request $request)
     {
-        // dd($request);
         $sender_id = Auth::user()->id;
         $Message = new Chat();
         if($request->receiver >=0 ) 
@@ -555,11 +478,11 @@ class MyPageController extends Controller
         else
             $Message->receiver_id = $request->to_id;
         $Message->sender_id = $sender_id ;
-        // $Message->subject = $request->subject;
         if($request->message_text)
             $Message->message = $request->message_text;
         else
             $Message->message = $request->message;
+        $Message->receive_status = 0;
         $Message->save();
 
         if($request->receiver == 0){
@@ -569,7 +492,6 @@ class MyPageController extends Controller
                                             $query->where('receiver_id', $sender_id)
                                                   ->where('sender_id', 0);
                                         })->first();
-                                        //dd($top_message);
             if(!$top_message){
                 $chat_thread = new ChatThread();
                 $chat_thread->sender_id = $sender_id;
@@ -587,7 +509,6 @@ class MyPageController extends Controller
             $user->is_admin_checked = 1;
             $user->save();
         }
-
         return redirect()->back()->with('success', 'Message sent successfully');
     }
 
@@ -597,7 +518,6 @@ class MyPageController extends Controller
         $totalReservation = Reservation::where('reserver_id', $id)->where('status', 2)->count();
         $personal = User::select('id','email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $prev = Profile::where('user_id', $id)->first();
-        //$my_his = ServiceHistory::where('receiver_id', $id)->with('service')->with('seller')->get();
         $my_his = Talkroom::where('buyer_id', $id)->where('status', 1)->orderBy('id', 'desc')->get();
         
         $data = [
@@ -688,29 +608,51 @@ class MyPageController extends Controller
 
     public function inboxMessage(Request $request)
     {
-        $id = Auth::user()->id;
-        $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
-        $prev = Profile::where('user_id', $id)->first();
-        // $data['messages'] = Message::where('to_id', Auth::user()->id)->where('is_deleted', false)->orderBy('created_at', 'desc')->paginate(20);
-        $left = Chat::select('sender_id AS other_side')->where('receiver_id', Auth::user()->id)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('sender_id');
-        $right = Chat::select('receiver_id AS other_side')->where('sender_id', Auth::user()->id)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('receiver_id')->union($left)->get();
-        // $threads = $left->merge($right);
-        $threads = $right;
+        $user = Auth::user()->id;
+        $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $user)->first();
+        $prev = Profile::where('user_id', $user)->first();
+        $left = Chat::select('sender_id AS other_side','receive_status')->where('receiver_id', $user)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('sender_id');
+        $right = Chat::select('receiver_id AS other_side','receive_status')->where('sender_id', $user)->with('threads_all')->with('threads_all.profile')->orderBy('created_at', 'desc')->groupBy('receiver_id')->union($left)->get();
+
+        $msgList = array();
+        foreach ($right as $chat){
+            $unread = Chat::where(function($q) use($chat, $user) {
+                                $q->where(function ($r) use($chat, $user) {
+                                    $r->where('receiver_id', $user)->Where('sender_id', $chat->other_side);
+                                })
+                                ->orWhere(function ($s) use($chat, $user){
+                                    $s->where('sender_id', $user)->Where('receiver_id', $chat->other_side);
+                                });
+                            })
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+            array_push($msgList, $unread);
+        }
+
         $data = [
             'personal' => $personal,
-            'messages' => $threads,
+            'thread' => $right,
+            'messages' => $msgList,
             'profile' => $prev
         ];
-        // return view('user.read_message', $data);
-			return view('personal.mypage-chat', $data);
-
+        return view('personal.mypage-chat', $data);
     }
 
     public function indUnread(Request $request)
     {
         $other = $request->sender;
         $receiver = Auth::user()->id;
-        $count = Chat::where('sender_id', $other)->where('receiver_id', $receiver)->where('receive_status', 1)->count();
+        $count = Chat::where('sender_id', $other)->where('receiver_id', $receiver)->where('receive_status', 0)->count();
         return $count;
+    }
+
+    public function messageReceiveStatusChange($receiver, $sender)
+    {
+        DB::table('chats')
+            ->where('receiver_id', $receiver)
+            ->where('sender_id', $sender)
+            ->where('receive_status', 0)
+            ->update(['receive_status' => 1]);
+        return redirect()->back();
     }
 }

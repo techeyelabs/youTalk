@@ -28,59 +28,37 @@
         </div> 
     </div>  
     <div class="clear"></div><hr/>
-<div class="table-responsive col-mod-12">
-    <div class="col-md-12">
-        <form action="{{route('mass-message')}}" method="POST">
-        {{ csrf_field() }}
-
-            <div class="col-md-4" style="border: 1px solid rgba(184, 160, 160, 0.651); margin-right:20px;box-shadow: 2px 2px 10px #888888;">
-            
-                <div class="col-md-12" style="margin: 16px 0px" >
-                    <div><h4>Select Users</h4></div><hr>
-                    <ul style="list-style: none; padding: 0px">
-                        <li><input type="checkbox" id="select_all"/> Selecct All</li><hr>
-        
-                        @foreach($users as $user)
-                        <li ><input style="display: inline; margin-right:10px; margin-bottom:10px" class="checkbox" type="checkbox" name="user[]" value="{{$user->id}}">{{$user->name}}</li>
-                            
-                        @endforeach
-                        
-                        {{-- <li><input class="checkbox" type="checkbox" name="check[]"> This is Item 2</li>
-                        <li><input class="checkbox" type="checkbox" name="check[]"> This is Item 3</li>
-                        <li><input class="checkbox" type="checkbox" name="check[]"> This is Item 4</li>
-                        <li><input class="checkbox" type="checkbox" name="check[]"> This is Item 5</li>
-                        <li><input class="checkbox" type="checkbox" name="check[]"> This is Item 6</li> --}}
-                    </ul>    
-                </div>
-                
-                
-            </div>
-            <div class="col-md-4" style="border: 1px solid rgba(184, 160, 160, 0.651);padding-left:0px;box-shadow: 2px 2px 10px #888888;">
-                <div class="col-md-12" style="margin: 16px 0px">
-                    <h4>Message</h4><hr>
-                    <div class="form-body">
-                        <textarea id="message_text" name="message_text" placeholder="type tour text here..." style="border: 1px solid #FFFFFF; width: 100%; border-radius: 10px; margin-bottom: 20px"></textarea>
+    <div class="table-responsive col-mod-12">
+        <div class="col-md-12">
+            <form action="{{route('mass-message')}}" method="POST">
+            {{ csrf_field() }}
+                <div class="col-md-4" style="border: 1px solid rgba(184, 160, 160, 0.651); margin-right:20px;box-shadow: 2px 2px 10px #888888;">
+                    <div class="col-md-12" style="margin: 16px 0px" >
+                        <div><h4>Select Users</h4></div><hr>
+                        <ul style="list-style: none; padding: 0px">
+                            <li><input type="checkbox" id="select_all"/> Selecct All</li><hr>
+                            @foreach($users as $user)
+                                <li ><input style="display: inline; margin-right:10px; margin-bottom:10px" class="checkbox" type="checkbox" name="user[]" value="{{$user->id}}">{{$user->name}}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                    <button class="btn btn-info" style="margin-bottom: 10px"  type="submit">send</button>
                 </div>
-                
-            </div>
-        </form>
-
-        
-
+                <div class="col-md-4" style="border: 1px solid rgba(184, 160, 160, 0.651);padding-left:0px;box-shadow: 2px 2px 10px #888888;">
+                    <div class="col-md-12" style="margin: 16px 0px">
+                        <h4>Message</h4><hr>
+                        <div class="form-body">
+                            <textarea id="message_text" name="message_text" placeholder="type tour text here..." style="border: 1px solid #FFFFFF; width: 100%; border-radius: 10px; margin-bottom: 20px"></textarea>
+                        </div>
+                        <button class="btn btn-info" style="margin-bottom: 10px"  type="submit">send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    
-    
-
-            
 </div>
-
-
 @endsection
 
 @section('script')
-
 <script>
     var select_all = document.getElementById("select_all"); //select all checkbox
     var checkboxes = document.getElementsByClassName("checkbox"); //checkbox items
@@ -91,7 +69,6 @@
             checkboxes[i].checked = select_all.checked;
         }
     });
-
 
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
@@ -158,26 +135,21 @@
         $('[data-toggle="tooltip"]').tooltip(); 
     });
 
-  
-        function doAjax(id) {
-        
-            var ajaxurl = "{{route('change-user-status')}}";
-            
-            $.ajax({
-                url: ajaxurl,
-                type: "POST",
-                data: {
-                        '_token': "{{ csrf_token() }}",
-                        'id': id
-                },
-                success: function(data){
-                    location.reload();
-                },
-            });
-        }
+    function doAjax(id) {
 
+        var ajaxurl = "{{route('change-user-status')}}";
 
-    
-    
+        $.ajax({
+            url: ajaxurl,
+            type: "POST",
+            data: {
+                    '_token': "{{ csrf_token() }}",
+                    'id': id
+            },
+            success: function(data){
+                location.reload();
+            },
+        });
+    }
 </script>
 @endsection

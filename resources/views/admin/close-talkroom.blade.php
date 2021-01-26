@@ -1,6 +1,5 @@
 @extends('admin.layouts.main-admin')
 
-
 @section('custom_css')
     <style>
         *{
@@ -47,7 +46,6 @@
 
 @section('content')
 <div class="white-box" style="min-height: 1050px">
-
     <div class="col-mod-12 alternates" style="min-height: 850px">
         <div class="col-mod-12 col-sm-12">
             <div class="col-mod-12 m-b-3">
@@ -64,9 +62,7 @@
                         </div>
                     </div>  
                 </div>
-                
             </div>
-
             <div class="col-md-8 m-b-5 text-14" style="padding: 0px">
                 <div class="p-2" style="border: 2px solid rgba(158, 148, 148, 0.5); padding:10px">
                     <div class="row" style="">
@@ -78,9 +74,7 @@
                         <div class="col-md-4">{{$talkroom->cost}}円</div>
                     </div> 
                 </div>
-                
             </div>
-
             <div class="col-md-12" style="padding: 0px; margin-top:20px">
                 <div style="margin-bottom: 10px"><span style="font-size: 16px">電話日時2020年5月25日19時開始</span></div>
                 <div class="message-wrapper" style="border: 2px solid rgba(158, 148, 148, 0.5); height: 600px; overflow-y:auto; padding:10px">
@@ -89,46 +83,25 @@
                         <p>
                             Welcome. Talkroom opne.
                         </p>
-
                     </div> <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40); margin:5px 0px" />
                     <div class="user-wrapper p-0 text-14" id="messages" >
-
                     </div>
-                    
                 </div>
-                
             </div>
-
             <div class="col-md-12" style="padding: 0px; margin-top:10px 0px">
                 <div class="p-2" style="border: 2px solid rgba(158, 148, 148, 0.5); padding:10px">
                     <div class="m-b-2 col-mod-12 text-center" style="font-size: 16px"><span>トークルーム終了</span></div>
                 </div>
-                
             </div>
-
             <div style="height: 300px">
             </div>
-
-
-
         </div>
-    
-
-    </div>    
-               
-           
-        
-
-             
-
-            
+    </div>
 </div>
 
 @endsection
 
 @section('script')
 <script type="text/javascript">
-    
-    
 </script>
 @endsection

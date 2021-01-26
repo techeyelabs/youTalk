@@ -42,13 +42,17 @@ class ServiceController extends Controller
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $user_id)->first();
         $prev = Profile::where('user_id', $user_id)->first();
         $categories = Category::get();
+        $service = count(Service::where('seller_id', $user_id)->get());
+
         $data = [
             'personal' => $personal,
             'profile' => $prev,
-            'categories' => $categories
+            'categories' => $categories,
+            'serviceCount' => $service
         ];
         return view('createservice', $data);
     }
+
     public function edit($id)
     {
         $user_id = Auth::user()->id;
@@ -60,40 +64,31 @@ class ServiceController extends Controller
             'personal' => $personal,
             'profile' => $prev,
             'service_prev' => $service_prev,
-            'categories' => $categories
+            'categories' => $categories,
+            'serviceCount' => 1 //used to stop the scope of creating more than 2 services
         ];
         return view('createservice', $data);
     }
+
     public function userDisplay($id)
     {
         $service = Service::with('createdBy')->with('createdBy.profile')->with('faqs')->where('id', $id)->first();
 
-        
-        //$data['service'] = $service;
         if (isset(Auth::user()->id)){
             $user_id = Auth::user()->id;
             $prev = Profile::where('user_id', $user_id)->first();
         } else {
             $prev = '';
         }
-        
-        // $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $user_id)->first();
-        
-        // $service = Service::with('createdBy')->with('createdBy.profile')->with('faqs')->where('id', $id)->first();
-        // $data['service'] = $service;
-        // $data['personal'] = $personal;
-        // $data['profile'] = $prev;
-
         $reviews = Review::where('seller_id', $service->seller_id)->where('service_id', $id)->get();
         $avg_rating = Review::where('seller_id', $service->seller_id)->where('service_id', $id)->avg('rating');
         $avg_rating = number_format($avg_rating,1);
         $total_ratings = $reviews->count();
-        //$service_in_talkroom = Talkroom::where('service_id', $id)->where('status', 2)->get()->count();
         $service_data = Service::find($id);
-        //return $service_data;
+
         $call_possible_seller = 0;
         $call_possible_buyer = 0;
-        //return $call_possible_buyer;
+
         if(isset(Auth::user()->id)){
             $user_id = Auth::user()->id;
             $call_possible_seller = Talkroom::where('status', 2)
@@ -116,9 +111,9 @@ class ServiceController extends Controller
             'call_possible_seller' =>$call_possible_seller,
             'call_possible_buyer' => $call_possible_buyer
         ];
-
         return view('service_details_user', $data);
     }
+
     public function userDisplaySelf($id)
     {
         $user_id = Auth::user()->id;
@@ -133,22 +128,22 @@ class ServiceController extends Controller
 
     public function newServicePost(Request $request)
     {
-        //return $request;
-        // dd($request);
         if(Auth::user()->id){
             if($request->edit_flag == 0){
                 if ($request->hasFile('thumbimg')) {
                     $extension = $request->thumbimg->extension();
-                    $name = time().rand(1000,9999).'.'.$extension;
+                    $imgName = time().rand(1000,9999).'.'.$extension;
                     $img = Image::make($request->thumbimg);
-                    $img->save(public_path().'/assets/service/'.$name);
+                    $img->save(public_path().'/assets/service/'.$imgName);
                     // $path = $request->image->storeAs('products', $name);
+                }
+                else{
+                    $imgName = null;
                 }
                 $title = isset($request->title)?$request->title:'';
                 $price = isset($request->price)?$request->price:0;
                 $description = isset($request->description)?$request->description:'';
                 $instruction = isset($request->instructions)?$request->instructions:'';
-                $thunbimg = $name;
         
                 $ser = new Service();
                 $ser->category_id = $request->service_category;
@@ -157,19 +152,13 @@ class ServiceController extends Controller
                 $ser->price = $price;
                 $ser->free_min = isset($request->min)?$request->min:0;
                 $ser->free_mint_iteration = isset($request->times)?$request->times:0;
-                $ser->thumbnail = $thunbimg;
+                $ser->thumbnail = $imgName;
                 $ser->details = $description;
                 $ser->payment_instructions = $instruction;
                 $ser->status = 1;
                 $ser->save();
-    
-                // $faq = new Faq();
-                // $faq->user_id = Auth::user()->id;
-                // $faq->service_id = $ser->id;
-                // $faq->question = $request->qstn;
-                // $faq->ans = $request->ans;
-                // $faq->save();
-            } else {
+            }
+            else {
                 $name = '';
                 if ($request->hasFile('thumbimg')) {
                     $extension = $request->thumbimg->extension();
@@ -210,6 +199,7 @@ class ServiceController extends Controller
         $service->save();
         return redirect()->back();
     }
+
     public function reservationChange($stat, $id)
     {
         $service = Service::where('id', $id)->first();
@@ -262,11 +252,8 @@ class ServiceController extends Controller
 
     public function postReserve(Request $request)
     {
-        // dd($request);
-        //return $request;
         $buyer = Auth::user()->id;
         $service = Service::where('id', $request->service_id)->first();
-        //return $seller_id;
         
         $card = new CardInfo();
         $card->card_name = $request->cardname;
@@ -277,7 +264,6 @@ class ServiceController extends Controller
         $card->buyer_id = $buyer;
         $card->save();
 
-
         $res = new Reservation();
         $res->service_id = $request->service_id;
         $res->seller_id = $service->seller_id;
@@ -286,7 +272,6 @@ class ServiceController extends Controller
         $res->status = 1;
         $res->completion_status = 1;
         $res->save();
-
 
         $d = str_split($request->d_1);
         $year = implode(array_slice($d, 0, 4));
@@ -345,9 +330,7 @@ class ServiceController extends Controller
             'profile_info' => $profile_info,
             'profile' => $profile_info,
         ];
-        // return view('personal.mypage-profile', $data);
         return redirect()->route('user-display-service', ['id' => $request->service_id]);
-
     }
 
     public function reservationList()
@@ -383,6 +366,7 @@ class ServiceController extends Controller
         ];
         return view('seller-res-list', $data);
     }
+
     public function historyListindService($id)
     {
         $user_id = Auth::user()->id;
@@ -402,6 +386,7 @@ class ServiceController extends Controller
         ];
         return view('seller-his-list', $data);
     }
+
     public function accepted_res($id)
     {
         $user_id = Auth::user()->id;
@@ -511,10 +496,8 @@ class ServiceController extends Controller
 
     public function getReservationRequest(Request $request)
     {
-      
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
-       // dd($time_slot);
       
         $s_id = $request->service_id;
         $reservation_req = Reservation::where('service_id', $s_id)->where('status', 1)->get();
@@ -640,6 +623,18 @@ class ServiceController extends Controller
             $reservation->status = 2;
             $reservation->save();
         }
+
+        $emailData = [
+            'buyer_name' => $reservation->reserver->name,
+            'subject' => '【YouTalk】電話予約確定のお知らせ！',
+            'from_email' => 'support@youtalk.tel',
+            'from_name' => 'YouTalk',
+            'template' => 'user.email.reservation_req_confirm',
+            'root'     => $request->root()
+        ];
+
+        Mail::to($reservation->reserver->email)
+            ->send(new Common($emailData));
         return redirect()->back();
     }
 
@@ -825,12 +820,7 @@ class ServiceController extends Controller
                     }
                 }
             }
-
-
         }
-        //return $res_dateTime;
-
-
     }
 
     public function openReservedTalkroom()
@@ -1009,11 +999,8 @@ class ServiceController extends Controller
         $test->current_talkroom_close = date('Y-m-d H:i:s');
         $test->save();
 
-       
-
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
-        // dd($time_slot);
 
         $res_dateTime = [];
         $active_talkrooms = Talkroom::where('status', 2)->get();
@@ -1080,10 +1067,8 @@ class ServiceController extends Controller
                 $data->status = 1;
                 $data->save();
             }
-            
             $res_dateTime = [];
         }
-
     }
 
     public function runningCallClose()
@@ -1152,7 +1137,7 @@ class ServiceController extends Controller
                     'amount' => $data->cost,
                     'from_email' => 'support@youtalk.tel',
                     'from_name' => 'YouTalk',
-                    'template' => 'emailtemplates.layouts.talkroom-close-notification',
+                    'template' => 'emailtemplates.layouts.autoTalkroomCloseNotification',
                     // 'root'     => $request->root(),
                     'email'     => $data->buyer->email
                 ];
@@ -1160,8 +1145,6 @@ class ServiceController extends Controller
                 Mail::to($data->buyer->email)
                     ->send(new Common($emailData));
             }
-
         }
     }
-
 }

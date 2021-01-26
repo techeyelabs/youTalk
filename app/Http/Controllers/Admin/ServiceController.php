@@ -17,34 +17,16 @@ class ServiceController extends Controller
 
         $recommendation_count = Service::where('recommendation', '>', 0)->get()->count();
         $recommendations = Service::where('recommendation', '>', 0)->get();
-        //return $recommendation_count;
 
         $array = [1,2,3];
         foreach($recommendations as $data){
-            //$array = \array_diff($array, [$data->recommendation]);
             $temp = $data->recommendation;
             for($j = 0 ; $j < sizeof($array) ; ++$j){
                 if($array[$j] == $temp){
                     array_splice($array, $j, 1);
                 }
             }
-            
         }
-
-        
-
-        //return $array;
-        // $arr = array( 
-        //     '1', // [0] 
-        //     '2', // [1] 
-        //     '3' // [2] 
-        // );
-        // $arr2 = [1,2,3];
-
-        // array_splice($arr2, 1, 1);
-
-        // return $arr2;
-
         return view('admin.service')->with([
             'services' => $services,
             'recom_count' => $recommendation_count,

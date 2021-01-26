@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers;
 
+use http\Exception;
 use Illuminate\Http\Request;
 use App\Mail\Common;
 use App\Models\Profile;
@@ -32,7 +33,6 @@ class AuthController extends Controller
     }
 
     public function login(){
-        //return $id;
         if (Auth::user()){
             return redirect()->route('front-home');
         }
@@ -40,13 +40,11 @@ class AuthController extends Controller
     }
 
     public function loginFromService($id){
-        //return $id;
         return view('auth.login', ['service_id'=> $id]);
     }
     
     public function loginAction(Request $request){
-        //return $request;
-        if (!Auth::attempt($request->only(['email', 'password']) )) {
+        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1])) {
             return redirect()->back()->with('error', 'Credentials do not match');
         }
         if($request->service_id == 0){
@@ -54,7 +52,6 @@ class AuthController extends Controller
         }else{
             return Redirect::route('user-display-service', ['id'=> $request->service_id]);
         }
-        // return 'hi';
     }
 
     public function user_registration_rules(array $data)
@@ -84,8 +81,6 @@ class AuthController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
         }
 
-
-        // New user add
         $User = new User();
         $User->name = 'welcome user';
         $User->email = $request->email;
@@ -93,8 +88,6 @@ class AuthController extends Controller
         $User->register_token = time().rand(1000,9999);
         $User->save();
 
-       
-        // new profile add
         $pro = new Profile();
         $pro->picture = 'default.png';
         $pro->save();
@@ -111,45 +104,33 @@ class AuthController extends Controller
             'email'     => $request->email
         ];
 
-        Mail::to($request->email)
-            ->send(new Common($emailData));
-
+        try {
+            Mail::to($request->email)
+                ->send(new Common($emailData));
+        }
+        catch (Exception $e){
+        }
         return redirect()->back()->with('success_message', 'メールを送信しました。');
-
     }
 
     public function register(Request $request)
     {
-        // $token = $request->token;
-        // $data['user'] = User::where('register_token', $token)->first();
-        // if($data['user']){
-        //     return view('auth.register', $data);
-        // }
-        // abort(404);
-        return view('auth.register');
-
-    }
-
-    public function validateEmail(Request $request)
-    {
-        //dd($request);
-        $count = User::where('email', $request->email)->get()->count();
-        //dd($count);
-        return $count;
+        $token = $request->token;
+        $data['user'] = User::where('register_token', $token)->first();
+        $data['token'] = $token;
+        if($data['user']){
+            return view('auth.register', $data);
+        }
+        abort(404);
     }
 
     public function registerAction(Request $request)
     {
-        //return $request->all();
-        //dd($request);
         $this->validate($request, [
             'first_name' => 'required|max:25',
-            'email' => 'required|email|unique:users',
-            'password' => ['required', 
-            'min:8',
-            'confirmed']
+            'email' => 'required|email',
+            'password' => ['required','min:8','confirmed']
         ],[
-            // 'password.regex'=> 'パスワードの書式が間違えています。確認してください。',
             'password.min' => 'パスワードは８文字以上にする必要があります',
             'password.confirmed' => 'パスワードの確認が一致しません'
         ]);
@@ -164,16 +145,12 @@ class AuthController extends Controller
         if(preg_match('/([0-9])/', $request->password)){
             $count++;
         }
-        //if(preg_match('/([!@#$%^&*])/', $request->password)){
-        //     $count++;
-        // }
+
         if($count < 2 || preg_match('/([!$%^&*]+)/', $request->password)){
             return redirect()->back()->withInput()->with('error_message', 'パスワードの書式が間違えています。確認してください。');
         }
-        // dd($count);
-        
-        //$User = User::where('register_token', $request->token)->first();
-        $User = new User();
+
+        $User = User::where('register_token', $request->token)->first();
         $User->name = $request->first_name;
         $User->last_name = isset($request->last_name)?$request->last_name:'';
         $User->email = $request->email;
@@ -183,15 +160,13 @@ class AuthController extends Controller
         $User->status = true;
         $User->save();
 
-         
-         $amount = new Wallet();
-         $amount->user_id = $User->id;
-         $amount->service_id = 0;
-         $amount->expense_type = 4;
-         $amount->amount = 0;
-         $amount->save();
-         
- 
+        $amount = new Wallet();
+        $amount->user_id = $User->id;
+        $amount->service_id = 0;
+        $amount->expense_type = 4;
+        $amount->amount = 0;
+        $amount->save();
+
         $image = 'default.png';
 
         $Profile = new Profile();
@@ -199,7 +174,6 @@ class AuthController extends Controller
         $Profile->picture = $image;
         $Profile->first_name = $request->first_name;;
         $Profile->save();
-
 
         $emailData = [
             'name' => $User->name.' '.$User->last_name,
@@ -211,11 +185,19 @@ class AuthController extends Controller
             'root'     => $request->root()
         ];
 
-        Mail::to($request->email)
-            ->send(new Common($emailData));
-
+        try {
+            Mail::to($request->email)
+                ->send(new Common($emailData));
+        }
+        catch (Exception $e){
+        }
         return redirect()->to(route('login'))->with('success_message', 'ご登録ありがとうございます！'.'<br/>'.' 下記よりログインして弊社サービスをご利用ください。');
+    }
 
+    public function validateEmail(Request $request)
+    {
+        $count = User::where('email', $request->email)->get()->count();
+        return $count;
     }
 
     public function changePassword(Request $request)
@@ -234,7 +216,6 @@ class AuthController extends Controller
  
     public function changePasswordAction(Request $request)
     {
-        // dd($request);
     	$this->validate($request, [
             'current_password' => 'required',
             // 'password' => 'required|confirmed'
@@ -280,15 +261,11 @@ class AuthController extends Controller
             return Redirect::route('login')->with('success_message', 'パスワードは正常に変更されました');
         }
         return redirect()->back()->with('error_message', '現在のパスワードが一致しません');
-
-
     }
-
 
     public function facebook(Request $request)
     {
 		$redirectUrl = $request->root().'/facebook-action';
-				// $redirectUrl = 'https://crofun.jp/facebook-action';
         return Socialite::driver('facebook')->setScopes(['email'])->redirectUrl($redirectUrl)->redirect();
     }
 
@@ -321,24 +298,15 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-
-            // $this->updateProfile($User);
-
         }
-
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Facebook connected!');
         }
-
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
 
-
     }
-
 
     public function google(Request $request)
     {
@@ -350,7 +318,6 @@ class AuthController extends Controller
     {
         $redirectUrl = $request->root().'/google-action';
         $user = Socialite::driver('google')->redirectUrl($redirectUrl)->user();
-        // dd($user);
         $check = User::where('email', $user->email)->first();
         if($check){
             $check->google_id = $user->id;
@@ -376,22 +343,14 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-            // $this->updateProfile($User);
-
         }
-
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Google connected!');
         }
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
-
-
     }
-
 
     public function twitter(Request $request)
     {
@@ -403,7 +362,6 @@ class AuthController extends Controller
     {
         $redirectUrl = $request->root().'/twitter-action';
         $user = Socialite::driver('twitter')->user();
-        // dd($user);
         $check = User::where('twitter_id', $user->id)->first();
         if($check){
             $check->twitter_id = $user->id;
@@ -429,22 +387,15 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-            // $this->updateProfile($User);
-
         }
-
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Twitter connected!');
         }
 
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
-
     }
-
 
     public function yahoo(Request $request)
     {
@@ -456,7 +407,6 @@ class AuthController extends Controller
     {
         $redirectUrl = $request->root().'/yahoo-action';
         $user = Socialite::driver('yahoo')->user();
-        // dd($user);
         $check = User::where('email', $user->email)->first();
         if($check){
             $check->twitter_id = $user->id;
@@ -482,22 +432,14 @@ class AuthController extends Controller
             $Profile->save();
 
             $userId = $User->id;
-
-            // $this->updateProfile($User);
-
         }
 
         if(Auth::check()){
             return redirect()->to(route('user-social'))->with('success_message', 'Yahoo connected!');
         }
-
         Auth::loginUsingId($userId, true);
-        // return redirect()->intended(route('user-profile-update'));
         return redirect()->intended(route('user-my-page'));
-
     }
-
-
 
     public function logout()
     {
