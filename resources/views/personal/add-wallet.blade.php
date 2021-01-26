@@ -20,8 +20,12 @@
 
 
 @section('content')
+    @if (session('status'))
+        <div class="alert alert-danger text-center" style="font-size: 18px;">
+            {{ session('status') }}
+        </div>
+    @endif
     @include('template.wallettop')
-   
     <br/>
     <div class="col-md-12 row">
     @php $index = 1; @endphp

@@ -173,11 +173,11 @@
     <div class="col-md-12 alternates px-0 remove-pads" style="min-height: 850px">
         <div class="col-md-12">
             <!-- title and buttons -->
-            <div class="text-center title-before-login" style="font-size: 18px"><b>{{$service->title}}</b></div>
+            <div class="text-center title-before-login " style="font-size: 18px"><b>{{$service->title}}</b></div>
             <div class="text-center description-before-login" style="font-size: 15px;">無料通話回数{{$service->free_mint_iteration}}回（毎回{{$service->free_min}}分)</div>
             @if(isset(Auth::user()->id))
                 @if($service->seller_id != Auth::user()->id)
-                    <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}"><div class="text-center description-before-login" style="font-size: 15px;">{{$service->createdBy->name}}{{$service->createdBy->last_name}}</div></a>
+                    <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}"><div class="text-center description-before-login anchorColor" style="font-size: 15px;">{{$service->createdBy->name}}{{$service->createdBy->last_name}}</div></a>
                 @endif
             @endif
         </div>

@@ -20,6 +20,9 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'line-webhook',
-        'addwallet-callback'
+        'addwallet-callback',
+        'cancel',
+        'addwallet-callback-fail',
+        'success'
     ];
 }

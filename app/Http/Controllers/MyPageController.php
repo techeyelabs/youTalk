@@ -147,6 +147,7 @@ class MyPageController extends Controller
         // gateway data preparation
         $id = Auth::user()->id;
         $amount = Wallet::where('user_id', $id)->first()->amount;
+        // dd($amount);
         $fromUser = User::select('email', 'name')->where('id', $id)->first();
         $email = $fromUser->email;
         $name = $fromUser->name;
@@ -175,7 +176,6 @@ class MyPageController extends Controller
             'TransactionId' => $TransactionId,
             'language'=> "ja"
         ];
-        // dd($data);
         return view('personal.add-wallet', $data);
     }
 
@@ -227,7 +227,8 @@ class MyPageController extends Controller
         
         return redirect()->route('my-wallet');
     }
-
+    
+   
     public function addwalletaction(Request $request)
     {
         // $user = User::where('id', Auth::user()->id)->first();

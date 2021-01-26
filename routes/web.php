@@ -142,6 +142,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add-wallet-action', 'MyPageController@addwalletaction')->name('add-wallet-action');
     Route::get('/withdraw-wallet', 'MyPageController@addwallet')->name('withdraw-wallet');
 
+    // //Gateway Messages
+    Route::post('/success', 'RedirectController@success')->name('payment-option-success');
+    Route::post('/addwallet-callback-fail', 'RedirectController@fail')->name('payment-option-fail');
+    Route::post('/cancel', 'RedirectController@cancel')->name('payment-cancel');
+
     //talkroom and call related
     Route::get('/payment/{id}', 'CallController@paymentMethod')->name('payment-method');
     Route::post('/payment', 'CallController@paymentOption')->name('payment-option');

@@ -512,7 +512,6 @@ class ServiceController extends Controller
     public function getReservationRequest(Request $request)
     {
       
-       
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
        // dd($time_slot);
