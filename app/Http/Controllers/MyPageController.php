@@ -148,7 +148,7 @@ class MyPageController extends Controller
         $fromUser = User::select('email', 'name')->where('id', $id)->first();
         $email = $fromUser->email;
         $name = $fromUser->name;
-        $TransactionId = 'YT-'.time().'-'.mt_rand(1000, 9999).'-BL';
+        $TransactionId = time().''.mt_rand(10000000000, 99999999999);
 
         // Regular 
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
