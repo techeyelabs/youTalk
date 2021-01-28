@@ -3,7 +3,11 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-3 col-sm-3 col-lg-3 col-xl-3 p-1 expandable text-center" style="">
-                <img src="{{Request::root()}}/assets/service/{{$s->thumbnail}}" class="" alt="..." style="object-fit: cover; width: 150px; height: 120px">
+                @if($s->thumbnail)
+                    <img src="{{Request::root()}}/assets/service/{{$s->thumbnail}}" class="" alt="..." style="object-fit: cover; width: 150px; height: 120px">
+                @else
+                    <img src="{{Request::root()}}/assets/service/default.png" class="" alt="..." style="object-fit: cover; width: 150px; height: 120px">
+                @endif
             </div>
             <div class="col-md-9 col-sm-9 col-lg-9 col-xl-9 mobile">
                 <div class="service_title"><a class="anchorColor" href="{{route('user-display-service', ['id'=>$s->id])}}"><h5 class="card-title">{{$s->title}}</h5></a></div>
@@ -74,7 +78,7 @@
                                             <span class="text-success" style="border:1px solid #0452ff;padding:3px; color: #0452ff !important">電話中</span>
                                         </div>
                                     @elseif($s->seller_status == 1)
-                                        <div class="mr-2"  >
+                                        <div class="mr-2 pb-2"  >
                                             <span class="text-success" style="border:1px solid #28a745;padding:3px">今すぐ電話可能</span>
                                         </div>
                                     @else

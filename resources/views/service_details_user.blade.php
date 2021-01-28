@@ -177,7 +177,11 @@
         <div class="col-md-12 px-0">
             <div class="row col-md-12 mt-4 align-items-end">
                 <div class="col-xs-12 col-lg-6 text-lg-left text-center">
+                @if($service->thumbnail)
                     <img class="img-thumbnail thumb profile-image" src="{{Request::root()}}/assets/service/{{$service->thumbnail}}">
+                @else
+                    <img class="img-thumbnail thumb profile-image" src="{{Request::root()}}/assets/service/default.png">
+                @endif
                 </div>
                 @if(isset(Auth::user()->id))
                     <div class="col-xs-12 col-lg-6">
@@ -193,7 +197,7 @@
                                                 <img src="{{Request::root()}}/assets/user/{{$service->createdBy->profile->picture}}" style="height: 130px; width: 150px;"/>
                                             </a>
                                         </div>
-                                        <div class="text-center pb-2 pt-1">
+                                        <div class="text-right pb-2 pt-1">
                                             {{$service->createdBy->name}}{{$service->createdBy->last_name}}
                                         </div>
                                     @endif
