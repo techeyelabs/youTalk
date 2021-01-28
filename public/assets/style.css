@@ -82,6 +82,11 @@ button:focus {outline:0;}
         display: none !important;
     }
 }
+@media screen and (min-width: 770px) {
+    .compressable {
+        display: none !important;
+    }
+}
 .table-responsive {
     display: block;
     width: 100%;
