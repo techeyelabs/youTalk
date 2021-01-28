@@ -34,7 +34,7 @@ Route::get('/leftout_reservation_removal', 'ServiceController@leftoutreservation
 Route::get('/sorting-cron', 'CronController@sortingCron');
 
 // gateway callback url
-Route::post('/addwallet-callback', 'MyPageController@addwalletcreditCallback')->name('addwallet-callback');
+Route::get('/addwallet-callback', 'MyPageController@addwalletcreditCallback')->name('addwallet-callback');
 
 Route::get('/', 'HomeController@top')->name('front-home');
 Route::get('/category', 'HomeController@serviceCategory')->name('front-cat-home');
@@ -147,7 +147,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // //Gateway Messages
     Route::post('/success', 'RedirectController@success')->name('payment-option-success');
-    Route::post('/addwallet-callback-fail', 'RedirectController@fail')->name('payment-option-fail');
+    Route::get('/addwallet-callback-fail', 'RedirectController@fail')->name('payment-option-fail');
     Route::post('/cancel', 'RedirectController@cancel')->name('payment-cancel');
 
     //talkroom and call related
