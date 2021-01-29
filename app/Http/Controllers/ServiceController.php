@@ -544,8 +544,8 @@ class ServiceController extends Controller
             $html_text .= '
             </div>
             <div class="col-md-3 pt-4">
-                <button onclick="select_res_req()" class="w3-button buttons mb-2 btn-resize" style="width: 120px">決定する</button>
-                <button onclick="cancelReservation('.$data->id.')" class="w3-button buttons btn-resize" style="width: 120px">キャンセル</a>
+                <button onclick="select_res_req()" class="w3-button buttons mb-2 btn-resize" style="width: 120px !important">決定する</button>
+                <button onclick="cancelReservation('.$data->id.')" class="w3-button buttons btn-resize" style="width: 120px !important">キャンセル</a>
             </div>
         </div>
         <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />';
