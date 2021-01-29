@@ -1260,7 +1260,12 @@ a{
         border: 1px solid gray;
         box-shadow: 2px 2px #b3b3b3;
         color: gray;
-        border: 1px solid gray;
         width: 140px;
         border-radius: 5px;
     }
+.btn-resize{
+    width: auto !important;
+    padding: 8px 12px 8px 12px !important;
+    background-color: #FFFFFF !important;
+    color: #7f9098!important;
+}

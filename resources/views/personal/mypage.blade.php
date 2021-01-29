@@ -76,7 +76,7 @@
                     <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
                     </div>
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
-                <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red buttons btn-size">Ok</button>
+                <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button buttons btn-size">Ok</button>
             </div>
 
             </div>
@@ -93,7 +93,7 @@
     
                 
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
-                <button onclick="document.getElementById('id02').style.display='none'" type="button" class="w3-button w3-red buttons btn-size">Ok</button>
+                <button onclick="document.getElementById('id02').style.display='none'" type="button" class="w3-button buttons btn-size">Ok</button>
             </div>
 
             </div>
