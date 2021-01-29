@@ -9,6 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 	// config.extraPlugins = 'dropler';
 
+	config.enterMode = CKEDITOR.ENTER_BR;
 	config.height = 300;
 	config.toolbar = 'Full';
 
