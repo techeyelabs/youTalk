@@ -12,8 +12,8 @@
             </div>
             @foreach($myServices as $data)
                 @php
-                   $countPending = 1;
-                   $countConfirmed = 1;
+                   $countPending = 0;
+                   $countConfirmed = 0;
                 @endphp
                 @foreach($data->reservation as $res)
                     @if($res->status == 1)
