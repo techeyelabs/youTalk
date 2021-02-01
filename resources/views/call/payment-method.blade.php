@@ -158,8 +158,7 @@
             if(flag == 0){
                 if(confirm("こちらの内容でよろしいですか！")){    //Are you sure you want this content?
                     $("#send_payment").prop('disabled',true);
-                    $("#cancel").css('pointer-events','none');
-                    $("#cancel").css('cursor', 'default');
+                    $("#cancel").css({'pointer-events' : 'none', 'cursor' : 'default'});
                     $("#payment_form").submit();
                 } else {
                     $("#send_payment").prop('disabled',false);
