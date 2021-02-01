@@ -9,7 +9,7 @@
         <div class="col-md-12 mb-3 remove-pads">
             @if($talkroom->seller_id != Auth::user()->id)
                 <div class="text-center pb-2">
-                    <span class="text-16">出品者から電話がかかってきますので、この画面まましばらくお待ちください。</span>
+                    <span class="text-16">出品者から電話がかかってきますので、この画面のまましばらくお待ちください。</span>
                 </div>
             @endif
             <div class="mb-2">
