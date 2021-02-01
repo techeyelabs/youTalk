@@ -17,33 +17,18 @@
                             <div style="font-size: 12px; height: auto;">お試し通話機能あり（開始から{{$s->free_min}}分までを{{$s->free_mint_iteration}}回無料）</div>
                         @endif
                         @if(isset(Auth::user()->id))
-                            @if($s->seller_id == Auth::user()->id)
-                                <div class="row col-md-10" style="font-size: 12px; height: auto;padding-left: 0px">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td class="seller_rating_tds expandable"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $s->seller_id])}}">{{$s->createdBy->name}}{{$s->createdBy->last_name}}</a></td>
-                                                <td class="seller_rating_tds expandable" style="padding-left: 8px !important"><span class="fa fa-star checked"></span></td>
-                                                <td class="seller_rating_tds expandable"><span>{{$ratingsSeller[$s->seller_id]}}</span></td>
-                                                <td class="seller_rating_tds expandable"><span>({{$ratingCountSeller[$s->seller_id]}})</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @else
-                                <div class="row col-md-10" style="font-size: 12px; height: auto;padding-left: 0px">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td class="seller_rating_tds expandable"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $s->seller_id])}}">{{$s->createdBy->name}}{{$s->createdBy->last_name}}</a></td>
-                                                <td class="seller_rating_tds expandable" style="padding-left: 8px !important"><span class="fa fa-star checked"></span></td>
-                                                <td class="seller_rating_tds expandable"><span>{{$ratingsSeller[$s->seller_id]}}</span></td>
-                                                <td class="seller_rating_tds expandable"><span>({{$ratingCountSeller[$s->seller_id]}})</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
+                            <div class="row col-md-10" style="font-size: 12px; height: auto;padding-left: 0px">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="seller_rating_tds expandable"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $s->seller_id])}}">{{$s->createdBy->name}}{{$s->createdBy->last_name}}</a></td>
+                                            <td class="seller_rating_tds expandable" style="padding-left: 8px !important"><span class="fa fa-star checked"></span></td>
+                                            <td class="seller_rating_tds expandable"><span>{{$ratingsSeller[$s->seller_id]}}</span></td>
+                                            <td class="seller_rating_tds expandable"><span>({{count($s->userServicesAllCallCount)}})</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         @else
                             <div class="mb-2 row" style="font-size: 12px; height: auto; padding-left: 0px">
                                 <table>
@@ -52,7 +37,7 @@
                                             <td class="seller_rating_tds expandable">{{$s->createdBy->name}}{{$s->createdBy->last_name}}</td>
                                             <td class="seller_rating_tds expandable" style="padding-left: 8px !important"><span class="fa fa-star checked"></span></td>
                                             <td class="seller_rating_tds expandable"><span>{{$ratingsSeller[$s->seller_id]}}</span></td>
-                                            <td class="seller_rating_tds expandable"><span>({{$ratingCountSeller[$s->seller_id]}})</span></td>
+                                            <td class="seller_rating_tds expandable"><span>({{count($s->userServicesAllCallCount)}})</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -70,7 +55,7 @@
                                         <div class="stars-inner" style="width:{{$starPercentage}}"></div>
                                     </div>
                                     <span>{{$ratings[$s->id]}}</span>
-                                    <span>({{$ratingCount[$s->id]}})</span>
+                                    <span>({{count($s->serviceAllCallCount)}})</span>
                                 </div>
                                 <div class="row pb-2">
                                     @if($seller_status[$s->seller_id] == 1)
@@ -113,7 +98,7 @@
                                 <span class="seller_rating_tds"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $s->seller_id])}}">{{$s->createdBy->name}}{{$s->createdBy->last_name}}</a></span>
                                 <span class="seller_rating_tds" style="padding-left: 8px !important"><span class="fa fa-star checked"></span></span>
                                 <span class="seller_rating_tds"><span>{{$ratingsSeller[$s->seller_id]}}</span></span>
-                                <span class="seller_rating_tds"><span>({{$ratingCountSeller[$s->seller_id]}})</span></span>
+                                <span class="seller_rating_tds"><span>({{count($s->userServicesAllCallCount)}})</span></span>
                             </div>
                         </div>
 
@@ -131,7 +116,7 @@
                                     <div class="stars-inner" style="width:{{$starPercentage}}"></div>
                                 </div>
                                 <span>{{$ratings[$s->id]}}</span>
-                                <span>({{$ratingCount[$s->id]}})</span>
+                                <span>({{count($s->serviceAllCallCount)}})</span>
                             </div>
                         </div>
                     </div>
