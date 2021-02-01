@@ -24,9 +24,11 @@
                 <div class="col-md-12 row" style="font-size: 14px"><a class="anchorColor" href="{{route('user-display-service', ['id' => $talkroom->service->id])}}"><h6>{{$talkroom->service->title}}</h6></a></div>
                 <div class="row pl-3">
                     <div class="col-md-8 p-0">
-                        <div class="row">
-                            <div>お試し通話機能あり</div><div>（開始から{{$talkroom->service->free_min}}分までを{{$talkroom->service->free_mint_iteration}}回無料）</div>
-                        </div>
+                        @if($talkroom->service->free_mint_iteration)
+                            <div class="row">
+                                <div>お試し通話機能あり</div><div>（開始から{{$talkroom->service->free_min}}分までを{{$talkroom->service->free_mint_iteration}}回無料）</div>
+                            </div>
+                        @endif
                         <div class="mt-2"><a class="anchorColor" href="{{route('user-page-profile', ['id' => $talkroom->service->seller_id])}}">{{$talkroom->service->createdBy->name}} {{$talkroom->service->createdBy->last_name}}</a></div>
                     </div>
                     <div class="col-md-4 text-center p-0">
