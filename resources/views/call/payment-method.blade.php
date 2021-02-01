@@ -41,7 +41,7 @@
                 <br/>
                 <div class="col-md-12 text-center mb-3">
                     <button id="button-of-no-worth" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 200px; margin-right: 2%" disabled>出品者を呼び出します</button>
-                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
+                    <a id="cancel" class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
                 </div>
                 <?php
                     } else {
@@ -51,7 +51,7 @@
                 <br/>
                 <div class="col-md-12 text-center mb-3">
                     <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 200px; margin-right: 2%">出品者を呼び出します</button>
-                    <a class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
+                    <a id="cancel"  class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
                 </div>
                 <?php
                     }
@@ -158,6 +158,8 @@
             if(flag == 0){
                 if(confirm("こちらの内容でよろしいですか！")){    //Are you sure you want this content?
                     $("#send_payment").prop('disabled',true);
+                    $("#cancel").css('pointer-events','none');
+                    $("#cancel").css('cursor', 'default');
                     $("#payment_form").submit();
                 } else {
                     $("#send_payment").prop('disabled',false);
