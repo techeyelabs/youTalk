@@ -47,9 +47,9 @@
                     </tr>
                 </table>
             </div>
-            <div class="text-center pt-3 pb-3">
+            {{--<div class="text-center pt-3 pb-3">
                 <span>ステータスが評価または入力されていない場合は、売上に記録されます</span>
-            </div>
+            </div>--}}
             <div class="text-left pb-2 text-16" style="border-bottom: 1px solid gray">
                 <span>売上金の振替</span>
             </div>
