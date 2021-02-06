@@ -21,7 +21,8 @@ Route::get('/sendToHome', function(){
     return redirect()->route('front-home');
 });
 // line test
-Route::post('/line-webhook', 'LineController@webhook');
+// Route::post('/line-webhook', 'LineController@webhook');
+// Route::get('/line-webhook', 'LineController@webhook');
 //routes for cron jobs
 Route::get('/time', 'ServiceController@expiredReservations');
 Route::get('/current-talkroom-close', 'ServiceController@runningTalkroomClose');
@@ -163,6 +164,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //talkroom chat
     Route::get('/get-message-talkroom', 'CallController@getMessage')->name('get-message-talkroom');
+
+    // line setup
+    Route::get('/line-login', 'LineController@login')->name('line-login');
+    Route::get('/line-login-callback', 'LineController@loginAction')->name('line-login-callback');
     
 
     
