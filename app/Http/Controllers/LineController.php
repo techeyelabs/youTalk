@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Linehook;
 
+use App\Models\Profile;
+use App\Models\Wallet;
+
 use App\Models\User;
 
 class LineController extends Controller
@@ -30,6 +33,20 @@ class LineController extends Controller
     public function login(Request $request)
     {
         $redirectUrl = 'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id='.$this->CLIENT_ID.'&redirect_uri='.$this->REDIRECT_URL.'&state=111111&scope=profile%20openid%20email&bot_prompt=aggressive';
+
+        if(!empty(Auth::user()->line_user_id)){
+            $id = isset(Auth::user()->id)?Auth::user()->id: 0;
+            $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
+            $prev = Profile::where('user_id', $id)->first();
+            $wallet = Wallet::where('user_id', $id)->get();
+            $data = [
+                'personal' => $personal,
+                'wallet' => $wallet,
+                'profile' => $prev,
+                'redirectUrl' => $redirectUrl
+            ];
+            return view('user.line_notification_setting', $data);
+        } 
         return redirect()->away($redirectUrl);
         
     }
