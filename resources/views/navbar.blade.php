@@ -315,6 +315,7 @@
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('user-message')}}">メッセージ
                                                     <span id="message_badge_mobile" class="badge badge-danger" style="border-radius: 50%;display:none; color:red; font-size: 8px; width: 13px; height: 13px; vertical-align: top">2</span>
                                                     </a><div class="dropdown-divider"></div>
+                                                  <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('line-login')}}">LINE通知設定</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('profile-edit')}}">プロフィール編集</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('change-password')}}">パスワード変更</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('sign-out')}}">ログアウト</a>
@@ -346,6 +347,7 @@
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('user-message')}}">メッセージ
                                                     <span id="message_badge" class="badge badge-danger" style="border-radius: 50%; display:none; color:red; font-size: 8px; width: 13px; height: 13px; vertical-align: top">2</span>
                                                 </a><div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('line-login')}}">LINE通知設定</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('profile-edit')}}">プロフィール編集</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('change-password')}}">パスワード変更</a>
                                                   <a class="dropdown-item" style="font-size: 13px" type="" href="{{route('sign-out')}}">ログアウト</a>
