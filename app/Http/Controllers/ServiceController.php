@@ -322,6 +322,11 @@ class ServiceController extends Controller
         Mail::to($service->createdBy->email)
             ->send(new Common($emailData));
 
+        $buyerReservationRequestLineMessageToSeller = '【YouTalk】電話予約希望のお知らせ！\n\n 電話予約の希望を受け付けました。\nマイページにて確認お願いします。';
+        if($service->createdBy->line_user_id){
+            (new LineController())->sendMessage($service->createdBy->line_user_id, $buyerReservationRequestLineMessageToSeller);
+        }
+
         $id = Auth::user()->id;
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $profile_info = Profile::where('user_id', $id)->first();
@@ -981,8 +986,6 @@ class ServiceController extends Controller
                     //deleting the reservation
                     $data->delete();
                 }
-                
-
             }
         }
         
@@ -1075,20 +1078,14 @@ class ServiceController extends Controller
         $test->save();
 
         $active_talkrooms = Talkroom::where('status', 2)->where('call_status', 1)->get();
-        //return $active_talkrooms;
-        //getting current timedate
         date_default_timezone_set("Asia/Dhaka");
         $date = date("Y-m-d");
         $time = date("H:i:s");
         $now = $date. " " .$time;
 
-        //return $now;
-
         foreach($active_talkrooms as $data){
             $start_time = $data->last_call_end;
             $start_plusten_time = date("Y-m-d H:i:s", strtotime("10 minutes", strtotime($start_time)));
-
-            //return $start_plusten_time;
 
             $date_start_time = new DateTime($start_plusten_time);
             $date_now = new DateTime($now);
@@ -1140,6 +1137,16 @@ class ServiceController extends Controller
 
                 Mail::to($data->buyer->email)
                     ->send(new Common($emailData));
+
+                //Line notification to buyer and seller
+                $autoCloseTalkroomLineMessageToBoth = '【YouTalk】トークルーム終了のお知らせ！\n\n10分経過しましたが通話が開始されなかったので、キャンセルとなりました。';
+                if($data->buyer->line_user_id){
+                    (new LineController())->sendMessage($data->buyer->line_user_id, $autoCloseTalkroomLineMessageToBoth);
+                }
+                if($data->seller->line_user_id){
+                    //(new LineController())->sendMessage($data->seller->line_user_id, config('constants.autoCloseTalkroomLineMessageToBoth'));
+                    (new LineController())->sendMessage($data->seller->line_user_id, $autoCloseTalkroomLineMessageToBoth);
+                }
             }
         }
     }

@@ -128,7 +128,6 @@ class CallController extends Controller
         $talkroom_chat->save();
 
         $live_talkroom = Talkroom::where('buyer_id', $id)->where('status', 2)->first();
-        //return $live_talkroom;
 
         //Mail notification to seller
         $seller_all = User::find($service->seller_id);
@@ -148,6 +147,12 @@ class CallController extends Controller
             ->send(new Common($emailData));
 
         //Mail notification ends
+
+        //Line notification to seller
+        $directCallSellerLineMessageToSeller = '【YouTalk】トークルーム開始のお知らせ！\n\nトークルームを開始されました、マイページにて受付お願いします。';
+        if($service->createdBy->line_user_id){
+            (new LineController())->sendMessage($service->createdBy->line_user_id, $directCallSellerLineMessageToSeller);
+        }
 
         $res_dateTime = [];
 
@@ -218,8 +223,6 @@ class CallController extends Controller
 
     public function openTalkRoom()
     {
-        // $closing = new CronClass();
-        // $closing->runningTalkroomClose();
         $id = isset(Auth::user()->id)?Auth::user()->id: 0;
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $prev = Profile::where('user_id', $id)->first();
@@ -234,14 +237,16 @@ class CallController extends Controller
                 'wallet' => $wallet,
                 'profile' => $prev
             ]);
-        }elseif($live_talkroom_seller){
+        }
+        elseif($live_talkroom_seller){
             return view('call.talkroom', [
                 'talkroom' => $live_talkroom_seller,
                 'personal' => $personal,
                 'wallet' => $wallet,
                 'profile' => $prev
             ]);
-        }else{
+        }
+        else{
             return view('call.talkroom', [
                 'talkroom' => $live_talkroom_buyer,
                 'personal' => $personal,
@@ -262,10 +267,8 @@ class CallController extends Controller
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $userid)->first();
         $prev = Profile::where('user_id', $userid)->first();
         $wallet = Wallet::where('user_id', $userid)->get();
-        //$service = Service::where('id', $service_id)->first();
-        //return $id;
         $talkroom = Talkroom::where('id', $id)->first();
-        //return $talkroom;
+
         return view('call.talkroom-close')->with([
             'talkroom' => $talkroom,
             'personal' => $personal,
@@ -278,7 +281,6 @@ class CallController extends Controller
     {
         $messages = TalkroomChat::where('talkroom_id', $request->talkroom)->get();
         $count_mes = $messages->count();
-        //dd($messages);
         return view('call.message-part', ['messages'=>$messages, 'count_mes' => $count_mes]);
     }
 
@@ -318,9 +320,7 @@ class CallController extends Controller
 
     public function postReview(Request $request)
     {
-        //return $request;
         $talkroom = Talkroom::where('id', $request->talkroom_id)->first();
-        //return $talkroom;
         $review = new Review();
         $review->talkroom_id = $request->talkroom_id;
         $review->service_id = $talkroom->service_id;
@@ -335,12 +335,10 @@ class CallController extends Controller
         $talkroom->save();
 
         return Redirect::route('user-display-service', ['id' => $talkroom->service_id])->with('success_message', '評価ありがとうございました！');
-        
     }
 
     public function postReply(Request $request)
     {
-        //return $request;
         $review = Review::where('id', $request->review_id)->first();
         $review->reply = $request->reply;
         $review->save();
@@ -400,6 +398,4 @@ class CallController extends Controller
 
         return Redirect::route('talk-room-close', ['id'=> $id]);
     }
-
-
 }
