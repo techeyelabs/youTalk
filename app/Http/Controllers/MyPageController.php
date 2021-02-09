@@ -536,30 +536,21 @@ class MyPageController extends Controller
         $reserved_slots = Reservation::where('reserver_id', $request->reservation_id)
                                         ->where('status', 2)->get();
 
-        $html_text = '
-        <h5 class="text-center mb-4">電話通話予約通知</h5>';
+        $html_text = '<h5 class="text-center mb-4">電話通話予約通知</h5>';
         foreach($reserved_slots as $data){
             $slot = Slot::where('id', $data->slot)->first();
-            $html_text .= '
-            <div class="col-md-12 px-0 align-items-center">
-                <div><h6 class="mb-0">'.$data->whichService->title.'</h6></div>
-                <div class="col-md-12 row pl-0">
-                    <div class="col-md-6 pl-0">
-                       
-
-                            <h6 class="mr-4">'.$slot->day.' '.$time_slot[$slot->slot].'</h6>';
-                           
-                            $html_text .='
-
-                        
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <button onclick="cancelReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary">キャンセル</a>
-                    </div>
-                </div>
-            </div>
-            <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40);margin-top:5px" />
-            ';
+            $html_text .= '<div class="col-md-12 px-0 align-items-center">
+                            <div><h6 class="mb-0">'.$data->whichService->title.'</h6></div>
+                            <div class="col-md-12 row pl-0">
+                                <div class="col-md-6 pl-0">
+                                    <h6 class="mr-4">'.$slot->day.' '.$time_slot[$slot->slot].'</h6>';
+            $html_text .='</div>
+                            <div class="col-md-6 text-right">
+                                <button onclick="cancelReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary">キャンセル</a>
+                            </div>
+                            </div>
+                        </div>
+                        <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40);margin-top:5px" />';
         }
         return $html_text;
     }
@@ -593,10 +584,10 @@ class MyPageController extends Controller
         Mail::to($reservations->seller->email)
             ->send(new Common($emailData));
 
-        $lineMessage = "【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。"
-            .$reservation->reserver->name."様のご都合で".$date_time."の予約をキャンセルにされました。\nご了承をお願い致します。";
-        if($reservation->reserver->line_user_id){
-            (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
+        $lineMessage = "【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。\n"
+            .$reservations->seller->name."様のご都合で".$date_time."の予約をキャンセルにされました。\nご了承をお願い致します。";
+        if($reservations->seller->line_user_id){
+            (new LineController())->sendMessage($reservations->seller->line_user_id, $lineMessage);
         }
         foreach($slots as $slot){
             $slot->delete();
