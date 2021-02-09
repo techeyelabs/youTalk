@@ -89,7 +89,8 @@ class CallController extends Controller
             if($is_exists->given_times > $is_exists->used_times){
                 $free_min_to_get = $is_exists->given_mins ;
             } 
-        } else {
+        }
+        else {
             if($service->free_min > 0 && $service->free_mint_iteration > 0){
                 $free_manager = new FreeServiceManager();
                 $free_manager->service_id = $service_id;
@@ -146,12 +147,9 @@ class CallController extends Controller
         Mail::to($service->createdBy->email)
             ->send(new Common($emailData));
 
-        //Mail notification ends
-
-        //Line notification to seller
-        $directCallSellerLineMessageToSeller = '【YouTalk】トークルーム開始のお知らせ！\n\nトークルームを開始されました、マイページにて受付お願いします。';
+        $lineMessage = '【YouTalk】トークルーム開始のお知らせ！\nトークルームを開始されました、マイページにて受付お願いします。';
         if($service->createdBy->line_user_id){
-            (new LineController())->sendMessage($service->createdBy->line_user_id, $directCallSellerLineMessageToSeller);
+            (new LineController())->sendMessage($service->createdBy->line_user_id, $lineMessage);
         }
 
         $res_dateTime = [];
@@ -200,8 +198,7 @@ class CallController extends Controller
                 }
             }
         }
-        
-        //return $res_dateTime[0];
+
         $final_time = null;
         if(sizeof($res_dateTime) > 0){
             $latest_reservation = $res_dateTime[0];
@@ -210,13 +207,6 @@ class CallController extends Controller
         $troom = Talkroom::where('buyer_id', $id)->where('status', 2)->first();
         $troom->deadline = $final_time;
         $troom->save();
-        //return $final_time;
-
-        // return view('call.talkroom')->with([
-        //     'service' => $service,
-        //     'talkroom' => $live_talkroom,
-        //     'final_time' => $final_time
-        // ]);
 
         return redirect()->route('my-talk-room');
     }

@@ -531,10 +531,8 @@ class MyPageController extends Controller
 
     public function myReservations(Request $request)
     {
-
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
-
         $reserved_slots = Reservation::where('reserver_id', $request->reservation_id)
                                         ->where('status', 2)->get();
 
@@ -556,15 +554,13 @@ class MyPageController extends Controller
                         
                     </div>
                     <div class="col-md-6 text-right">
-                        <button onclick="cancelReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary">Cancel</a>
+                        <button onclick="cancelReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary">キャンセル</a>
                     </div>
                 </div>
             </div>
             <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40);margin-top:5px" />
             ';
-
         }
-
         return $html_text;
     }
 
@@ -597,11 +593,14 @@ class MyPageController extends Controller
         Mail::to($reservations->seller->email)
             ->send(new Common($emailData));
 
-
+        $lineMessage = '【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。'
+            .$reservation->reserver->name.'様のご都合で2021年02月10日1時の予約をキャンセルにされました。\nご了承をお願い致します。';
+        if($reservation->reserver->line_user_id){
+            (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
+        }
         foreach($slots as $slot){
             $slot->delete();
         }
-
         $reservations->delete();
         return;
     }
