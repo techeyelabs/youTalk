@@ -50,7 +50,7 @@
                 <br/>
                 <br/>
                 <div class="col-md-12 text-center mb-3">
-                    <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="width: 200px; margin-right: 2%">出品者を呼び出します</button>
+                    <button id="send_payment" class="btn buttons btn-size justify-content-center mb-1 mt-1" style="background-color: #92D050 !important;color:white; width: 200px; margin-right: 2%">出品者を呼び出します</button>
                     <a id="cancel"  class="btn buttons btn-size justify-content-center mb-1 mt-1" href="{{ url()->previous() }}" style="width: 200px; margin-right: 2%; color: #7f9098 !important">キャンセル</a>
                 </div>
                 <?php
