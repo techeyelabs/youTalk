@@ -585,7 +585,7 @@ class MyPageController extends Controller
             ->send(new Common($emailData));
 
         $lineMessage = "【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。\n"
-            .$reservations->seller->name."様のご都合で".$date_time."の予約をキャンセルにされました。\nご了承をお願い致します。";
+            .$reservations->reserver->name."様のご都合で".$date_time."の予約をキャンセルにされました。\nご了承をお願い致します。";
         if($reservations->seller->line_user_id){
             (new LineController())->sendMessage($reservations->seller->line_user_id, $lineMessage);
         }
