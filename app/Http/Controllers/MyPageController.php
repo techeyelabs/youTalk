@@ -546,7 +546,7 @@ class MyPageController extends Controller
                                     <h6 class="mr-4">'.$slot->day.' '.$time_slot[$slot->slot].'</h6>';
             $html_text .='</div>
                             <div class="col-md-6 text-right">
-                                <button onclick="cancelReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary">キャンセル</a>
+                                <button onclick="cancelReservation('.$data->id.')" class="w3-button buttons mb-2 btn-resize" style="width: 120px !important">キャンセル</a>
                             </div>
                             </div>
                         </div>
