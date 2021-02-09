@@ -73,12 +73,11 @@
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                 <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
-                    <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
-                    </div>
-            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
-                <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button buttons btn-size">Ok</button>
-            </div>
-
+                <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
+                </div>
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
+                    <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button buttons btn-size">Ok</button>
+                </div>
             </div>
         </div>
     </div>
@@ -87,15 +86,11 @@
         <div id="id02" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                 <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
-                    <div class="w3-section p-4" id="accepted_req" style="height: 300px; overflow-y: auto">
-                        
-                    </div>
-    
-                
-            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
-                <button onclick="document.getElementById('id02').style.display='none'" type="button" class="w3-button buttons btn-size">Ok</button>
-            </div>
-
+                <div class="w3-section p-4" id="accepted_req" style="height: 300px; overflow-y: auto">
+                </div>
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
+                    <button onclick="document.getElementById('id02').style.display='none'" type="button" class="w3-button buttons btn-size">Ok</button>
+                </div>
             </div>
         </div>
     </div>
@@ -106,29 +101,29 @@
 @section('custom_js')
 <script>
     function select_res_req(){
-        var selectedOption = $("input:radio[name=option_req]:checked").val()
+        var selectedOption = $("input:radio[name=option_req]:checked").val();
         var ajaxurl = "{{route('accept-reservation-request')}}";
-        var result = confirm("予約を決定でよろしいですか！");
-        if (result) {
-            $.ajax({
-                url: ajaxurl,
-                type: "POST",
-                data: {
-                    '_token': "{{ csrf_token() }}",
-                    'selectedOption': selectedOption
-                },
-                success: function(data){
-                    // console.log(data);
-                    // $data = $(data);
-                    // show_res_req($data);
-                    // var element = document.getElementById("conversation");
-                    // element.scrollTop = element.scrollHeight;
-                    document.getElementById('id01').style.display='none';
-                    location.reload();
-                },
-                complete: function (data) {    
-                }
-            });
+        if(selectedOption){
+            var result = confirm("予約を決定でよろしいですか！");
+            if (result) {
+                $.ajax({
+                    url: ajaxurl,
+                    type: "POST",
+                    data: {
+                        '_token': "{{ csrf_token() }}",
+                        'selectedOption': selectedOption
+                    },
+                    success: function(data){
+                        document.getElementById('id01').style.display='none';
+                        location.reload();
+                    },
+                    complete: function (data) {
+                    }
+                });
+            }
+        }
+        else{
+            alert("スケジュールを選択してください。");
         }
     }
 
@@ -198,21 +193,19 @@
             url: ajaxurl,
             type: "GET",
             data: {
-                    '_token': "{{ csrf_token() }}",
-                    'service_id': service_id
+                '_token': "{{ csrf_token() }}",
+                'service_id': service_id
             },
             success: function(data){
-                    $data = $(data); // the HTML content that controller has produced
-                    {{--$('#item-container').hide().html($data).fadeIn();--}}
-                    $('#conversation').html($data);
-                    //setTimeout(doAjax, interval);
-                    if($('#scroll_flag').val() == 0){
-                        updateScroll();
-                    }
+                $data = $(data); // the HTML content that controller has produced
+                $('#conversation').html($data);
+                //setTimeout(doAjax, interval);
+                if($('#scroll_flag').val() == 0){
+                    updateScroll();
+                }
             },
             complete: function (data) {
                     // Schedule the next
-                    
             }
         });
     }
@@ -226,20 +219,19 @@
             url: ajaxurl,
             type: "GET",
             data: {
-                    '_token': "{{ csrf_token() }}",
-                    'service_id': service_id
+                '_token': "{{ csrf_token() }}",
+                'service_id': service_id
             },
             success: function(data){
-                    $data = $(data); // the HTML content that controller has produced
-                    $('#accepted_req').html($data);
-                    //setTimeout(doAjax, interval);
-                    if($('#scroll_flag').val() == 0){
-                        update2Scroll();
-                    }
+                $data = $(data); // the HTML content that controller has produced
+                $('#accepted_req').html($data);
+                //setTimeout(doAjax, interval);
+                if($('#scroll_flag').val() == 0){
+                    update2Scroll();
+                }
             },
             complete: function (data) {
                     // Schedule the next
-                    
             }
         });
     }
