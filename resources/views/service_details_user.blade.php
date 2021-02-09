@@ -187,10 +187,13 @@
                     <div class="col-xs-12 col-lg-6">
                         <div class="text-right ">
                             <div class="row">
-                                <div class="col-md-6 text-left pl-0" @if($service->seller_id != Auth::user()->id) style="top: 80px;" @endif>
-                                    <span style="font-size: 42px;">{{$service->price}}</span> <span style="font-size: 15px">円 / 分</span>
+                                <div class="col-md-6 col-6 text-left pl-0">
+                                    <div class="row pt-5" @if($service->seller_id != Auth::user()->id) style="position: absolute; bottom: 16px ;" @endif>
+                                        <span class="pl-0 pr-0" style="font-size: 42px;">{{$service->price}}</span>
+                                        <span class="pt-4" style="font-size: 15px">円 / 分</span>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 pr-0">
+                                <div class="col-md-6 col-6 pr-0">
                                     @if($service->seller_id != Auth::user()->id)
                                         <div class="text-right description-before-login anchorColor" style="font-size: 15px;">
                                             <a href="{{route('user-page-profile', ['id' => $service->seller_id])}}">
@@ -207,36 +210,36 @@
                                 @if($call_possible_seller > 0 || $call_possible_buyer > 0)
                                     <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">電話中</button>
                                 @else
-                                    <form action="{{route('change-status', ['stat' => 2, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #92D050 !important;color:white">📞 電話受付OFFする</button></form>
+                                    <form action="{{route('change-status', ['stat' => 2, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #92D050 !important;color:white">電話受付OFFする</button></form>
                                 @endif
 
                             @elseif($service->seller_id == Auth::user()->id && $service->seller_status == 2)
                                 @if($call_possible_seller > 0 || $call_possible_buyer > 0)
                                     <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">電話中</button>
                                 @else
-                                    <form action="{{route('change-status', ['stat' => 1, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">🚫 電話受付ONする</button></form>
+                                    <form action="{{route('change-status', ['stat' => 1, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">電話受付ONする</button></form>
                                 @endif
                             @elseif($service->seller_id != Auth::user()->id && $service->seller_status == 1)
                                 @if($call_possible_seller > 0 || $call_possible_buyer > 0)
                                     <button id="" type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">電話中</button>
                                 @else
-                                    <form action="{{route('payment-method', ['id' => $service->id])}}"><button id="" type="submit" class="buttons button-before-login" style="background-color: #92D050 !important;color:white">📞 電話する</button></form>
+                                    <form action="{{route('payment-method', ['id' => $service->id])}}"><button id="" type="submit" class="buttons button-before-login" style="background-color: #92D050 !important;color:white">電話する</button></form>
                                 @endif
                             @else
-                                <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">🚫 電話する</button>
+                                <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">電話する</button>
                             @endif
 
                             <div class="after-login-br" style="height: 10px"><br/></div>
                             @if($service->seller_id == Auth::user()->id && $service->reservation_status == 1)
-                                <form action="{{route('change-reservation', ['stat' => 2, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #9DC3E6 !important">🗓 予約受付OFFする</button></form>
+                                <form action="{{route('change-reservation', ['stat' => 2, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #9DC3E6 !important">予約受付OFFする</button></form>
                             @elseif($service->seller_id == Auth::user()->id && $service->reservation_status == 2)
-                                <form action="{{route('change-reservation', ['stat' => 1, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important">🚫 予約受付ONする</button></form>
+                                <form action="{{route('change-reservation', ['stat' => 1, 'id' => $service->id])}}"><button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important">予約受付ONする</button></form>
                             @elseif($service->seller_id != Auth::user()->id && $service->reservation_status == 1)
                                 <form action="{{route('make-reservation', ['id' => $service->id])}}">
-                                    <button type="submit" class="buttons button-before-login" style="background-color: #9DC3E6 !important; color:white">🗓 電話予約する</button>
+                                    <button type="submit" class="buttons button-before-login" style="background-color: #9DC3E6 !important; color:white">電話予約する</button>
                                 </form>
                             @else
-                                <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important; color:white">🚫 電話予約する</button>
+                                <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important; color:white">電話予約する</button>
                             @endif
 
                             <div class="after-login-br" style="height: 10px; text-align: right"><br class="before-login-br"></div>
@@ -253,18 +256,18 @@
                         <div class="mb-3 margin-bottom-before-login price-before-login" ><span style="font-size: 42px">{{$service->price}}</span> <span style="font-size: 15px !important">円 / 分</span></div>
 
                         @if($service->seller_status == 1)
-                            <form action="{{route('service-login', ['id' => $service->id])}}"><button id="" type="submit" class="buttons button-before-login" style="background-color: #92D050 !important;color:white">📞 電話する</button></form>
+                            <form action="{{route('service-login', ['id' => $service->id])}}"><button id="" type="submit" class="buttons button-before-login" style="background-color: #92D050 !important;color:white">電話する</button></form>
                         @else
-                            <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">🚫 電話する</button>
+                            <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important;color:white">電話する</button>
                         @endif
 
                         <div class="after-login-br" style="height: 20px"><br/></div>
                         @if($service->reservation_status == 1)
                             <form action="{{route('service-login', ['id' => $service->id])}}">
-                                <button type="submit" class="buttons button-before-login" style="background-color: #9DC3E6 !important; color:white">🗓 電話予約する</button>
+                                <button type="submit" class="buttons button-before-login" style="background-color: #9DC3E6 !important; color:white">電話予約する</button>
                             </form>
                         @else
-                            <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important; color:white">🚫 電話予約する</button>
+                            <button type="submit" class="buttons button-before-login" style="background-color: #949ea2 !important; color:white">電話予約する</button>
                         @endif
 
                         <div class="after-login-br" style="height: 20px; text-align: right"><br class="before-login-br"></div>
