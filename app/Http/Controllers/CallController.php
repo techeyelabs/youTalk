@@ -147,7 +147,7 @@ class CallController extends Controller
         Mail::to($service->createdBy->email)
             ->send(new Common($emailData));
 
-        $lineMessage = '【YouTalk】トークルーム開始のお知らせ！\nトークルームを開始されました、マイページにて受付お願いします。';
+        $lineMessage = "【YouTalk】トークルーム開始のお知らせ！\nトークルームを開始されました、マイページにて受付お願いします。";
         if($service->createdBy->line_user_id){
             (new LineController())->sendMessage($service->createdBy->line_user_id, $lineMessage);
         }

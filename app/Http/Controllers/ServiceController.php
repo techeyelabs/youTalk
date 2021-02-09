@@ -322,7 +322,7 @@ class ServiceController extends Controller
         Mail::to($service->createdBy->email)
             ->send(new Common($emailData));
 
-        $lineMessage = '【YouTalk】電話予約希望のお知らせ！\n電話予約の希望を受け付けました。\nマイページにて確認お願いします。';
+        $lineMessage = "【YouTalk】電話予約希望のお知らせ！\n電話予約の希望を受け付けました。\nマイページにて確認お願いします。";
         if($service->createdBy->line_user_id){
             (new LineController())->sendMessage($service->createdBy->line_user_id, $lineMessage);
         }
@@ -562,7 +562,7 @@ class ServiceController extends Controller
         Mail::to($reservation->reserver->email)
             ->send(new Common($emailData));
 
-        $lineMessage = '【YouTalk】電話予約希望のキャンセルのお知らせ！\nご希望の日程で予約を受付できませんでした。\nお手数ですが、新たに日程を調整して予約申請をお願いします。';
+        $lineMessage = "【YouTalk】電話予約希望のキャンセルのお知らせ！\nご希望の日程で予約を受付できませんでした。\nお手数ですが、新たに日程を調整して予約申請をお願いします。";
         if($reservation->reserver->line_user_id){
             (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
         }
@@ -601,8 +601,8 @@ class ServiceController extends Controller
         Mail::to($reservation->reserver->email)
             ->send(new Common($emailData));
 
-        $lineMessage = '【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。'
-            .$reservation->reserver->name.'様のご都合で2021年02月10日1時の予約をキャンセルにされました。\nご了承をお願い致します。';
+        $lineMessage = "【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。"
+            .$reservation->reserver->name."様のご都合で".$date_time."の予約をキャンセルにされました。\nご了承をお願い致します。";
         if($reservation->reserver->line_user_id){
             (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
         }
@@ -635,7 +635,7 @@ class ServiceController extends Controller
         Mail::to($reservation->reserver->email)
             ->send(new Common($emailData));
 
-        $lineMessage = '【YouTalk】電話予約確定のお知らせ！\nご希望の日程で予約を確定されました。\nマイページにて確認お願いします。';
+        $lineMessage = "【YouTalk】電話予約確定のお知らせ！\nご希望の日程で予約を確定されました。\nマイページにて確認お願いします。";
         if($reservation->reserver->line_user_id){
             (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
         }
@@ -1120,7 +1120,7 @@ class ServiceController extends Controller
                 Mail::to($data->buyer->email)
                     ->send(new Common($emailData));
 
-                $lineMessage = '【YouTalk】トークルーム終了のお知らせ！\n10分経過しましたが通話が開始されなかったので、キャンセルとなりました。';
+                $lineMessage = "【YouTalk】トークルーム終了のお知らせ！\n10分経過しましたが通話が開始されなかったので、キャンセルとなりました。";
                 if($data->buyer->line_user_id){
                     (new LineController())->sendMessage($data->buyer->line_user_id, $lineMessage);
                 }
