@@ -10,7 +10,11 @@
                 @endif
             </div>
             <div class="col-md-9 col-sm-9 col-lg-9 col-xl-9 mobile">
-                <div class="service_title"><a class="anchorColor" href="{{route('user-display-service', ['id'=>$s->id])}}"><h5 class="card-title">{{$s->title}}</h5></a></div>
+                <div class="service_title">
+                    <a class="anchorColor" href="{{route('user-display-service', ['id'=>$s->id])}}">
+                        <h5 class="mb-0">{{$s->title}}</h5>
+                    </a>
+                </div>
                 <div class="row">
                     <div class="col-md-6 p-0">
                         @if($s->free_mint_iteration > 0)
@@ -44,8 +48,8 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col pl-0 pt-2">
-                                <div class="compressable my-auto pb-1" style="font-size: 14px;">
+                            <div class="col pl-0">
+                                <div class="compressable" style="font-size: 14px;">
                                     @php
                                         $starTotal = 5;
                                         $starPercentage = $ratings[$s->id] / $starTotal * 100;
@@ -57,34 +61,56 @@
                                     <span>{{$ratings[$s->id]}}</span>
                                     <span>({{count($s->serviceAllCallCount)}})</span>
                                 </div>
-                                <div class="row pb-2">
-                                    @if($seller_status[$s->seller_id] == 1)
-                                            <div class="mr-2"  >
-                                            <span class="text-success" style="border:1px solid #0452ff;padding:3px; color: #0452ff !important">電話中</span>
-                                        </div>
-                                    @elseif($s->seller_status == 1)
-                                        <div class="mr-2 pb-2"  >
-                                            <span class="text-success" style="border:1px solid #28a745;padding:3px">今すぐ電話可能</span>
-                                        </div>
-                                    @else
-                                        <div class="mr-2">
-                                            <span class="text-danger" style="border:1px solid #dc3545;padding:3px">離席中</span>
-                                        </div>
-                                    @endif
-                                    @if($s->reservation_status == 1)
-                                        <div class="">
-                                            <span class="text-success" style="border:1px solid #28a745;padding:3px">予約受付中</span>
-                                        </div>
-                                    @endif
-                                    <div class="col-md-5 col-sm-0 col-0 p-0 text-right">
-
+                                <div class="row pl-0 pr-0">
+                                    <div class="row col-md-12 compressable mobile pb-2">
+                                        <span class="mobile_price" style="line-height: 0.8">{{$s->price}}  </span>
+                                        <span class="pt-1">円 / 分</span>
                                     </div>
-                                    <div class="compressable mobile">
-                                        <span class="mobile_price" style="font-size: 35px">{{$s->price}}  </span><span>円 / 分</span>
+                                    <div class="row compressable pl-0 pr-0">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            @if($seller_status[$s->seller_id] == 1)
+                                                <div class="mr-2 pb-2" >
+                                                    <span class="text-success" style="border:1px solid #0452ff;padding:3px; color: #0452ff !important">電話中</span>
+                                                </div>
+                                            @elseif($s->seller_status == 1)
+                                                <div class="mr-2 pb-2"  >
+                                                    <span class="text-success" style="border:1px solid #28a745;padding:3px">今すぐ電話可能</span>
+                                                </div>
+                                            @else
+                                                <div class="mr-2 pb-2">
+                                                    <span class="text-danger" style="border:1px solid #dc3545;padding:3px">離席中</span>
+                                                </div>
+                                            @endif
+                                            @if($s->reservation_status == 1)
+                                                <div class="">
+                                                    <span class="text-success" style="border:1px solid #28a745;padding:3px">予約受付中</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="row expandable">
+                                        @if($seller_status[$s->seller_id] == 1)
+                                            <div class="mr-2 pb-2" >
+                                                <span class="text-success" style="border:1px solid #0452ff;padding:3px; color: #0452ff !important">電話中</span>
+                                            </div>
+                                        @elseif($s->seller_status == 1)
+                                            <div class="mr-2 pb-2"  >
+                                                <span class="text-success" style="border:1px solid #28a745;padding:3px">今すぐ電話可能</span>
+                                            </div>
+                                        @else
+                                            <div class="mr-2 pb-2">
+                                                <span class="text-danger" style="border:1px solid #dc3545;padding:3px">離席中</span>
+                                            </div>
+                                        @endif
+                                        @if($s->reservation_status == 1)
+                                            <div class="">
+                                                <span class="text-success" style="border:1px solid #28a745;padding:3px">予約受付中</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="col pr-0 compressable text-right">
+                            <div class="col pr-0 pl-0 compressable justify-content-end text-right">
                                 <a href="{{route('user-page-profile', ['id' => $s->seller_id])}}">
                                     <img src="{{Request::root()}}/assets/user/{{$s->createdBy->profile->picture}}"  style="height: 100px; width: 120px;"/>
                                 </a>
