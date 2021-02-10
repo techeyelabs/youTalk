@@ -21,7 +21,7 @@
                             <div style="font-size: 12px; height: auto;">お試し通話機能あり（開始から{{$s->free_min}}分までを{{$s->free_mint_iteration}}回無料）</div>
                         @endif
                         @if(isset(Auth::user()->id))
-                            <div class="row col-md-10" style="font-size: 12px; height: auto;padding-left: 0px">
+                            <div class="row col-md-10 pb-2" style="font-size: 12px; height: auto;padding-left: 0px">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -34,7 +34,7 @@
                                 </table>
                             </div>
                         @else
-                            <div class="mb-2 row" style="font-size: 12px; height: auto; padding-left: 0px">
+                            <div class="mb-2 row pb-2" style="font-size: 12px; height: auto; padding-left: 0px">
                                 <table>
                                     <tbody>
                                         <tr>
