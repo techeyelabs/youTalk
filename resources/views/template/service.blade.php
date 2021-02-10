@@ -10,7 +10,12 @@
                 @endif
             </div>
             <div class="col-md-9 col-sm-9 col-lg-9 col-xl-9 mobile">
-                <div class="service_title">
+                <div class="service_title expandable">
+                    <a class="anchorColor" href="{{route('user-display-service', ['id'=>$s->id])}}">
+                        <h5 class="card-title">{{$s->title}}</h5>
+                    </a>
+                </div>
+                <div class="service_title compressable">
                     <a class="anchorColor" href="{{route('user-display-service', ['id'=>$s->id])}}">
                         <h5 class="mb-0">{{$s->title}}</h5>
                     </a>
