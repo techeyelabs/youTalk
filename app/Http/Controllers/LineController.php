@@ -32,7 +32,7 @@ class LineController extends Controller
 
     public function login(Request $request)
     {
-        $redirectUrl = 'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id='.$this->CLIENT_ID.'&redirect_uri='.$this->REDIRECT_URL.'&state=111111&scope=profile%20openid%20email&bot_prompt=aggressive';
+        $redirectUrl = $this->AUTH_URL.'?response_type=code&client_id='.$this->CLIENT_ID.'&redirect_uri='.$this->REDIRECT_URL.'&state=111111&scope=profile%20openid%20email&bot_prompt=aggressive';
 
         if(!empty(Auth::user()->line_user_id)){
             $id = isset(Auth::user()->id)?Auth::user()->id: 0;
@@ -54,7 +54,7 @@ class LineController extends Controller
     public function loginAction(Request $request)
     {
         if(empty($request->code)) return false;
-        return $this->getAccessToken($request->code);        
+        $this->getAccessToken($request->code);        
     }
 
     private function getAccessToken($code)
