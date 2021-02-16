@@ -51,10 +51,11 @@ class LineController extends Controller
         
     }
 
-    public function loginAction(Request $request)
+    public function loginAction()
     {
-        if(empty($request->code)) return 'invalid request';
-        if($this->getAccessToken($request->code)) return redirect()->route('front-home')->with('success_message', 'Successfull');
+        if(!isset($_GET['code'])) return 'invalid request';
+        $code = $_GET['code'];
+        $this->getAccessToken($code);
         return redirect()->route('front-home')->with('success_message', 'Successfull');
     }
 

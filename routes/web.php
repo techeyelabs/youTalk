@@ -167,12 +167,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     // line setup
     Route::get('/line-login', 'LineController@login')->name('line-login');
-    Route::get('/line-login-callback', 'LineController@loginAction')->name('line-login-callback');
+    // Route::get('/line-login-callback', 'LineController@loginAction')->name('line-login-callback');
     
 
     
     
 });
+
+Route::get('/line-login-callback', 'LineController@loginAction')->name('line-login-callback');
+
 
 
 
