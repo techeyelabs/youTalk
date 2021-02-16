@@ -54,7 +54,7 @@ class LineController extends Controller
     public function loginAction(Request $request)
     {
         if(empty($request->code)) return false;
-        $this->getAccessToken($request->code);        
+        $this->getAccessToken($request->code);    
     }
 
     private function getAccessToken($code)
@@ -90,6 +90,7 @@ class LineController extends Controller
             $this->sendMessage($response->userId, 'welcome to youtalk notification center');
             return redirect()->route('front-home')->with('success_message', 'Successfull');
         }
+        return redirect()->route('front-home')->with('success_message', 'Successfull');
         return false;
     }
     
