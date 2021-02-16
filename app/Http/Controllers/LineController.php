@@ -32,7 +32,7 @@ class LineController extends Controller
 
     public function login(Request $request)
     {
-        $redirectUrl = 'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id='.$this->CLIENT_ID.'&redirect_uri='.$this->REDIRECT_URL.'&state=111111&scope=profile%20openid%20email&bot_prompt=aggressive';
+        $redirectUrl = $this->AUTH_URL.'?response_type=code&client_id='.$this->CLIENT_ID.'&redirect_uri='.$this->REDIRECT_URL.'&state=111111&scope=profile%20openid%20email&bot_prompt=aggressive';
 
         if(!empty(Auth::user()->line_user_id)){
             $id = isset(Auth::user()->id)?Auth::user()->id: 0;
@@ -51,10 +51,12 @@ class LineController extends Controller
         
     }
 
-    public function loginAction(Request $request)
+    public function loginAction()
     {
-        if(empty($request->code)) return false;
-        return $this->getAccessToken($request->code);        
+        if(!isset($_GET['code'])) return 'invalid request';
+        $code = $_GET['code'];
+        $this->getAccessToken($code);
+        return redirect()->route('front-home')->with('success_message', 'Successfull');
     }
 
     private function getAccessToken($code)
@@ -70,11 +72,10 @@ class LineController extends Controller
             'Content-Type: application/x-www-form-urlencoded'
         );
         $response = $this->sendCURL($this->TOKEN_URL, $header, 'post', $postData);
-        if($response) {
-            $response = json_decode($response);
-            return $this->getLineProfile($response->access_token);
-        }
+        $response = json_decode($response);
+        if(isset($response->access_token)) return $this->getLineProfile($response->access_token);
         return false;
+        
         
     }
 
@@ -84,11 +85,11 @@ class LineController extends Controller
             'Authorization: Bearer '.$accessToken
         );
         $response = $this->sendCURL($this->PROFILE_URL, $header, 'get');
-        if($response){
-            $response = json_decode($response);
+        $response = json_decode($response);
+        if(isset($response->userId)) {
             User::where('id', Auth::user()->id)->update(['line_user_id' => $response->userId]);
             $this->sendMessage($response->userId, 'welcome to youtalk notification center');
-            return redirect()->route('front-home')->with('success_message', 'Successfull');
+            return true;
         }
         return false;
     }
