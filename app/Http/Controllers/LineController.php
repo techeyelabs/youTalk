@@ -73,8 +73,9 @@ class LineController extends Controller
         );
         $response = $this->sendCURL($this->TOKEN_URL, $header, 'post', $postData);
         $response = json_decode($response);
-        if($response->error) return false;
-        return $this->getLineProfile($response->access_token);
+        if(isset($response->access_token)) return $this->getLineProfile($response->access_token);
+        return false;
+        
         
     }
 
@@ -85,10 +86,12 @@ class LineController extends Controller
         );
         $response = $this->sendCURL($this->PROFILE_URL, $header, 'get');
         $response = json_decode($response);
-        if($response->error) return false;
-        User::where('id', Auth::user()->id)->update(['line_user_id' => $response->userId]);
-        $this->sendMessage($response->userId, 'welcome to youtalk notification center');
-        return true;
+        if(isset($response->userId)) {
+            User::where('id', Auth::user()->id)->update(['line_user_id' => $response->userId]);
+            $this->sendMessage($response->userId, 'welcome to youtalk notification center');
+            return true;
+        }
+        return false;
     }
     
     
