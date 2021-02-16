@@ -53,8 +53,9 @@ class LineController extends Controller
 
     public function loginAction(Request $request)
     {
-        if(empty($request->code)) return false;
-        $this->getAccessToken($request->code);    
+        if(empty($request->code)) return 'invalid request';
+        if($this->getAccessToken($request->code)) return redirect()->route('front-home')->with('success_message', 'Successfull');
+        return redirect()->route('front-home')->with('success_message', 'Successfull');
     }
 
     private function getAccessToken($code)
@@ -70,11 +71,9 @@ class LineController extends Controller
             'Content-Type: application/x-www-form-urlencoded'
         );
         $response = $this->sendCURL($this->TOKEN_URL, $header, 'post', $postData);
-        if($response) {
-            $response = json_decode($response);
-            return $this->getLineProfile($response->access_token);
-        }
-        return false;
+        $response = json_decode($response);
+        if($response->error) return false;
+        return $this->getLineProfile($response->access_token);
         
     }
 
@@ -84,14 +83,11 @@ class LineController extends Controller
             'Authorization: Bearer '.$accessToken
         );
         $response = $this->sendCURL($this->PROFILE_URL, $header, 'get');
-        if($response){
-            $response = json_decode($response);
-            User::where('id', Auth::user()->id)->update(['line_user_id' => $response->userId]);
-            $this->sendMessage($response->userId, 'welcome to youtalk notification center');
-            return redirect()->route('front-home')->with('success_message', 'Successfull');
-        }
-        return redirect()->route('front-home')->with('success_message', 'Successfull');
-        return false;
+        $response = json_decode($response);
+        if($response->error) return false;
+        User::where('id', Auth::user()->id)->update(['line_user_id' => $response->userId]);
+        $this->sendMessage($response->userId, 'welcome to youtalk notification center');
+        return true;
     }
     
     
