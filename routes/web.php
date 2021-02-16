@@ -166,10 +166,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-message-talkroom', 'CallController@getMessage')->name('get-message-talkroom');
 
     // line setup
-    Route::get('/line-login', 'LineController@login')->name('line-login');
-    Route::get('/line-login-callback', 'LineController@loginAction')->name('line-login-callback');
+    // Route::get('/line-login', 'LineController@login')->name('line-login');
+    // Route::get('/line-login-callback', 'LineController@loginAction')->name('line-login-callback');
 });
-
+Route::get('/line-login', 'LineController@login')->name('line-login');
+Route::get('/line-login-callback', 'LineController@loginAction')->name('line-login-callback');
 
 
 Route::group(['prefix' => 'admin'], function () {
