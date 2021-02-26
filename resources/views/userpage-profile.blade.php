@@ -87,7 +87,7 @@
                             <table>
                                 <tr>
                                     <td style="padding-left: 0px; padding-top: 0px; padding-bottom: 0px; border: none; pading-right: 10px">
-                                        <span>{!!nl2br($follow_count)!!}人フォロワー</span>
+                                        <span>フォロワー {{($follow_count)}}人</span>
                                     </td>
                                     <td style="padding: 0px; border: none">
                                         <div>
@@ -107,7 +107,7 @@
                         <div class="p-0 mb-2">
                             <table>
                                 <tr>
-                                    <td style="padding-left: 0px; padding-top: 0px; padding-bottom: 0px; border: none; pading-right: 10px">販売実績  {{$completed_services}}</td>
+                                    <td style="padding-left: 0px; padding-top: 0px; padding-bottom: 0px; border: none; pading-right: 10px">販売実績</td>
                                     <td style="padding: 0px; border: none">@php
                                         $starTotal = 5;
                                         $starPercentage = $avg_rating / $starTotal * 100; 
@@ -117,7 +117,7 @@
                                             <div class="stars-outer">
                                                 <div class="stars-inner" style="width:{{$starPercentage}}"></div>
                                             </div>
-                                            {{$avg_rating}}({{$total_ratings}})
+                                            {{$avg_rating}}({{$completed_services}})
                                         </span>
                                     </td>
                                 </tr>

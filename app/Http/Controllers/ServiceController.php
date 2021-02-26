@@ -322,6 +322,11 @@ class ServiceController extends Controller
         Mail::to($service->createdBy->email)
             ->send(new Common($emailData));
 
+        $lineMessage = "【YouTalk】電話予約希望のお知らせ！\n電話予約の希望を受け付けました。\nマイページにて確認お願いします。";
+        if($service->createdBy->line_user_id){
+            (new LineController())->sendMessage($service->createdBy->line_user_id, $lineMessage);
+        }
+
         $id = Auth::user()->id;
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
         $profile_info = Profile::where('user_id', $id)->first();
@@ -485,13 +490,11 @@ class ServiceController extends Controller
 
     public function accept(Request $request)
     {
-        // dd($request);
         Reservation::where('service_id', $request->service_id)
                     ->where('status', 1)
                     ->where('reserver_id', $request->reserver_id)
                     ->update(['slot' => $request->accepted_slot, 'status' => 2]);
         return redirect()->back();
-
     }
 
     public function getReservationRequest(Request $request)
@@ -505,47 +508,33 @@ class ServiceController extends Controller
         $html_text = '<h5 class="text-center mb-4">電話通話予約希望</h5>';
 
         if($reservation_req->count() == 0){
-            $html_text .= '
-            <h6 class="text-center">no reservation request</h6>';
+            $html_text .= '<h6 class="text-center">no reservation request</h6>';
         }
 
         foreach($reservation_req as $data){
-            $html_text .= '
-            <div class="col-md-12 row px-0 align-items-center">
-            <div class="col-md-9">
-            <span>'.$data->reserver->name.'</span><br/><br/>';
+            $html_text .= '<div class="col-md-12 row px-0 align-items-center"><div class="col-md-9"><span>'.$data->reserver->name.'</span><br/><br/>';
             $len = count($data->slots);
             $i = 0;
             $x = ['第一希望', '第二希望', '第三希望'];
             $iter = 0;
             foreach($data->slots as $slots){
                 $html_text .= '
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="option_req" id="'.$slots->id.'" value="'.$slots->id.'">
-                <label class="form-check-label" style="width:100%" for="exampleRadios1">
-                <div class="row mb-2">
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option_req" id="'.$slots->id.'" value="'.$slots->id.'">
+                    <label class="form-check-label" style="width:100%" for="exampleRadios1">
+                    <div class="row mb-2">
                     <div class="col-md-4 pr-0">'.$x[$iter].'</div>
                     <div class="col-md-4 px-0">'.$slots->day.'</div>
                     <div class="col-md-4 px-0">'.$time_slot[$slots->slot].'</div>';
-                    // if($slots->slot == 1){
-                    //     $html_text .= '11:00 AM</div>';
-                    // }elseif($slots->slot == 2){
-                    //     $html_text .= '02:00 PM</div>';
-                    // }else{
-                    //     $html_text .= '04:00 PM</div>';
-                    // }
                 
-                $html_text .='
-                </div>
-                </label>
-                </div>';
+                $html_text .='</div></label></div>';
                 $iter++;
             }
             $html_text .= '
             </div>
             <div class="col-md-3 pt-4">
-                <button onclick="select_res_req()" class="btn btn-sm btn-outline-secondary text-secondary mb-2" style="width: 120px">決定する</button>
-                <button onclick="cancelReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary" style="width: 120px">キャンセル</a>
+                <button onclick="select_res_req()" class="w3-button buttons mb-2 btn-resize" style="width: 120px !important">決定する</button>
+                <button onclick="cancelReservation('.$data->id.')" class="w3-button buttons btn-resize" style="width: 120px !important">キャンセル</a>
             </div>
         </div>
         <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />';
@@ -569,10 +558,15 @@ class ServiceController extends Controller
             // 'root'     => $request->root(),
             'email'     => $reservation->reserver->email
         ];
-        // dd($emailData);
 
         Mail::to($reservation->reserver->email)
             ->send(new Common($emailData));
+
+        $lineMessage = "【YouTalk】電話予約希望のキャンセルのお知らせ！\nご希望の日程で予約を受付できませんでした。\nお手数ですが、新たに日程を調整して予約申請をお願いします。";
+        if($reservation->reserver->line_user_id){
+            (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
+        }
+
         $reservation->delete();
 
         return redirect()->back()->with('success', 'Message sent successfully');
@@ -603,10 +597,15 @@ class ServiceController extends Controller
             // 'root'     => $request->root(),
             'email'     => $reservation->reserver->email
         ];
-        // dd($emailData);
 
         Mail::to($reservation->reserver->email)
             ->send(new Common($emailData));
+
+        $lineMessage = "【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。\n"
+            .$reservation->reserver->name."様のご都合で".$date_time."の予約をキャンセルにされました。\nご了承をお願い致します。";
+        if($reservation->reserver->line_user_id){
+            (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
+        }
         $reservation->delete();
 
         return redirect()->back();
@@ -635,44 +634,30 @@ class ServiceController extends Controller
 
         Mail::to($reservation->reserver->email)
             ->send(new Common($emailData));
+
+        $lineMessage = "【YouTalk】電話予約確定のお知らせ！\nご希望の日程で予約を確定されました。\nマイページにて確認お願いします。";
+        if($reservation->reserver->line_user_id){
+            (new LineController())->sendMessage($reservation->reserver->line_user_id, $lineMessage);
+        }
+
         return redirect()->back();
     }
 
     public function acceptedReservation(Request $request)
     {
-        
-        
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
 
         $service_id = $request->service_id;
-        //return $service_id;
         $reservations = Reservation::where('service_id', $service_id)->where('status', 2)->get();
         
-        $html_text = '
-        <h5 class="text-center">電話受付予約日程</h5>';
+        $html_text = '<h5 class="text-center">電話受付予約日程</h5>';
         
         if($reservations->count() == 0){
-            $html_text .= '
-            <h6 class="text-center">no confirmed reservation</h6>';
+            $html_text .= '<h6 class="text-center">no confirmed reservation</h6>';
         }
-            
-        //     <div class="col-md-12 row px-0 align-items-center">
-        //         <div class="col-md-4">
-        //             <span>shiam</span><br/>
-        //             <span>電話受付予約時間</span>
-        //         </div>
-        //         <div class="col-md-4">
-        //             <span>dfzgdfg</span>
-        //         </div>
-        //         <div class="col-md-4">
-        //             <span>11:00 AM</span>
-        //         </div>      
-        //     </div>
-        // <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />
-        // dd($time_slot);
-        foreach($reservations as $data){
 
+        foreach($reservations as $data){
             $slot_id = $data->slot;
             $slot = Slot::where('id', $slot_id)->first();
             
@@ -687,12 +672,10 @@ class ServiceController extends Controller
                     
                     $html_text .= '
                     <div class="col-md-4 ">
-                        <button onclick="cancelConfirmedReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary">予約キャンセルする</a>
+                        <button onclick="cancelConfirmedReservation('.$data->id.')" class="w3-button buttons btn-resize">キャンセルする</a>
                     </div>
                 </div>
                 <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40)" />';
-            
-            
         }
 
         return $html_text;
@@ -985,8 +968,6 @@ class ServiceController extends Controller
                     //deleting the reservation
                     $data->delete();
                 }
-                
-
             }
         }
         
@@ -1079,20 +1060,14 @@ class ServiceController extends Controller
         $test->save();
 
         $active_talkrooms = Talkroom::where('status', 2)->where('call_status', 1)->get();
-        //return $active_talkrooms;
-        //getting current timedate
         date_default_timezone_set("Asia/Dhaka");
         $date = date("Y-m-d");
         $time = date("H:i:s");
         $now = $date. " " .$time;
 
-        //return $now;
-
         foreach($active_talkrooms as $data){
             $start_time = $data->last_call_end;
             $start_plusten_time = date("Y-m-d H:i:s", strtotime("10 minutes", strtotime($start_time)));
-
-            //return $start_plusten_time;
 
             $date_start_time = new DateTime($start_plusten_time);
             $date_now = new DateTime($now);
@@ -1144,6 +1119,14 @@ class ServiceController extends Controller
 
                 Mail::to($data->buyer->email)
                     ->send(new Common($emailData));
+
+                $lineMessage = "【YouTalk】トークルーム終了のお知らせ！\n10分経過しましたが通話が開始されなかったので、キャンセルとなりました。";
+                if($data->buyer->line_user_id){
+                    (new LineController())->sendMessage($data->buyer->line_user_id, $lineMessage);
+                }
+                if($data->seller->line_user_id){
+                    (new LineController())->sendMessage($data->seller->line_user_id, $lineMessage);
+                }
             }
         }
     }

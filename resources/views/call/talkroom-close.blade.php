@@ -61,11 +61,18 @@
     <div class="col-md-12 col-sm-12 p-0">
         <div class="col-md-12 mb-3">
             <div class="mb-2"><span style="font-size: 16px;">電話通話内容</span></div>
+            @if($talkroom->seller_id == Auth::user()->id)
+                <div class="text-left pb-2">
+                    <span class="text-16">購入者： {{$talkroom->buyer->name}}様</span>
+                </div>
+            @endif
             <div class="p-2 text-14" style="border: 2px solid rgba(158, 148, 148, 0.5);">
                 <div class="col-md-12 row pl-3" style=""><a class="anchorColor" href="{{route('user-display-service', ['id' => $talkroom->service->id])}}"><h6>{{$talkroom->service->title}}</h6></a></div>
                 <div class="row pl-3">
                     <div class="col-md-8 p-0">
-                        <div style="height: 30px;">無料通話回数{{$talkroom->service->free_mint_iteration}}回（毎回{{$talkroom->service->free_min}}分)</div>
+                        @if($talkroom->service->free_mint_iteration)
+                            <div style="height: 30px;">お試し通話機能あり（開始から{{$talkroom->service->free_min}}分までを{{$talkroom->service->free_mint_iteration}}回無料）</div>
+                        @endif
                         <div style=""><a class="anchorColor" href="{{route('user-page-profile', ['id' => $talkroom->seller_id])}}">{{$talkroom->seller->name}} {{$talkroom->seller->last_name}}</a></div>
                     </div>
                     <div class="col-md-4 text-center p-0">
@@ -73,9 +80,7 @@
                     </div>
                 </div>  
             </div>
-            
         </div>
-
         <div class="col-md-8 mb-5 text-14">
             <div class="p-2" style="border: 2px solid rgba(158, 148, 148, 0.5)">
                 <div class="" style="">
@@ -89,7 +94,7 @@
                 <div class="" style="">
                     <table style="width: 100%">
                         <tr>
-                            <td style="width: 65%">通話時間</td>
+                            <td style="width: 65%">無料時間</td>
                             <td style="width: 35%">{{$talkroom->free_mint}}分</td>
                         </tr>
                     </table>
@@ -103,19 +108,13 @@
                     </table>
                 </div>
             </div>
-            
         </div>
-
         <div class="col-md-12">
             <div class="p-2 message-wrapper" style="border: 2px solid rgba(158, 148, 148, 0.5); height: 600px; overflow-y:auto">
                 <div class="user-wrapper p-0 text-14" id="messages" >
-
                 </div>
-                
             </div>
-            
         </div>
-
         <div class="col-md-12 my-3">
             <div class="p-2" style="border: 2px solid rgba(158, 148, 148, 0.5)">
                 <div class="mb-2 col-md-12 text-center" style="font-size: 14px"><span>トークルーム終了</span></div>
@@ -127,11 +126,7 @@
                     </div>  
                 @endif
             </div>
-            
         </div>
-
-
-
     </div>
 
     <!-- MODAL -->
@@ -159,31 +154,24 @@
                                 <label for="star1" title="text">1 star</label>
                                 <input type="radio" id="star6" name="rate" value="0"  style="display: none" checked/>
                             </div>
-                            
-                        </div>
-                        <div class="col-md-12 mt-2">
-                            <input type="hidden" name="talkroom_id" value="{{$talkroom->id}}">
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1"><span style="font-size: 16px">評価本文</span></label>
-                                <textarea class="form-control rounded-0" id="review" name="review" placeholder="レビューを書く..." rows="10"></textarea>
+                            <div class="col-md-12 mt-2">
+                                <input type="hidden" name="talkroom_id" value="{{$talkroom->id}}">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1"><span style="font-size: 16px">評価本文</span></label>
+                                    <textarea class="form-control rounded-0" id="review" name="review" placeholder="レビューを書く..." rows="10"></textarea>
+                                </div>
                             </div>
-                            
                         </form>
-                            <div class="col-md-12 text-center">
-                                <button id="post_review" class="btn buttons btn-size" style="margin-top: 10px">送信</button>
-                            </div>
-                        
+                        <div class="col-md-12 text-center">
+                            <button id="post_review" class="btn buttons btn-size" style="margin-top: 10px">送信</button>
+                        </div>
                     </div>
                 </div>
             </div>
           </div>
         </div>
       </div>
-
-</div>    
-               
-           
-        
+</div>
 @stop
 
 

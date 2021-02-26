@@ -152,7 +152,16 @@ class Chat{
   		let URI = baseURI+'?id='+this.id+'&to_id='+data.id+'&name='+data.name+'&pic='+data.pic+'&type='+type+'&limit='+data.limit;
 
 
-  		let html = '<div class="modal chat-modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-body" style="height:600px;padding:0px;"><iframe border="0" src="'+URI+'" width="100%" height="100%"></iframe></div></div></div></div>';
+  		let html = '<div class="modal chat-modal" tabindex="-1" role="dialog">'+
+			'<div class="modal-dialog" role="document">'+
+				'<div class="modal-content">'+
+					'<div class="modal-body" style="height:600px;padding:0px;">'+
+						'<iframe border="0" src="'+URI+'" width="100%" height="100%"></iframe>'+
+					'</div>'+
+				'</div>'+
+			'</div>'+
+		'</div>';
+
   		$('.chat-modal').remove();
   		document.body.innerHTML += html;
   		// document.body.appendChild(html);
@@ -171,7 +180,6 @@ class Chat{
 	}
 
 	send(event, data){
-		console.log(event, data);
 		if(this.socket == null) return false;
 		this.socket.emit(event, data);
 	}

@@ -38,5 +38,11 @@ class Service extends Model
         return $this->hasMany('App\Models\Review', 'service_id');
     }
 
-   
+    public function serviceAllCallCount(){
+        return $this->hasMany('App\Models\Talkroom', 'service_id');
+    }
+
+    public function userServicesAllCallCount(){
+        return $this->hasMany('App\Models\Talkroom', 'seller_id', 'seller_id');
+    }
 }

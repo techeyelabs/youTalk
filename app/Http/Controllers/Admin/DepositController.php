@@ -45,8 +45,6 @@ class DepositController extends Controller
 
     public function acceptDeposit(Request $request)
     {
-        //dd($request);
-
         $wallet = new Wallet();
         $wallet->user_id = $request->user_id;
         $wallet->service_id = 0;
@@ -67,16 +65,11 @@ class DepositController extends Controller
             'status' => true,
             'text' => 'Deposit request successfully!!'
         ];
-        
         return redirect()->back()->with('message', $message);
-
-
     }
 
     public function rejectDeposit(Request $request)
     {
-        //dd($request);
-
         $pending_deposit = PendingBankDeposit::where('id', $request->deposit_id)->first();
         $pending_deposit->status = 3;
         $pending_deposit->save();
@@ -84,28 +77,22 @@ class DepositController extends Controller
 
     public function addAmount(Request $request)
     {
-        //return $request;
-        //$wallet = Wallet::where('user_id', $request->id)->get();
-        //return $wallet;
-            $wallet = new Wallet();
-            $wallet->user_id = $request->id;
-            $wallet->service_id = 0;
-            $wallet->expense_type = 4;
-            $wallet->amount = $request->amount;
-            $wallet->save();
+        $wallet = new Wallet();
+        $wallet->user_id = $request->id;
+        $wallet->service_id = 0;
+        $wallet->expense_type = 4;
+        $wallet->amount = $request->amount;
+        $wallet->save();
 
-            $user = User::where('id', $request->id)->first();
-            $user->wallet_balance += $request->amount;
-            $user->save();
+        $user = User::where('id', $request->id)->first();
+        $user->wallet_balance += $request->amount;
+        $user->save();
 
-            $message = [
-                'status' => true,
-                'text' => 'Amount added successfully!!'
-            ];
-            
-            return redirect()->back()->with('message', $message);
-        
-        
+        $message = [
+            'status' => true,
+            'text' => 'Amount added successfully!!'
+        ];
+        return redirect()->back()->with('message', $message);
     }
 
     public function pendingNotification()

@@ -7,13 +7,13 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            <div class="text-center mb-5">
-                <h4 class="title">You have already setup line notification.</h4>
-                <h6>Still not getting any notification?Scan the following QR code using line app.</h6>
+            <div class="text-center pt-4">
+                <h4 class="title">LINE通話設定済み</h4>
+                <h6>アカウント変更したい場合は下記のボタンから設定をし直して下さい。</h6>
                 <img src="/line/952hqpgv" alt="">
             </div>
-            <div class="text-center">
-                <a href="{{$redirectUrl}}" class="btn btn-info btn-lg">Setup again</a>
+            <div class="text-center pb-4">
+                <a href="{{$redirectUrl}}" class="btn buttons btn-size white_buttons" style="color: black">アカウント変更</a>
             </div>
         </div>
     </div>    

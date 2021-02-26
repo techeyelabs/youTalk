@@ -148,7 +148,7 @@ class MyPageController extends Controller
         $fromUser = User::select('email', 'name')->where('id', $id)->first();
         $email = $fromUser->email;
         $name = $fromUser->name;
-        $TransactionId = 'YT-'.time().'-'.mt_rand(1000, 9999).'-BL';
+        $TransactionId = time().''.mt_rand(10000000000, 99999999999);
 
         // Regular 
         $personal = User::select('email', 'name', 'last_name', 'wallet_balance')->where('id', $id)->first();
@@ -531,40 +531,27 @@ class MyPageController extends Controller
 
     public function myReservations(Request $request)
     {
-
         $time_slot_array = new TimeLibrary();
         $time_slot =  $time_slot_array->TimeLibrary();
-
         $reserved_slots = Reservation::where('reserver_id', $request->reservation_id)
                                         ->where('status', 2)->get();
 
-        $html_text = '
-        <h5 class="text-center mb-4">電話通話予約通知</h5>';
+        $html_text = '<h5 class="text-center mb-4">電話通話予約通知</h5>';
         foreach($reserved_slots as $data){
             $slot = Slot::where('id', $data->slot)->first();
-            $html_text .= '
-            <div class="col-md-12 px-0 align-items-center">
-                <div><h6 class="mb-0">'.$data->whichService->title.'</h6></div>
-                <div class="col-md-12 row pl-0">
-                    <div class="col-md-6 pl-0">
-                       
-
-                            <h6 class="mr-4">'.$slot->day.' '.$time_slot[$slot->slot].'</h6>';
-                           
-                            $html_text .='
-
-                        
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <button onclick="cancelReservation('.$data->id.')" class="btn btn-sm btn-outline-secondary text-secondary">Cancel</a>
-                    </div>
-                </div>
-            </div>
-            <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40);margin-top:5px" />
-            ';
-
+            $html_text .= '<div class="col-md-12 px-0 align-items-center">
+                            <div><h6 class="mb-0">'.$data->whichService->title.'</h6></div>
+                            <div class="col-md-12 row pl-0">
+                                <div class="col-md-6 pl-0">
+                                    <h6 class="mr-4">'.$slot->day.' '.$time_slot[$slot->slot].'</h6>';
+            $html_text .='</div>
+                            <div class="col-md-6 text-right">
+                                <button onclick="cancelReservation('.$data->id.')" class="w3-button buttons mb-2 btn-resize" style="width: 120px !important">キャンセル</a>
+                            </div>
+                            </div>
+                        </div>
+                        <hr style="height:2px;border-width:0;color:gray;background-color:rgba(128, 128, 128, 0.40);margin-top:5px" />';
         }
-
         return $html_text;
     }
 
@@ -597,11 +584,14 @@ class MyPageController extends Controller
         Mail::to($reservations->seller->email)
             ->send(new Common($emailData));
 
-
+        $lineMessage = "【YouTalk】電話予約キャンセルのお知らせ！\nこのたびは、YouTalkをご利用いただきまして、誠にありがとうございます。\n"
+            .$reservations->reserver->name."様のご都合で".$date_time."の予約をキャンセルにされました。\nご了承をお願い致します。";
+        if($reservations->seller->line_user_id){
+            (new LineController())->sendMessage($reservations->seller->line_user_id, $lineMessage);
+        }
         foreach($slots as $slot){
             $slot->delete();
         }
-
         $reservations->delete();
         return;
     }

@@ -311,25 +311,17 @@
                         </tr>
                     </table>
                 </div>
-
-                <br />
+                <br/>
             </div>
         </form>
-
         @if($available_mins > 0)
-        <div class="col-md-12 text-center mb-5"><button id="send_res" class="submit_button buttons">予約する</button></div>
+            <div class="col-md-12 text-center mb-5"><button id="send_res" class="submit_button buttons">予約する</button></div>
         @else
-        <div class="col-md-12 text-center mb-5"><button id="send_res_disabled" class="submit_button buttons"
-                disabled>予約する</button></div>
+            <div class="col-md-12 text-center mb-5"><button id="send_res_disabled" class="submit_button buttons" disabled>予約する</button></div>
         @endif
     </div>
 </div>
-
-
-
 @stop
-
-
 
 @section('custom_js')
 <script>
@@ -338,33 +330,27 @@
             var flag = 0;
             if ($('#d_1').val() == '' || $('#d_1').val() == null) {
                 flag = 1;
-                console.log("Here1");
                 $('#d_1_error').show();
             }
             if ($('#d_2').val() == '' || $('#d_2').val() == null) {
                 flag = 1;
                 $('#d_2_error').show();
-                console.log("Here2");
             }
             if ($('#d_3').val() == '' || $('#d_3').val() == null) {
                 flag = 1;
                 $('#d_3_error').show();
-                console.log("Here3");
             }
             if ($('#slot_1').val() == '' || $('#slot_1').val() == null) {
                 flag = 1;
                 $('#d_1_error').show();
-                console.log("Here4");
             }
             if ($('#slot_2').val() == '' || $('#slot_2').val() == null) {
                 flag = 1;
                 $('#d_2_error').show();
-                console.log("Here5");
             }
             if ($('#slot_3').val() == '' || $('#slot_3').val() == null) {
                 flag = 1;
                 $('#d_3_error').show();
-                console.log("Here6");
             }
             // if($('#description').val() == '' || $('#description').val() == null){
             //     flag = 1;
@@ -372,6 +358,7 @@
             // }
             if (flag == 0) {
                 if (confirm("こちらの内容でよろしいですか！")) {
+                    document.getElementById("send_res").disabled = true;
                     $("#reservation_form").submit();
                 }
             }

@@ -6,9 +6,6 @@
 
 
 @section('content')
-    {{-- @include('template.mytop') --}}
-   
-    {{-- <br/> --}}
     <div class=" row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
@@ -53,27 +50,20 @@
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                 <input type="hidden" id="scroll_flag" name="scroll_flag" value= 0 />
-                    <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
-                        
-                    </div>
-    
-                
-            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
-                <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red buttons btn-size">Ok</button>
-            </div>
-
+                <div class="w3-section p-4" id="conversation" style="height: 300px; overflow-y: auto">
+                </div>
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey text-center">
+                    <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red buttons btn-size">Ok</button>
+                </div>
             </div>
         </div>
     </div>
 @stop
 
-
-
 @section('custom_js')
 <script>
     function show_reservations(id1){
         var reservation_id = id1;
-        //console.log(reservation_id);
         document.getElementById('id01').style.display='block';
         var ajaxurl = "{{route('user-reservations')}}";
         
@@ -81,21 +71,19 @@
             url: ajaxurl,
             type: "GET",
             data: {
-                    '_token': "{{ csrf_token() }}",
-                    'reservation_id': reservation_id
+                '_token': "{{ csrf_token() }}",
+                'reservation_id': reservation_id
             },
             success: function(data){
-                    $data = $(data); // the HTML content that controller has produced
-                    {{--$('#item-container').hide().html($data).fadeIn();--}}
-                    $('#conversation').html($data);
-                    //setTimeout(doAjax, interval);
-                    if($('#scroll_flag').val() == 0){
-                        updateScroll();
-                    }
+                $data = $(data); // the HTML content that controller has produced
+                $('#conversation').html($data);
+                //setTimeout(doAjax, interval);
+                if($('#scroll_flag').val() == 0){
+                    updateScroll();
+                }
             },
             complete: function (data) {
                     // Schedule the next
-                    
             }
         });
     }
@@ -113,19 +101,12 @@
                     'reservation_id': reservation_id
                 },
                 success: function(data){
-                    // console.log(data);
-                    // $data = $(data);
-                    // show_res_req($data);
-                    // var element = document.getElementById("conversation");
-                    // element.scrollTop = element.scrollHeight;
-                    // document.getElementById('id01').style.display='none';
                     location.reload();
                 },
                 complete: function (data) {    
                 }
             });
         }
-        
     }
 </script>
 @stop
