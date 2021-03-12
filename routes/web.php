@@ -149,7 +149,7 @@ Route::group(['middleware' => 'auth'], function () {
     // //Gateway Messages
     Route::post('/success', 'RedirectController@success')->name('payment-option-success');
     Route::get('/addwallet-callback-fail', 'RedirectController@fail')->name('payment-option-fail');
-    Route::post('/cancel', 'RedirectController@cancel')->name('payment-cancel');
+    Route::get('/cancel', 'RedirectController@cancel')->name('payment-cancel');
 
     //talkroom and call related
     Route::get('/payment/{id}', 'CallController@paymentMethod')->name('payment-method');
